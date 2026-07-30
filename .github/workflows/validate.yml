@@ -14,12 +14,12 @@ jobs:
       - name: Checkout del Repositorio
         uses: actions/checkout@v4
 
-      - name: Setup de Node.js
+      - name: Configurar Node.js
         uses: actions/setup-node@v4
         with:
-          node-size: '22.x'
-          node-version: '22'
+          node-version: '22.12.0'
           cache: 'npm'
+          cache-dependency-path: package-lock.json
 
       - name: Instalar Dependencias
         run: npm ci
