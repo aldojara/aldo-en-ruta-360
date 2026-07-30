@@ -1,0 +1,101 @@
+---
+import { publicUrl } from '../../lib/urls/public-url';
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="main-footer">
+  <div class="footer-container container">
+    <div class="footer-brand">
+      <a href={publicUrl('/')} class="logo-link">
+        <span class="logo-text">Aldo en Ruta</span>
+        <span class="logo-subtext">360°</span>
+      </a>
+      <p class="brand-desc">
+        Explorando el Perú por carretera. Una experiencia interactiva, geográfica e inmersiva.
+      </p>
+    </div>
+    
+    <div class="footer-bottom">
+      <p class="copyright">
+        &copy; {currentYear} Aldo en Ruta. Todos los derechos reservados.
+      </p>
+      <div class="footer-meta">
+        <span>Diseñado para transmitir territorio, distancia y memoria.</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .main-footer {
+    background-color: var(--color-bg-secondary);
+    border-top: 1px solid var(--color-border);
+    padding: 60px 0 40px 0;
+    margin-top: auto;
+  }
+
+  .footer-container {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .footer-brand {
+    max-width: 480px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .logo-link {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    width: fit-content;
+  }
+
+  .logo-text {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--color-text-primary);
+    font-weight: 500;
+  }
+
+  .logo-subtext {
+    font-size: 0.75rem;
+    color: var(--color-accent);
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+  }
+
+  .brand-desc {
+    color: var(--color-text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 24px;
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-meta {
+    font-style: italic;
+  }
+
+  @media (max-width: 768px) {
+    .footer-bottom {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>

@@ -1,0 +1,107 @@
+---
+import { publicUrl } from '../../lib/urls/public-url';
+
+interface Props {
+  quote: string;
+  author?: string;
+  context?: string;
+  image?: string;
+  imageAlt?: string;
+}
+
+const {
+  quote,
+  author,
+  context,
+  image,
+  imageAlt = "Imagen del autor de la cita"
+} = Astro.props;
+
+const hasImage = !!image;
+const resolvedImageUrl = hasImage ? publicUrl(image) : undefined;
+---
+
+<blockquote class="quote-block glass-panel animate-fade-in">
+  <div class="quote-container">
+    <!-- Icono de comillas decorativo -->
+    <svg class="quote-icon" viewBox="0 0 24 24" width="48" height="48" stroke="var(--color-accent)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M3 21c3 0 7-9 7-14a5 5 0 0 0-5-5 5 5 0 0 0-5 5c0 5 3 14 3 14zm11 0c3 0 7-9 7-14a5 5 0 0 0-5-5 5 5 0 0 0-5 5c0 5 3 14 3 14z"></path>
+    </svg>
+    
+    <p class="quote-text">{quote}</p>
+    
+    {(author || context || hasImage) && (
+      <footer class="quote-footer">
+        {hasImage && (
+          <img src={resolvedImageUrl} alt={imageAlt} class="quote-author-img" loading="lazy" />
+        )}
+        <div class="quote-meta">
+          {author && <cite class="quote-author">{author}</cite>}
+          {context && <span class="quote-context">{context}</span>}
+        </div>
+      </footer>
+    )}
+  </div>
+</blockquote>
+
+<style>
+  .quote-block {
+    background-color: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    padding: 40px;
+    margin: 32px 0;
+    position: relative;
+  }
+
+  .quote-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .quote-icon {
+    opacity: 0.25;
+  }
+
+  .quote-text {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    line-height: 1.5;
+    color: var(--color-text-primary);
+    font-style: italic;
+  }
+
+  .quote-footer {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 8px;
+  }
+
+  .quote-author-img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--color-accent);
+  }
+
+  .quote-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .quote-author {
+    font-family: var(--font-interface);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    font-style: normal;
+  }
+
+  .quote-context {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+  }
+</style>

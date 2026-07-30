@@ -1,0 +1,109 @@
+---
+interface MetricItem {
+  label: string;
+  value: string | number;
+  unit?: string;
+}
+
+interface Props {
+  metrics: MetricItem[];
+}
+
+const { metrics = [] } = Astro.props;
+---
+
+<div class="stats-strip glass-panel animate-fade-in">
+  {metrics.map(metric => (
+    <div class="stat-item">
+      <span class="stat-label">{metric.label}</span>
+      <div class="stat-value-row">
+        <span class="stat-value">{metric.value}</span>
+        {metric.unit && <span class="stat-unit">{metric.unit}</span>}
+      </div>
+    </div>
+  ))}
+</div>
+
+<style>
+  .stats-strip {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 24px;
+    background-color: var(--color-bg-secondary);
+    width: 100%;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 1;
+    min-width: 120px;
+    position: relative;
+  }
+
+  /* Línea divisoria entre métricas en pantallas grandes */
+  .stat-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: -10px;
+    top: 15%;
+    height: 70%;
+    width: 1px;
+    background-color: var(--color-border);
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+
+  .stat-value-row {
+    display: flex;
+    align-items: baseline;
+    gap: 2px;
+  }
+
+  .stat-value {
+    font-family: var(--font-interface);
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--color-accent-strong);
+    line-height: 1;
+  }
+
+  .stat-unit {
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+  }
+
+  @media (max-width: 768px) {
+    .stats-strip {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+    
+    .stat-item {
+      flex: none;
+    }
+
+    .stat-item:not(:last-child)::after {
+      display: none;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .stats-strip {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,191 @@
+---
+import { publicUrl } from '../../lib/urls/public-url';
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  description?: string;
+  /**
+   * Imagen de fondo decorativa (cargada en CSS inline).
+   * Toda la información esencial se transmite mediante título y descripción,
+   * por lo que esta imagen de fondo no requiere texto alternativo directo (alt).
+   */
+  backgroundImage?: string;
+  primaryAction?: {
+    href: string;
+    label: string;
+  };
+  secondaryAction?: {
+    href: string;
+    label: string;
+  };
+  variant?: 'large' | 'compact';
+}
+
+const {
+  eyebrow,
+  title,
+  description,
+  backgroundImage,
+  primaryAction,
+  secondaryAction,
+  variant = 'compact'
+} = Astro.props;
+
+const hasBg = !!backgroundImage;
+const resolvedBgUrl = hasBg ? publicUrl(backgroundImage) : undefined;
+---
+
+<section class={`page-hero ${variant} ${hasBg ? 'has-bg' : ''}`} style={resolvedBgUrl ? `background-image: url('${resolvedBgUrl}')` : undefined}>
+  {hasBg && <div class="hero-overlay" aria-hidden="true" />}
+  
+  <div class="hero-container container animate-fade-in">
+    {eyebrow && <span class="hero-eyebrow">{eyebrow}</span>}
+    <h1 class="hero-title text-gradient">{title}</h1>
+    {description && <p class="hero-description">{description}</p>}
+    
+    {(primaryAction || secondaryAction) && (
+      <div class="hero-actions">
+        {primaryAction && (
+          <a href={primaryAction.href} class="btn btn-primary">
+            {primaryAction.label}
+          </a>
+        )}
+        {secondaryAction && (
+          <a href={secondaryAction.href} class="btn btn-secondary">
+            {secondaryAction.label}
+          </a>
+        )}
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .page-hero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 60px 0;
+    overflow: hidden;
+    background-color: var(--color-bg-primary);
+  }
+
+  .page-hero.large {
+    min-height: 70vh;
+  }
+
+  .page-hero.compact {
+    min-height: 350px;
+    padding: 80px 0 60px 0;
+  }
+
+  .page-hero.has-bg {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(5, 12, 18, 0.4) 0%, var(--color-bg-primary) 100%);
+    z-index: 1;
+  }
+
+  .hero-container {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .hero-eyebrow {
+    color: var(--color-accent);
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    padding: 4px 12px;
+    background-color: var(--color-accent-dim);
+    border: 1px solid rgba(216, 154, 43, 0.2);
+    border-radius: var(--radius-sm);
+  }
+
+  .hero-title {
+    font-size: 3rem;
+    line-height: 1.15;
+    margin: 0;
+  }
+
+  .large .hero-title {
+    font-size: 4rem;
+  }
+
+  .hero-description {
+    font-size: 1.15rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    max-width: 680px;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    font-family: var(--font-interface);
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    transition: var(--transition-smooth);
+  }
+
+  .btn-primary {
+    background-color: var(--color-accent);
+    color: var(--color-bg-primary);
+    border: 1px solid var(--color-accent);
+  }
+
+  .btn-primary:hover {
+    background-color: var(--color-accent-strong);
+    border-color: var(--color-accent-strong);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(216, 154, 43, 0.25);
+  }
+
+  .btn-secondary {
+    background-color: var(--color-surface);
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border);
+  }
+
+  .btn-secondary:hover {
+    background-color: var(--color-bg-secondary);
+    border-color: var(--color-border-hover);
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 768px) {
+    .hero-title {
+      font-size: 2.25rem;
+    }
+    .large .hero-title {
+      font-size: 2.75rem;
+    }
+  }
+</style>

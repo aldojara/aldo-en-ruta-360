@@ -1,0 +1,27 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="immersive-layout-container">
+    <slot />
+  </div>
+</BaseLayout>
+
+<style>
+  .immersive-layout-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    /* Altura completa menos cabecera */
+    height: calc(100vh - var(--header-height) - 40px);
+    overflow: hidden;
+  }
+</style>

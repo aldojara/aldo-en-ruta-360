@@ -1,0 +1,73 @@
+---
+interface FilterOption {
+  value: string;
+  label: string;
+}
+
+interface Props {
+  options: FilterOption[];
+  activeValue?: string;
+  groupLabel?: string;
+}
+
+const {
+  options = [],
+  activeValue,
+  groupLabel = "Filtrar resultados"
+} = Astro.props;
+---
+
+<div class="filter-chips-container" role="group" aria-label={groupLabel}>
+  {options.map(option => {
+    const isActive = option.value === activeValue;
+    return (
+      <button
+        type="button"
+        class={`filter-chip ${isActive ? 'active' : ''}`}
+        aria-pressed={isActive ? "true" : "false"}
+        data-filter-value={option.value}
+      >
+        {option.label}
+      </button>
+    );
+  })}
+</div>
+
+<style>
+  .filter-chips-container {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 8px 0;
+  }
+
+  .filter-chip {
+    padding: 8px 18px;
+    font-family: var(--font-interface);
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 50px;
+    cursor: pointer;
+    transition: var(--transition-fast);
+  }
+
+  .filter-chip:hover {
+    border-color: var(--color-border-hover);
+    color: var(--color-text-primary);
+    background-color: var(--color-bg-secondary);
+  }
+
+  .filter-chip.active {
+    background-color: var(--color-accent-dim);
+    border-color: var(--color-accent);
+    color: var(--color-accent-strong);
+  }
+
+  .filter-chip:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+</style>
