@@ -1,0 +1,445 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { publicUrl } from '../../lib/urls/public-url';
+
+interface Props {
+  route: CollectionEntry<'routes'>;
+}
+
+const { route } = Astro.props;
+const { title, summary, metrics, media, taxonomy } = route.data;
+
+const formattedDuration = Math.round(metrics.durationSeconds / 60);
+const formattedAltitude = metrics.maximumAltitudeMeters
+  ? new Intl.NumberFormat('es-PE').format(metrics.maximumAltitudeMeters)
+  : null;
+
+const difficultyLabels = {
+  easy: 'Fácil',
+  moderate: 'Moderada',
+  advanced: 'Avanzada'
+};
+const difficultyText = difficultyLabels[metrics.drivingDifficulty] || 'Pendiente';
+const resolvedCover = publicUrl(media.cover);
+---
+
+<section class="featured-route-section container" aria-labelledby="featured-title">
+  <h2 id="featured-title" class="section-heading">Ruta destacada</h2>
+
+  <div class="featured-grid">
+
+    <!-- Columna Izquierda: Tarjeta Visual de Portada con Play y 360 -->
+    <div class="media-column">
+      <div class="media-container glass-panel">
+        <img
+          src={resolvedCover}
+          alt={`Vista panorámica de la carretera de la ${title}`}
+          class="route-image"
+          loading="lazy"
+          width="800"
+          height="450"
+        />
+        <div class="media-overlay"></div>
+
+        <!-- Indicador Conceptual de 360° (Decorativo / No interactivo) -->
+        <div class="badge-360" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-360">
+            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
+            <path d="M12 6v12"></path>
+            <path d="M6 12h12"></path>
+          </svg>
+          <span>360°</span>
+        </div>
+
+        <!-- Botón de Reproducción Conceptual (Decorativo / No enfocable por teclado) -->
+        <div class="play-btn-mock" aria-hidden="true">
+          <div class="play-triangle"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Columna Derecha: Información Editorial, Métricas y CTA -->
+    <div class="info-column">
+      <span class="eyebrow-accent">PERÚ EN RUTA 360</span>
+      <h3 class="route-title">{title}</h3>
+      <p class="route-description">{summary}</p>
+
+      <!-- Fila de 4 Métricas Reales de la Colección -->
+      <div class="route-metrics-row" role="region" aria-label="Métricas de la ruta destacada">
+
+        <div class="metric-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+          <div class="metric-text">
+            <span class="value">{metrics.distanceKm} km</span>
+            <span class="label">Distancia</span>
+          </div>
+        </div>
+
+        <div class="metric-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          <div class="metric-text">
+            <span class="value">{formattedDuration} min</span>
+            <span class="label">Duración</span>
+          </div>
+        </div>
+
+        {formattedAltitude && (
+          <div class="metric-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="m8 3 4 8 5-5 5 15H2L8 3z"></path>
+            </svg>
+            <div class="metric-text">
+              <span class="value">{formattedAltitude} m</span>
+              <span class="label">Altitud máx.</span>
+            </div>
+          </div>
+        )}
+
+        <div class="metric-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <circle cx="12" cy="12" r="6"></circle>
+            <line x1="12" y1="2" x2="12" y2="22"></line>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+          </svg>
+          <div class="metric-text">
+            <span class="value">{difficultyText}</span>
+            <span class="label">Dificultad</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Listado de Etiquetas de Taxonomía -->
+      {taxonomy.tags && taxonomy.tags.length > 0 && (
+        <div class="tags-list" role="list" aria-label="Etiquetas de la ruta">
+          {taxonomy.tags.map(tag => (
+            <span class="tag-chip" role="listitem">{tag}</span>
+          ))}
+        </div>
+      )}
+
+      <!-- CTA Principal (Apunta temporalmente a /rutas/) -->
+      <div class="cta-wrapper">
+        <a href="/rutas/" class="btn-cta">
+          <span>Entrar a la ruta</span>
+          <svg class="cta-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .featured-route-section {
+    padding-top: 80px;
+    padding-bottom: 120px;
+    width: 100%;
+  }
+
+  .section-heading {
+    font-family: var(--font-editorial);
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 400;
+    color: var(--color-text);
+    line-height: 1.2;
+    margin-bottom: 48px;
+    letter-spacing: -0.01em;
+  }
+
+  .featured-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  /* Columna de Imagen */
+  .media-column {
+    width: 100%;
+  }
+
+  .media-container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%; /* Relación de aspecto 16:9 */
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(245, 245, 240, 0.06);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+
+  .route-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .media-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10, 15, 30, 0.4) 0%, transparent 60%);
+  }
+
+  /* Insignia 360 */
+  .badge-360 {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: rgba(13, 20, 38, 0.85);
+    border: 1px solid rgba(245, 245, 240, 0.15);
+    padding: 6px 12px;
+    border-radius: 20px;
+    color: var(--color-text);
+    font-family: var(--font-interface);
+    font-size: 0.8rem;
+    font-weight: 600;
+    backdrop-filter: blur(8px);
+  }
+
+  .icon-360 {
+    width: 14px;
+    height: 14px;
+    color: var(--color-accent-strong);
+  }
+
+  /* Botón Play Decorativo */
+  .play-btn-mock {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 68px;
+    height: 68px;
+    background-color: rgba(197, 160, 89, 0.15);
+    border: 2px solid var(--color-accent-strong);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+    transition: transform var(--transition-smooth), background-color var(--transition-smooth);
+    pointer-events: none; /* No capta eventos directamente, el padre maneja hover */
+  }
+
+  .play-triangle {
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-left: 18px solid var(--color-accent-strong);
+    border-bottom: 10px solid transparent;
+    margin-left: 4px;
+  }
+
+  .media-container:hover .route-image {
+    transform: scale(1.04);
+  }
+
+  .media-container:hover .play-btn-mock {
+    transform: scale(1.1);
+    background-color: rgba(197, 160, 89, 0.3);
+  }
+
+  /* Columna de Información */
+  .info-column {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .eyebrow-accent {
+    font-family: var(--font-interface);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-accent-strong);
+    letter-spacing: 0.15em;
+    margin-bottom: 16px;
+  }
+
+  .route-title {
+    font-family: var(--font-editorial);
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-weight: 400;
+    color: var(--color-text);
+    line-height: 1.2;
+    margin-bottom: 20px;
+    letter-spacing: -0.01em;
+  }
+
+  .route-description {
+    font-size: 1rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin-bottom: 36px;
+  }
+
+  /* Fila de Métricas */
+  .route-metrics-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px 24px;
+    width: 100%;
+    padding-bottom: 32px;
+    border-bottom: 1px solid rgba(245, 245, 240, 0.08);
+    margin-bottom: 32px;
+  }
+
+  .metric-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .metric-item svg {
+    width: 18px;
+    height: 18px;
+    color: var(--color-accent-strong);
+    opacity: 0.85;
+    flex-shrink: 0;
+  }
+
+  .metric-text {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .metric-text .value {
+    font-family: var(--font-interface);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--color-text);
+    line-height: 1.2;
+  }
+
+  .metric-text .label {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-top: 1px;
+  }
+
+  /* Chips de Taxonomía */
+  .tags-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 40px;
+  }
+
+  .tag-chip {
+    font-family: var(--font-interface);
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+    background-color: rgba(245, 245, 240, 0.04);
+    border: 1px solid rgba(245, 245, 240, 0.08);
+    padding: 6px 14px;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+
+  /* CTA Button */
+  .btn-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background-color: var(--color-accent-strong);
+    color: #1c150c;
+    padding: 14px 32px;
+    border-radius: 4px;
+    font-family: var(--font-interface);
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(197, 160, 89, 0.2);
+    transition: all var(--transition-smooth);
+  }
+
+  .btn-cta:hover {
+    background-color: #dcb36c;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(197, 160, 89, 0.3);
+  }
+
+  .btn-cta:focus-visible {
+    outline: 2px solid var(--color-text);
+    outline-offset: 4px;
+  }
+
+  .cta-arrow {
+    width: 16px;
+    height: 16px;
+    transition: transform var(--transition-smooth);
+  }
+
+  .btn-cta:hover .cta-arrow {
+    transform: translateX(4px);
+  }
+
+  @media (max-width: 1024px) {
+    .featured-grid {
+      gap: 40px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .featured-route-section {
+      padding-top: 60px;
+      padding-bottom: 80px;
+    }
+
+    .section-heading {
+      margin-bottom: 32px;
+    }
+
+    .featured-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .media-container {
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .route-metrics-row {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .route-metrics-row {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn-cta:hover,
+    .btn-cta:hover .cta-arrow,
+    .media-container:hover .route-image,
+    .media-container:hover .play-btn-mock {
+      transform: none;
+      transition: none;
+    }
+  }
+</style>

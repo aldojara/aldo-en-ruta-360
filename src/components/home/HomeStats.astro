@@ -1,0 +1,240 @@
+---
+interface Props {
+  distanceKm: number;
+  durationSeconds: number;
+  maximumAltitudeMeters: number | null;
+  territory: string;
+  drivingDifficulty: 'easy' | 'moderate' | 'advanced';
+}
+
+const {
+  distanceKm,
+  durationSeconds,
+  maximumAltitudeMeters,
+  territory,
+  drivingDifficulty
+} = Astro.props;
+
+// Formateadores y mapeos locales
+const formattedDuration = Math.round(durationSeconds / 60);
+const formattedAltitude = maximumAltitudeMeters
+  ? new Intl.NumberFormat('es-PE').format(maximumAltitudeMeters)
+  : null;
+
+const difficultyLabels = {
+  easy: 'Fácil',
+  moderate: 'Moderada',
+  advanced: 'Avanzada'
+};
+
+const difficultyText = difficultyLabels[drivingDifficulty] || 'Pendiente';
+---
+
+<div class="home-stats-strip-wrapper container">
+  <div class="stats-strip glass-panel" role="region" aria-label="Métricas del recorrido piloto">
+
+    <!-- Distancia -->
+    <div class="stat-item">
+      <div class="stat-icon-wrapper" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+          <circle cx="12" cy="10" r="3"></circle>
+        </svg>
+      </div>
+      <div class="stat-info">
+        <span class="stat-value">{distanceKm} <span class="stat-unit">km</span></span>
+        <span class="stat-label">Distancia</span>
+      </div>
+    </div>
+
+    <!-- Duración -->
+    <div class="stat-item">
+      <div class="stat-icon-wrapper" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+      </div>
+      <div class="stat-info">
+        <span class="stat-value">{formattedDuration} <span class="stat-unit">min</span></span>
+        <span class="stat-label">Duración</span>
+      </div>
+    </div>
+
+    <!-- Altitud Máxima -->
+    {formattedAltitude && (
+      <div class="stat-item">
+        <div class="stat-icon-wrapper" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m8 3 4 8 5-5 5 15H2L8 3z"></path>
+          </svg>
+        </div>
+        <div class="stat-info">
+          <span class="stat-value">{formattedAltitude} <span class="stat-unit">m</span></span>
+          <span class="stat-label">Altitud máxima</span>
+        </div>
+      </div>
+    )}
+
+    <!-- Territorio -->
+    <div class="stat-item">
+      <div class="stat-icon-wrapper" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+          <path d="M2 12h20"></path>
+        </svg>
+      </div>
+      <div class="stat-info">
+        <span class="stat-value">{territory}</span>
+        <span class="stat-label">Territorio</span>
+      </div>
+    </div>
+
+    <!-- Nivel de Conducción -->
+    <div class="stat-item">
+      <div class="stat-icon-wrapper" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <circle cx="12" cy="12" r="6"></circle>
+          <line x1="12" y1="2" x2="12" y2="22"></line>
+          <line x1="2" y1="12" x2="22" y2="12"></line>
+        </svg>
+      </div>
+      <div class="stat-info">
+        <span class="stat-value">{difficultyText}</span>
+        <span class="stat-label">Nivel de conducción</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<style>
+  .home-stats-strip-wrapper {
+    position: relative;
+    z-index: 10;
+    margin-top: -40px; /* Superpone sutilmente sobre el hero */
+    margin-bottom: 80px;
+    width: 100%;
+  }
+
+  .stats-strip {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 40px;
+    background-color: rgba(13, 20, 38, 0.7);
+    border: 1px solid rgba(245, 245, 240, 0.08);
+    border-radius: 8px;
+    gap: 24px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  }
+
+  .stat-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 1;
+    min-width: 150px;
+    position: relative;
+  }
+
+  /* Línea vertical divisoria entre columnas (desktop) */
+  .stat-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: -12px;
+    top: 15%;
+    height: 70%;
+    width: 1px;
+    background-color: rgba(245, 245, 240, 0.1);
+  }
+
+  .stat-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-accent-strong);
+    width: 24px;
+    height: 24px;
+    opacity: 0.85;
+  }
+
+  .stat-icon-wrapper svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .stat-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .stat-value {
+    font-family: var(--font-interface);
+    font-size: clamp(1.1rem, 2vw, 1.35rem);
+    font-weight: 700;
+    color: var(--color-text);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  .stat-unit {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    margin-left: 2px;
+  }
+
+  .stat-label {
+    font-family: var(--font-interface);
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 2px;
+  }
+
+  @media (max-width: 1024px) {
+    .stats-strip {
+      padding: 24px;
+      gap: 16px;
+    }
+    .stat-item {
+      min-width: 130px;
+      gap: 12px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .home-stats-strip-wrapper {
+      margin-top: 0;
+      margin-bottom: 60px;
+    }
+
+    .stats-strip {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px 16px;
+      padding: 24px 20px;
+    }
+
+    .stat-item {
+      min-width: 0;
+    }
+
+    .stat-item:not(:last-child)::after {
+      display: none;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .stats-strip {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+  }
+</style>

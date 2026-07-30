@@ -1,24 +1,24 @@
 {
-  "title": "Ruta Piloto - Pendiente de Confirmar",
+  "title": "Ruta andina — Tramo piloto",
   "slug": "ruta-piloto",
-  "summary": "Especificación temporal para verificar el esquema de datos de la colección de rutas del proyecto.",
+  "summary": "Un recorrido en altura por una carretera sinuosa rodeada de laderas verdes, curvas cerradas y vistas abiertas del valle andino.",
   "status": "draft",
-  "featured": false,
+  "featured": true,
   "location": {
     "country": "Perú",
     "department": null,
     "province": null,
-    "territory": "Territorio Piloto",
+    "territory": "Andes",
     "startLabel": null,
     "endLabel": null
   },
   "metrics": {
-    "distanceKm": 0,
-    "durationSeconds": 0,
+    "distanceKm": 11.6,
+    "durationSeconds": 720,
     "minimumAltitudeMeters": null,
-    "maximumAltitudeMeters": null,
+    "maximumAltitudeMeters": 3901,
     "elevationGainMeters": null,
-    "drivingDifficulty": "easy",
+    "drivingDifficulty": "moderate",
     "gpsPoints": null
   },
   "map": {
@@ -31,7 +31,7 @@
     "bounds": null
   },
   "media": {
-    "cover": "/assets/placeholder-cover.jpg",
+    "cover": "/images/temp/home/featured-route.webp",
     "gallery": [],
     "video": null,
     "verticalVideo": null,
@@ -46,9 +46,9 @@
     "momentsTimeline": false
   },
   "taxonomy": {
-    "territories": [],
-    "experienceTypes": [],
-    "tags": []
+    "territories": ["Andes"],
+    "experienceTypes": ["Andes"],
+    "tags": ["Montaña", "Curvas", "Altura", "Vista 360°", "Aventura"]
   },
   "seo": {
     "title": "Ruta Piloto | Borrador de Trabajo",
@@ -58,6 +58,6 @@
   },
   "verification": {
     "locationStatus": "pending",
-    "notes": "Los datos geográficos y descriptivos definitivos se incorporarán una vez recibida la fuente oficial homologada."
+    "notes": "Los datos de la ruta piloto provienen de la especificación visual preliminar y se mantendrán en estado pending hasta su validación oficial."
   }
 }
