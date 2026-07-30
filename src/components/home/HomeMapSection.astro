@@ -1,0 +1,225 @@
+---
+import HomeMapPreview from './HomeMapPreview.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  routesLink?: string;
+}
+
+const {
+  title = "Explora el Perú por carretera",
+  description = "Descubre rutas reales que atraviesan montañas, desiertos, valles y selvas. Elige tu próxima aventura.",
+  routesLink = "/rutas/"
+} = Astro.props;
+---
+
+<section class="home-map-section container">
+  <div class="map-grid">
+
+    <!-- Columna Izquierda: Información Editorial -->
+    <div class="info-column">
+      <h2 class="section-title">{title}</h2>
+      <p class="section-text">{description}</p>
+
+      <!-- Leyenda de Estados de las Rutas -->
+      <div class="states-legend" role="group" aria-label="Leyenda de disponibilidad de rutas">
+        <span class="legend-title sr-only">Estados de las rutas</span>
+
+        <div class="legend-item">
+          <span class="dot dot-active" aria-hidden="true"></span>
+          <span class="legend-label">Ruta disponible</span>
+        </div>
+
+        <div class="legend-item">
+          <span class="dot dot-coming" aria-hidden="true"></span>
+          <span class="legend-label">Próximamente</span>
+        </div>
+
+        <div class="legend-item">
+          <span class="dot dot-planned" aria-hidden="true"></span>
+          <span class="legend-label">En planificación</span>
+        </div>
+      </div>
+
+      <!-- Enlace / CTA a todas las rutas -->
+      <div class="cta-row">
+        <a href={routesLink} class="cta-link">
+          <span>Ver todas las rutas</span>
+          <svg class="cta-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Columna Derecha: Preview del Mapa -->
+    <div class="map-column">
+      <HomeMapPreview />
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .home-map-section {
+    padding-top: 80px;
+    padding-bottom: 80px;
+    width: 100%;
+  }
+
+  .map-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .info-column {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .section-title {
+    font-family: var(--font-editorial);
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 400;
+    color: var(--color-text);
+    line-height: 1.2;
+    margin-bottom: 24px;
+    letter-spacing: -0.01em;
+  }
+
+  .section-text {
+    font-size: clamp(1rem, 1.8vw, 1.15rem);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin-bottom: 40px;
+    max-width: 500px;
+  }
+
+  /* Leyenda de Estados */
+  .states-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .dot-active {
+    background-color: var(--color-accent-strong);
+    box-shadow: 0 0 8px var(--color-accent-strong);
+  }
+
+  .dot-coming {
+    background-color: rgba(89, 197, 180, 0.95);
+    box-shadow: 0 0 8px rgba(89, 197, 180, 0.5);
+  }
+
+  .dot-planned {
+    background-color: rgba(245, 245, 240, 0.25);
+  }
+
+  .legend-label {
+    font-family: var(--font-interface);
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+  }
+
+  /* Enlace CTA */
+  .cta-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--color-accent-strong);
+    font-family: var(--font-interface);
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    padding-bottom: 4px;
+    border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+    transition: all var(--transition-smooth);
+  }
+
+  .cta-link:hover {
+    border-bottom-color: var(--color-accent-strong);
+    color: #dcb36c;
+  }
+
+  .cta-arrow {
+    width: 14px;
+    height: 14px;
+    transition: transform var(--transition-smooth);
+  }
+
+  .cta-link:hover .cta-arrow {
+    transform: translateX(4px);
+  }
+
+  .map-column {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  @media (max-width: 1024px) {
+    .map-grid {
+      gap: 40px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .home-map-section {
+      padding-top: 60px;
+      padding-bottom: 60px;
+    }
+
+    .map-grid {
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+
+    .info-column {
+      align-items: flex-start;
+    }
+
+    .section-text {
+      margin-bottom: 32px;
+      max-width: 100%;
+    }
+
+    .states-legend {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 12px 24px;
+      margin-bottom: 36px;
+    }
+
+    .map-column {
+      max-width: 440px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cta-link:hover .cta-arrow {
+      transform: none;
+    }
+  }
+</style>

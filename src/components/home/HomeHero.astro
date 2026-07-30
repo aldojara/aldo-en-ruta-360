@@ -1,0 +1,255 @@
+---
+import { publicUrl } from '../../lib/urls/public-url';
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  description: string;
+  backgroundImage: string;
+  primaryAction: {
+    href: string;
+    label: string;
+  };
+  secondaryAction?: {
+    label: string;
+    note?: string;
+  };
+}
+
+const {
+  eyebrow = "Colección destacada · Perú en ruta 360",
+  title,
+  description,
+  backgroundImage,
+  primaryAction,
+  secondaryAction
+} = Astro.props;
+
+const resolvedBg = publicUrl(backgroundImage);
+---
+
+<section class="home-hero" style={`background-image: linear-gradient(to bottom, rgba(10, 15, 30, 0.4) 0%, rgba(10, 15, 30, 0.85) 100%), url('${resolvedBg}');`}>
+  <div class="hero-content container">
+    {eyebrow && <span class="hero-eyebrow">{eyebrow}</span>}
+    <h1 class="hero-title">{title}</h1>
+    <p class="hero-description">{description}</p>
+
+    <div class="hero-actions">
+      {secondaryAction && (
+        <div class="action-secondary-wrapper">
+          <button class="btn-secondary" aria-describedby="quick-exp-note" disabled>
+            <svg class="icon-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polygon points="6 3 20 12 6 21 6 3"></polygon>
+            </svg>
+            <span>{secondaryAction.label}</span>
+          </button>
+          {secondaryAction.note && <span id="quick-exp-note" class="sr-only">{secondaryAction.note}</span>}
+          <span class="badge-provisional">Próximamente</span>
+        </div>
+      )}
+
+      <a href={primaryAction.href} class="btn-primary">
+        <span>{primaryAction.label}</span>
+        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .home-hero {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    min-height: 85vh;
+    padding-top: 140px;
+    padding-bottom: 80px;
+    background-size: cover;
+    background-position: center 35%;
+    background-repeat: no-repeat;
+    width: 100%;
+  }
+
+  /* Asegura un overlay que garantice contraste para la accesibilidad */
+  .home-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, transparent 20%, rgba(10, 15, 30, 0.6) 100%);
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--font-interface);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-accent-strong);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 20px;
+    padding: 6px 12px;
+    background-color: rgba(197, 160, 89, 0.1);
+    border: 1px solid rgba(197, 160, 89, 0.2);
+    border-radius: 4px;
+    backdrop-filter: blur(4px);
+  }
+
+  .hero-title {
+    font-family: var(--font-editorial);
+    font-size: clamp(2.5rem, 5vw, 4.2rem);
+    font-weight: 400;
+    color: var(--color-text);
+    line-height: 1.15;
+    margin-bottom: 24px;
+    letter-spacing: -0.01em;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  }
+
+  .hero-description {
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin-bottom: 40px;
+    max-width: 650px;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .action-secondary-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+  }
+
+  .btn-secondary {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: transparent;
+    border: 1px solid rgba(245, 245, 240, 0.3);
+    color: var(--color-text-secondary);
+    padding: 14px 28px;
+    border-radius: 30px;
+    font-family: var(--font-interface);
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: not-allowed;
+    opacity: 0.7;
+    transition: all var(--transition-smooth);
+  }
+
+  .icon-play {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+  }
+
+  .badge-provisional {
+    font-family: var(--font-interface);
+    font-size: 0.7rem;
+    color: var(--color-accent-strong);
+    background-color: rgba(197, 160, 89, 0.15);
+    border: 1px solid rgba(197, 160, 89, 0.3);
+    padding: 2px 8px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+  }
+
+  .btn-primary {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background-color: var(--color-accent-strong);
+    color: #1c150c; /* Contraste fuerte sobre el dorado */
+    padding: 14px 32px;
+    border-radius: 4px;
+    font-family: var(--font-interface);
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(197, 160, 89, 0.3);
+    transition: all var(--transition-smooth);
+  }
+
+  .btn-primary:hover {
+    background-color: #dcb36c;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(197, 160, 89, 0.4);
+  }
+
+  .btn-primary:focus-visible {
+    outline: 2px solid var(--color-text);
+    outline-offset: 4px;
+  }
+
+  .icon-arrow {
+    width: 16px;
+    height: 16px;
+    transition: transform var(--transition-smooth);
+  }
+
+  .btn-primary:hover .icon-arrow {
+    transform: translateX(4px);
+  }
+
+  @media (max-width: 768px) {
+    .home-hero {
+      min-height: 80vh;
+      padding-top: 120px;
+      padding-bottom: 60px;
+    }
+
+    .hero-actions {
+      flex-direction: column-reverse;
+      align-items: stretch;
+      gap: 16px;
+    }
+
+    .action-secondary-wrapper {
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .btn-secondary {
+      flex: 1;
+      justify-content: center;
+      padding: 12px 20px;
+    }
+
+    .btn-primary {
+      width: 100%;
+      justify-content: center;
+      padding: 14px 24px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn-primary:hover,
+    .btn-primary:hover .icon-arrow {
+      transform: none;
+    }
+  }
+</style>

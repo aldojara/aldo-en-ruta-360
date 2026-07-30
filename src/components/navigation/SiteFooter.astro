@@ -5,24 +5,65 @@ const currentYear = new Date().getFullYear();
 ---
 
 <footer class="main-footer">
-  <div class="footer-container container">
+  <div class="footer-grid container">
+
+    <!-- Bloque de Marca -->
     <div class="footer-brand">
-      <a href={publicUrl('/')} class="logo-link">
-        <span class="logo-text">Aldo en Ruta</span>
-        <span class="logo-subtext">360°</span>
+      <a href={publicUrl('/')} class="logo-link" aria-label="Volver a Inicio">
+        <svg class="logo-symbol" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 20 L10 6 L17 20 Z" />
+          <path d="M14 20 L18 12 L22 20 Z" />
+        </svg>
+        <div class="logo-text-wrapper">
+          <span class="logo-text">Aldo en Ruta</span>
+          <span class="logo-subtext">Viajes, carreteras y experiencias inmersivas</span>
+        </div>
       </a>
       <p class="brand-desc">
-        Explorando el Perú por carretera. Una experiencia interactiva, geográfica e inmersiva.
+        Rutas reales, historias auténticas y caminos que se viven desde una perspectiva inmersiva.
       </p>
     </div>
-    
-    <div class="footer-bottom">
-      <p class="copyright">
-        &copy; {currentYear} Aldo en Ruta. Todos los derechos reservados.
+
+    <!-- Bloque de Navegación -->
+    <div class="footer-column">
+      <h3 class="column-title">Navegación</h3>
+      <ul class="column-list">
+        <li><a href={publicUrl('/explorar/')} class="footer-link">Explorar</a></li>
+        <li><a href={publicUrl('/rutas/')} class="footer-link">Rutas</a></li>
+        <li><a href={publicUrl('/momentos/')} class="footer-link">Momentos</a></li>
+        <li><a href={publicUrl('/historias/')} class="footer-link">Historias</a></li>
+        <li><a href={publicUrl('/sobre-aldo/')} class="footer-link">Sobre Aldo</a></li>
+      </ul>
+    </div>
+
+    <!-- Bloque de Información (Provisional - No Clicables sin Badges de Ruido) -->
+    <div class="footer-column">
+      <h3 class="column-title">Información</h3>
+      <ul class="column-list text-list">
+        <li><span class="muted-text">¿Cómo funciona?</span></li>
+        <li><span class="muted-text">Preguntas frecuentes</span></li>
+        <li><span class="muted-text">Términos y condiciones</span></li>
+        <li><span class="muted-text">Privacidad</span></li>
+      </ul>
+    </div>
+
+    <!-- Bloque de Contacto -->
+    <div class="footer-column">
+      <h3 class="column-title">Contacto</h3>
+      <p class="contact-prompt">
+        Para colaborar, compartir rutas o consultas, la información oficial de contacto se publicará una vez finalizado el lanzamiento.
       </p>
-      <div class="footer-meta">
-        <span>Diseñado para transmitir territorio, distancia y memoria.</span>
-      </div>
+    </div>
+
+  </div>
+
+  <!-- Copyright y Meta inferior -->
+  <div class="footer-bottom container">
+    <p class="copyright">
+      &copy; {currentYear} Aldo en Ruta. Todos los derechos reservados.
+    </p>
+    <div class="footer-meta">
+      <span>Exploración y cartografía por carretera.</span>
     </div>
   </div>
 </footer>
@@ -30,72 +71,171 @@ const currentYear = new Date().getFullYear();
 <style>
   .main-footer {
     background-color: var(--color-bg-secondary);
-    border-top: 1px solid var(--color-border);
-    padding: 60px 0 40px 0;
+    border-top: 1px solid rgba(245, 245, 240, 0.06);
+    padding: 80px 0 40px 0;
     margin-top: auto;
+    width: 100%;
   }
 
-  .footer-container {
-    display: flex;
-    flex-direction: column;
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr 0.8fr 1.2fr;
     gap: 40px;
+    padding-bottom: 60px;
+    border-bottom: 1px solid rgba(245, 245, 240, 0.06);
   }
 
   .footer-brand {
-    max-width: 480px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    align-items: flex-start;
+    gap: 20px;
   }
 
   .logo-link {
     display: flex;
-    align-items: baseline;
-    gap: 4px;
-    width: fit-content;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
+
+  .logo-symbol {
+    width: 26px;
+    height: 26px;
+    color: var(--color-accent-strong);
+    flex-shrink: 0;
+  }
+
+  .logo-text-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
   }
 
   .logo-text {
     font-family: var(--font-display);
-    font-size: 1.5rem;
-    color: var(--color-text-primary);
+    font-size: 1.45rem;
+    color: var(--color-text);
+    letter-spacing: -0.01em;
     font-weight: 500;
+    line-height: 1.1;
   }
 
   .logo-subtext {
-    font-size: 0.75rem;
-    color: var(--color-accent);
-    text-transform: uppercase;
-    font-weight: 700;
-    letter-spacing: 0.1em;
+    font-family: var(--font-interface);
+    font-size: 0.68rem;
+    color: var(--color-text-muted);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    line-height: 1.1;
+    text-transform: none;
   }
 
   .brand-desc {
     color: var(--color-text-secondary);
     font-size: 0.95rem;
     line-height: 1.6;
+    max-width: 280px;
   }
 
+  /* Columnas Generales */
+  .footer-column {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .column-title {
+    font-family: var(--font-interface);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-text);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .column-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .footer-link {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color var(--transition-fast);
+  }
+
+  .footer-link:hover {
+    color: var(--color-accent-strong);
+  }
+
+  .text-list {
+    gap: 16px;
+  }
+
+  .muted-text {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .contact-prompt {
+    color: var(--color-text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    max-width: 250px;
+  }
+
+  /* Sección Inferior */
   .footer-bottom {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    padding-top: 24px;
+    padding-top: 30px;
     color: var(--color-text-muted);
     font-size: 0.85rem;
-    flex-wrap: wrap;
-    gap: 16px;
   }
 
   .footer-meta {
+    font-family: var(--font-interface);
     font-style: italic;
   }
 
+  @media (max-width: 1024px) {
+    .footer-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 48px 32px;
+    }
+  }
+
   @media (max-width: 768px) {
+    .main-footer {
+      padding: 60px 0 30px 0;
+    }
+
+    .footer-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .brand-desc {
+      max-width: 100%;
+    }
+
     .footer-bottom {
       flex-direction: column;
       align-items: flex-start;
+      gap: 16px;
     }
   }
 </style>
