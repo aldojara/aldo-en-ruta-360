@@ -1,0 +1,31 @@
+---
+import ListingLayout from '../layouts/ListingLayout.astro';
+import PageHero from '../components/patterns/PageHero.astro';
+---
+
+<ListingLayout title="Aldo en Ruta | Historias y Crónicas">
+  <PageHero
+    eyebrow="Bitácora Editorial"
+    title="Historias"
+    description="Bitácoras de viaje y crónicas editoriales. Relatos detallados sobre los territorios recorridos, su gente y la experiencia detrás del volante."
+  />
+  <div class="container stories-placeholder animate-fade-in">
+    <div class="placeholder-box">
+      <p>Crónicas Editoriales - La integración de relatos narrativos dinámicos se realizará en la siguiente fase.</p>
+    </div>
+  </div>
+</ListingLayout>
+
+<style>
+  .stories-placeholder {
+    padding: 60px 20px;
+  }
+  .placeholder-box {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 40px;
+    background-color: var(--color-bg-secondary);
+    text-align: center;
+    color: var(--color-text-secondary);
+  }
+</style>

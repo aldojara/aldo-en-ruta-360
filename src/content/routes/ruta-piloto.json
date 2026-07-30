@@ -1,0 +1,63 @@
+{
+  "title": "Ruta Piloto - Pendiente de Confirmar",
+  "slug": "ruta-piloto",
+  "summary": "Especificación temporal para verificar el esquema de datos de la colección de rutas del proyecto.",
+  "status": "draft",
+  "featured": false,
+  "location": {
+    "country": "Perú",
+    "department": null,
+    "province": null,
+    "territory": "Territorio Piloto",
+    "startLabel": null,
+    "endLabel": null
+  },
+  "metrics": {
+    "distanceKm": 0,
+    "durationSeconds": 0,
+    "minimumAltitudeMeters": null,
+    "maximumAltitudeMeters": null,
+    "elevationGainMeters": null,
+    "drivingDifficulty": "easy",
+    "gpsPoints": null
+  },
+  "map": {
+    "sourceGpx": null,
+    "routeGeojson": "/data/placeholder.geojson",
+    "previewGeojson": null,
+    "elevationData": null,
+    "center": [0, 0],
+    "zoom": 1,
+    "bounds": null
+  },
+  "media": {
+    "cover": "/assets/placeholder-cover.jpg",
+    "gallery": [],
+    "video": null,
+    "verticalVideo": null,
+    "panoramas": []
+  },
+  "capabilities": {
+    "map": false,
+    "animatedRoute": false,
+    "synchronizedVideo": false,
+    "elevationProfile": false,
+    "panoramas360": false,
+    "momentsTimeline": false
+  },
+  "taxonomy": {
+    "territories": [],
+    "experienceTypes": [],
+    "tags": []
+  },
+  "seo": {
+    "title": "Ruta Piloto | Borrador de Trabajo",
+    "description": "Entrada de datos neutral para validación estructural de esquemas de contenido.",
+    "image": null,
+    "noindex": true
+  },
+  "verification": {
+    "locationStatus": "pending",
+    "notes": "Los datos geográficos y descriptivos definitivos se incorporarán una vez recibida la fuente oficial homologada."
+  }
+}

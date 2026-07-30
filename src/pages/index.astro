@@ -1,17 +1,15 @@
 ---
-
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/patterns/PageHero.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Aldo en Ruta | Viajes por carretera, mapas y relatos 360°">
+  <PageHero
+    eyebrow="Colección Piloto: Perú en Ruta 360°"
+    title="Explora el Perú por Carretera"
+    description="Viaja a través de relatos interactivos, mapas cartográficos precisos, perfiles de elevación y escenas inmersivas en 360 grados. Siente la distancia, la altura y el relieve de las rutas más desafiantes."
+    primaryAction={{ href: '/rutas', label: 'Ver las Rutas' }}
+    secondaryAction={{ href: '/explorar', label: 'Explorar el Mapa' }}
+    variant="large"
+  />
+</BaseLayout>

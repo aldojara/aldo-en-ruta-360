@@ -1,0 +1,25 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const { title, description, ogImage } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} ogImage={ogImage}>
+  <article class="route-layout-container">
+    <slot />
+  </article>
+</BaseLayout>
+
+<style>
+  .route-layout-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+</style>

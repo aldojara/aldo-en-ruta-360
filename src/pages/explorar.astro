@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/patterns/PageHero.astro';
+---
+
+<BaseLayout title="Aldo en Ruta | Explorar Territorio">
+  <PageHero
+    eyebrow="Geografía Interactiva"
+    title="Explorar el Territorio"
+    description="Visualiza la red de rutas, relieves e hitos sobre un mapa interactivo diseñado para descubrir el territorio peruano."
+  />
+  <div class="container explore-placeholder animate-fade-in">
+    <div class="placeholder-box">
+      <p>Subsistema Cartográfico Base - La inicialización interactiva de MapLibre GL JS se realizará en la siguiente fase.</p>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .explore-placeholder {
+    padding: 60px 20px;
+  }
+  .placeholder-box {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 40px;
+    background-color: var(--color-bg-secondary);
+    text-align: center;
+    color: var(--color-text-secondary);
+  }
+</style>

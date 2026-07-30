@@ -1,0 +1,31 @@
+name: Validar Proyecto
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del Repositorio
+        uses: actions/checkout@v4
+
+      - name: Setup de Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-size: '22.x'
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Instalar Dependencias
+        run: npm ci
+
+      - name: Astro Check (Tipos y Sintaxis)
+        run: npm run check
+
+      - name: Compilación de Producción (Static Build)
+        run: npm run build

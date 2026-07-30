@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/patterns/PageHero.astro';
+---
+
+<BaseLayout title="Aldo en Ruta | Sobre Aldo">
+  <PageHero
+    eyebrow="Tripulación y Equipo"
+    title="Sobre Aldo"
+    description="Detrás del volante, de los mapas y de las cámaras de esta travesía."
+  />
+  <div class="container about-placeholder animate-fade-in">
+    <div class="placeholder-box">
+      <p>Sobre Aldo - Los detalles del vehículo, equipamientos y reglas de credibilidad se integrarán en la siguiente fase.</p>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .about-placeholder {
+    padding: 60px 20px;
+  }
+  .placeholder-box {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 40px;
+    background-color: var(--color-bg-secondary);
+    text-align: center;
+    color: var(--color-text-secondary);
+  }
+</style>

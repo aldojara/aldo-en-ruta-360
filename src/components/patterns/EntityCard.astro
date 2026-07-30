@@ -1,0 +1,193 @@
+---
+import { publicUrl } from '../../lib/urls/public-url';
+
+interface Props {
+  image?: string;
+  imageAlt?: string;
+  title: string;
+  description?: string;
+  badge?: string;
+  badgeVariant?: 'active' | 'upcoming' | 'planned' | 'default';
+  link?: string;
+  linkText?: string;
+}
+
+const {
+  image,
+  imageAlt = "Imagen descriptiva de la tarjeta",
+  title,
+  description,
+  badge,
+  badgeVariant = 'default',
+  link,
+  linkText = "Ver más"
+} = Astro.props;
+
+const hasImage = !!image;
+const resolvedImageUrl = hasImage ? publicUrl(image) : undefined;
+---
+
+<article class="entity-card glass-panel">
+  <div class="card-media">
+    {hasImage ? (
+      <img src={resolvedImageUrl} alt={imageAlt} class="card-img" loading="lazy" />
+    ) : (
+      <div class="media-placeholder" aria-hidden="true">
+        <span>{title.slice(0, 2).toUpperCase()}</span>
+      </div>
+    )}
+    {badge && <span class={`badge badge-${badgeVariant}`}>{badge}</span>}
+  </div>
+
+  <div class="card-content">
+    <h3 class="card-title">{title}</h3>
+    {description && <p class="card-desc">{description}</p>}
+    
+    <div class="card-footer-slot">
+      <slot name="card-footer" />
+    </div>
+
+    {link && (
+      <a href={link} class="card-link" aria-label={`${linkText} sobre ${title}`}>
+        {linkText}
+        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </a>
+    )}
+  </div>
+</article>
+
+<style>
+  .entity-card {
+    background-color: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    transition: var(--transition-smooth);
+  }
+
+  .entity-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+  }
+
+  .card-media {
+    position: relative;
+    height: 180px;
+    background-color: var(--color-surface);
+    overflow: hidden;
+  }
+
+  .card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition-smooth);
+  }
+
+  .entity-card:hover .card-img {
+    transform: scale(1.05);
+  }
+
+  .media-placeholder {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-muted);
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 500;
+    background: linear-gradient(135deg, rgba(16, 27, 36, 1) 0%, rgba(8, 20, 28, 1) 100%);
+  }
+
+  /* Badges */
+  .badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 4px 10px;
+    border-radius: 4px;
+    z-index: 2;
+  }
+
+  .badge-active {
+    background-color: var(--color-accent);
+    color: var(--color-bg-primary);
+  }
+
+  .badge-upcoming {
+    background-color: var(--color-route-upcoming);
+    color: var(--color-text-primary);
+  }
+
+  .badge-planned {
+    background-color: var(--color-surface);
+    color: var(--color-text-secondary);
+    border: 1px solid var(--color-border);
+  }
+
+  .badge-default {
+    background-color: var(--color-surface);
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border);
+  }
+
+  /* Content */
+  .card-content {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex: 1;
+  }
+
+  .card-title {
+    font-size: 1.3rem;
+    color: var(--color-text-primary);
+    line-height: 1.35;
+  }
+
+  .card-desc {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    line-height: 1.55;
+    flex: 1;
+  }
+
+  .card-footer-slot {
+    margin-top: auto;
+  }
+
+  .card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    width: fit-content;
+    padding: 2px 0;
+    transition: var(--transition-fast);
+  }
+
+  .card-link svg {
+    transition: transform 0.2s ease-out;
+  }
+
+  .card-link:hover {
+    color: var(--color-accent-strong);
+  }
+
+  .card-link:hover svg {
+    transform: translateX(4px);
+  }
+</style>

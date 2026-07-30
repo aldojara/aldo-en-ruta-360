@@ -1,0 +1,31 @@
+---
+import ListingLayout from '../../layouts/ListingLayout.astro';
+import PageHero from '../../components/patterns/PageHero.astro';
+---
+
+<ListingLayout title="Aldo en Ruta | Nuestras Rutas">
+  <PageHero
+    eyebrow="Expediciones"
+    title="Nuestras Rutas"
+    description="Descubre expediciones detalladas por carretera. Cada ruta incluye datos de altitud, terreno, hitos narrativos y material multimedia completo."
+  />
+  <div class="container routes-placeholder animate-fade-in">
+    <div class="placeholder-box">
+      <p>Catálogo de Rutas - Los datos dinámicos provenientes de Content Collections se listarán en la siguiente fase.</p>
+    </div>
+  </div>
+</ListingLayout>
+
+<style>
+  .routes-placeholder {
+    padding: 60px 20px;
+  }
+  .placeholder-box {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 40px;
+    background-color: var(--color-bg-secondary);
+    text-align: center;
+    color: var(--color-text-secondary);
+  }
+</style>

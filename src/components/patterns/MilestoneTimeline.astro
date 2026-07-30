@@ -1,0 +1,202 @@
+---
+interface MilestoneItem {
+  id: string;
+  title: string;
+  description?: string;
+  time?: string;
+  distanceKm?: number;
+  altitudeMeters?: number;
+  link?: string;
+}
+
+interface Props {
+  milestones: MilestoneItem[];
+}
+
+const { milestones = [] } = Astro.props;
+---
+
+<div class="timeline-container animate-fade-in">
+  <div class="timeline-line"></div>
+  
+  <ul class="timeline-list" role="list">
+    {milestones.map((item) => (
+      <li class="timeline-item" id={`milestone-${item.id}`}>
+        <!-- Indicador visual de nodo -->
+        <div class="timeline-node" aria-hidden="true">
+          <div class="node-dot"></div>
+        </div>
+
+        <div class="timeline-content glass-panel">
+          <div class="timeline-header">
+            <h3 class="timeline-item-title">{item.title}</h3>
+            
+            {(item.time || item.distanceKm !== undefined || item.altitudeMeters !== undefined) && (
+              <div class="timeline-meta">
+                {item.time && <span class="meta-tag time">{item.time}</span>}
+                {item.distanceKm !== undefined && <span class="meta-tag dist">{item.distanceKm} km</span>}
+                {item.altitudeMeters !== undefined && <span class="meta-tag alt">{item.altitudeMeters} msnm</span>}
+              </div>
+            )}
+          </div>
+
+          {item.description && <p class="timeline-desc">{item.description}</p>}
+          
+          {item.link && (
+            <a href={item.link} class="timeline-link">
+              Explorar Momento &rarr;
+            </a>
+          )}
+        </div>
+      </li>
+    ))}
+  </ul>
+</div>
+
+<style>
+  .timeline-container {
+    position: relative;
+    padding: 20px 0;
+    width: 100%;
+  }
+
+  .timeline-line {
+    position: absolute;
+    left: 24px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: var(--color-border);
+    z-index: 1;
+  }
+
+  .timeline-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .timeline-item {
+    position: relative;
+    padding-left: 64px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .timeline-node {
+    position: absolute;
+    left: 15px;
+    top: 24px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: var(--color-bg-primary);
+    border: 2px solid var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    transition: var(--transition-smooth);
+  }
+
+  .node-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--color-text-muted);
+    transition: var(--transition-smooth);
+  }
+
+  .timeline-item:hover .timeline-node {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 10px var(--color-accent-dim);
+  }
+
+  .timeline-item:hover .node-dot {
+    background-color: var(--color-accent-strong);
+  }
+
+  /* Content Panel */
+  .timeline-content {
+    background-color: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    padding: 24px;
+  }
+
+  .timeline-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .timeline-item-title {
+    font-size: 1.25rem;
+    color: var(--color-text-primary);
+    font-weight: 500;
+  }
+
+  .timeline-meta {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .meta-tag {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: var(--font-interface);
+  }
+
+  .meta-tag.time {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--color-text-secondary);
+    border: 1px solid var(--color-border);
+  }
+
+  .meta-tag.dist {
+    background-color: var(--color-accent-dim);
+    color: var(--color-accent-strong);
+    border: 1px solid rgba(216, 154, 43, 0.2);
+  }
+
+  .meta-tag.alt {
+    background-color: rgba(61, 156, 154, 0.1);
+    color: var(--color-route-upcoming);
+    border: 1px solid rgba(61, 156, 154, 0.2);
+  }
+
+  .timeline-desc {
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+  }
+
+  .timeline-link {
+    display: inline-block;
+    margin-top: 16px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    transition: var(--transition-fast);
+  }
+
+  .timeline-link:hover {
+    color: var(--color-accent-strong);
+    padding-left: 4px;
+  }
+
+  @media (max-width: 600px) {
+    .timeline-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>

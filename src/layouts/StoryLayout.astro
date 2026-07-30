@@ -1,0 +1,56 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  publishDate?: string;
+  authorName?: string;
+}
+
+const { title, description, publishDate, authorName } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <article class="story-layout-container">
+    <div class="story-article-header container">
+      {publishDate && <span class="story-date">{publishDate}</span>}
+      {authorName && <span class="story-author">Por {authorName}</span>}
+    </div>
+    
+    <div class="story-body container">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .story-layout-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 40px 0;
+  }
+
+  .story-article-header {
+    display: flex;
+    gap: 16px;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 24px;
+  }
+
+  .story-author {
+    color: var(--color-accent);
+    font-weight: 600;
+  }
+
+  .story-body {
+    max-width: 800px;
+    line-height: 1.7;
+    font-size: 1.1rem;
+    color: var(--color-text-secondary);
+  }
+</style>
