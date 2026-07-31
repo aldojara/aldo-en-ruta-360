@@ -1,0 +1,117 @@
+---
+import { publicUrl } from '../../lib/urls/public-url';
+
+const resolvedHeroBg = publicUrl('/images/temp/routes/routes-hero.webp');
+---
+
+<section class="routes-hero" aria-label="Rutas Héroe">
+  <div class="hero-bg-wrapper">
+    <img
+      src={resolvedHeroBg}
+      alt="Carretera y cordillera peruana al atardecer"
+      class="hero-bg-image"
+      loading="eager"
+      fetchpriority="high"
+    />
+    <div class="hero-overlay" aria-hidden="true"></div>
+  </div>
+
+  <div class="hero-content container">
+    <span class="hero-eyebrow">RUTAS</span>
+    <h1 class="hero-title">
+      Recorridos que<br />
+      atraviesan el Perú
+    </h1>
+    <p class="hero-description">
+      Explora los trayectos documentados por carretera, con información geográfica, audiovisual y narrativa vinculada a cada recorrido.
+    </p>
+  </div>
+</section>
+
+<style>
+  .routes-hero {
+    position: relative;
+    min-height: 50vh;
+    display: flex;
+    align-items: center;
+    padding-top: calc(var(--header-height) + 2rem);
+    padding-bottom: 3.5rem;
+    overflow: hidden;
+    background-color: var(--color-bg-primary);
+  }
+
+  .hero-bg-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+
+  .hero-bg-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 40%;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      to bottom,
+      rgba(5, 12, 18, 0.6) 0%,
+      rgba(5, 12, 18, 0.85) 60%,
+      var(--color-bg-primary) 100%
+    );
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    margin-right: auto;
+  }
+
+  .hero-eyebrow {
+    display: inline-block;
+    font-family: var(--font-interface);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--color-accent);
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+  }
+
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.25rem, 4.5vw, 3.75rem);
+    line-height: 1.15;
+    font-weight: 400;
+    color: var(--color-text-primary);
+    margin-bottom: 1.25rem;
+    letter-spacing: -0.01em;
+  }
+
+  .hero-description {
+    font-family: var(--font-interface);
+    font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    max-width: 600px;
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 768px) {
+    .routes-hero {
+      min-height: 40vh;
+      padding-top: calc(var(--header-height) + 1.5rem);
+      padding-bottom: 2.5rem;
+    }
+  }
+</style>

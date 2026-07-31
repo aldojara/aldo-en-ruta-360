@@ -1,0 +1,110 @@
+---
+import { routesPageMetrics } from '../../data/routes-page';
+---
+
+<section class="routes-summary container" aria-label="Resumen del catálogo de rutas">
+  <div class="summary-strip glass-panel animate-fade-in">
+    {routesPageMetrics.map(metric => (
+      <div class="summary-item">
+        <div class="summary-value-row">
+          <span class="summary-value">{metric.value}</span>
+        </div>
+        <span class="summary-label">{metric.label}</span>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .routes-summary {
+    margin-top: -2rem; /* Superpone sutilmente sobre el final del degradado del hero */
+    margin-bottom: 2.5rem;
+    position: relative;
+    z-index: 10;
+  }
+
+  .summary-strip {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 1.5rem 1rem;
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .summary-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 1;
+    min-width: 180px;
+    position: relative;
+    padding: 0.5rem 1rem;
+  }
+
+  /* Línea divisoria en pantallas grandes */
+  .summary-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: -0.75rem;
+    top: 15%;
+    height: 70%;
+    width: 1px;
+    background-color: var(--color-border);
+  }
+
+  .summary-value {
+    font-family: var(--font-interface);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-accent-strong);
+    line-height: 1.2;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+  }
+
+  .summary-label {
+    font-family: var(--font-interface);
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+    margin-top: 0.35rem;
+    line-height: 1.4;
+    max-width: 220px;
+  }
+
+  /* Responsive Breakpoints */
+  @media (max-width: 1024px) {
+    .summary-strip {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem 1.5rem;
+      padding: 2rem;
+    }
+
+    .summary-item {
+      min-width: 0;
+      padding: 0;
+    }
+
+    .summary-item:not(:last-child)::after {
+      display: none;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .routes-summary {
+      margin-top: -1rem;
+      margin-bottom: 2rem;
+    }
+
+    .summary-strip {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      padding: 1.5rem;
+    }
+  }
+</style>

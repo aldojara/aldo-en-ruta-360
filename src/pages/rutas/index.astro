@@ -1,31 +1,32 @@
 ---
-import ListingLayout from '../../layouts/ListingLayout.astro';
-import PageHero from '../../components/patterns/PageHero.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import RoutesHero from '../../components/routes/RoutesHero.astro';
+import RoutesSummary from '../../components/routes/RoutesSummary.astro';
+import RoutesToolbar from '../../components/routes/RoutesToolbar.astro';
+import RoutesCatalog from '../../components/routes/RoutesCatalog.astro';
+import RouteContentsSection from '../../components/routes/RouteContentsSection.astro';
+import RoutesClosingCallout from '../../components/routes/RoutesClosingCallout.astro';
+import { getFeaturedRoute } from '../../lib/content/get-featured-route';
+import { siteConfig } from '../../data/site';
+
+const featuredRoute = await getFeaturedRoute({
+  includeDrafts: siteConfig.content.showPrototypeDraftRoute,
+});
+
+if (!featuredRoute) {
+  throw new Error("No se encontró la ruta piloto destacada en las Content Collections.");
+}
 ---
 
-<ListingLayout title="Aldo en Ruta | Nuestras Rutas">
-  <PageHero
-    eyebrow="Expediciones"
-    title="Nuestras Rutas"
-    description="Descubre expediciones detalladas por carretera. Cada ruta incluye datos de altitud, terreno, hitos narrativos y material multimedia completo."
-  />
-  <div class="container routes-placeholder animate-fade-in">
-    <div class="placeholder-box">
-      <p>Catálogo de Rutas - Los datos dinámicos provenientes de Content Collections se listarán en la siguiente fase.</p>
-    </div>
-  </div>
-</ListingLayout>
-
-<style>
-  .routes-placeholder {
-    padding: 60px 20px;
-  }
-  .placeholder-box {
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: 40px;
-    background-color: var(--color-bg-secondary);
-    text-align: center;
-    color: var(--color-text-secondary);
-  }
-</style>
+<BaseLayout
+  title="Rutas por carretera | Aldo en Ruta"
+  description="Consulta los recorridos documentados por carretera de Aldo en Ruta, con información geográfica, audiovisual y narrativa de cada trayecto."
+  overlayHeader={true}
+>
+  <RoutesHero />
+  <RoutesSummary />
+  <RoutesToolbar />
+  <RoutesCatalog featuredRoute={featuredRoute} />
+  <RouteContentsSection />
+  <RoutesClosingCallout />
+</BaseLayout>

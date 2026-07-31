@@ -1,0 +1,274 @@
+---
+import { routesPageFeatures } from '../../data/routes-page';
+---
+
+<section class="route-contents-section container animate-fade-in" aria-labelledby="section-contents-title">
+  <div class="contents-layout">
+    <!-- Columna Izquierda: Introducción Editorial -->
+    <div class="contents-intro">
+      <h2 id="section-contents-title" class="contents-title">
+        Cada ruta es más<br />
+        que un trayecto
+      </h2>
+      <p class="contents-description">
+        No se trata solo de ir de un punto a otro. El proyecto documenta cada recorrido mediante capas de información geográfica, narrativa y multimedia sincronizadas para recrear la experiencia de viaje.
+      </p>
+      <div class="contents-legend">
+        <div class="legend-item">
+          <span class="legend-badge legend-badge--available" aria-hidden="true"></span>
+          <span>Disponible en el prototipo piloto</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-badge legend-badge--projected" aria-hidden="true"></span>
+          <span>Proyectado para la versión final del catálogo</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Columna Derecha: Tarjetas de Características -->
+    <div class="contents-features">
+      {routesPageFeatures.map(feature => (
+        <div class="feature-item glass-panel">
+          <div class="feature-header">
+            <div class="feature-icon-box">
+              {feature.icon === 'map' && (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon>
+                  <line x1="9" y1="3" x2="9" y2="18"></line>
+                  <line x1="15" y1="6" x2="15" y2="21"></line>
+                </svg>
+              )}
+              {feature.icon === 'video-sync' && (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
+                  <line x1="7" y1="2" x2="7" y2="22"></line>
+                  <line x1="17" y1="2" x2="17" y2="22"></line>
+                  <line x1="2" y1="12" x2="22" y2="12"></line>
+                  <line x1="2" y1="7" x2="7" y2="7"></line>
+                  <line x1="2" y1="17" x2="7" y2="17"></line>
+                  <line x1="17" y1="17" x2="22" y2="17"></line>
+                  <line x1="17" y1="7" x2="22" y2="7"></line>
+                </svg>
+              )}
+              {feature.icon === 'milestones' && (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="5" r="3"></circle>
+                  <circle cx="12" cy="19" r="3"></circle>
+                  <line x1="12" y1="8" x2="12" y2="16"></line>
+                </svg>
+              )}
+              {feature.icon === 'metrics' && (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="18" y1="20" x2="18" y2="10"></line>
+                  <line x1="12" y1="20" x2="12" y2="4"></line>
+                  <line x1="6" y1="20" x2="6" y2="14"></line>
+                </svg>
+              )}
+              {feature.icon === 'gallery' && (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                  <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                  <polyline points="21 15 16 10 5 21"></polyline>
+                </svg>
+              )}
+              {feature.icon === 'panorama-360' && (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <text x="12" y="15" font-size="8" font-family="sans-serif" font-weight="bold" text-anchor="middle" fill="currentColor">360</text>
+                </svg>
+              )}
+              {feature.icon === 'narrative' && (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+              )}
+            </div>
+
+            {feature.badge && (
+              <span class={`feature-badge feature-badge--${feature.badge.variant}`}>
+                {feature.badge.text}
+              </span>
+            )}
+          </div>
+
+          <h3 class="feature-title">{feature.title}</h3>
+          <p class="feature-desc">{feature.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .route-contents-section {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .contents-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.8fr;
+    gap: 4rem;
+  }
+
+  /* Columna Izquierda */
+  .contents-intro {
+    position: sticky;
+    top: calc(var(--header-height) + 2rem);
+    height: fit-content;
+  }
+
+  .contents-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3.5vw, 2.75rem);
+    font-weight: 400;
+    color: var(--color-text-primary);
+    line-height: 1.2;
+    margin: 0 0 1.5rem 0;
+  }
+
+  .contents-description {
+    font-family: var(--font-interface);
+    font-size: 1.05rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin: 0 0 2.5rem 0;
+  }
+
+  .contents-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    border-top: 1px solid var(--color-border);
+    padding-top: 1.5rem;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: var(--font-interface);
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+  }
+
+  .legend-badge {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .legend-badge--available {
+    background-color: var(--color-accent);
+  }
+
+  .legend-badge--projected {
+    background-color: var(--color-route-upcoming);
+  }
+
+  /* Columna Derecha */
+  .contents-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .feature-item {
+    padding: 1.5rem;
+    background-color: rgba(16, 27, 36, 0.3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    transition: var(--transition-smooth);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .feature-item:hover {
+    border-color: var(--color-border-hover);
+    background-color: rgba(16, 27, 36, 0.5);
+  }
+
+  .feature-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+  }
+
+  .feature-icon-box {
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    background-color: rgba(245, 242, 235, 0.03);
+    border: 1px solid rgba(184, 190, 196, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-accent);
+  }
+
+  .feature-icon-box svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .feature-badge {
+    font-family: var(--font-interface);
+    font-size: 0.65rem;
+    font-weight: 600;
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .feature-badge--available {
+    background-color: rgba(216, 154, 43, 0.1);
+    color: var(--color-accent-strong);
+    border: 1px solid rgba(216, 154, 43, 0.2);
+  }
+
+  .feature-badge--proyectado {
+    background-color: rgba(61, 156, 154, 0.1);
+    color: #5bc0be;
+    border: 1px solid rgba(61, 156, 154, 0.2);
+  }
+
+  .feature-title {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    color: var(--color-text-primary);
+    margin: 0 0 0.5rem 0;
+  }
+
+  .feature-desc {
+    font-family: var(--font-interface);
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* Responsive breakpoints */
+  @media (max-width: 1024px) {
+    .contents-layout {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    .contents-intro {
+      position: static;
+      max-width: 700px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .contents-features {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+  }
+</style>

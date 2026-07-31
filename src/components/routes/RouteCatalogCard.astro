@@ -1,0 +1,416 @@
+---
+import type { RouteEntry } from '../../types/route';
+import type { RoutePageConceptCard } from '../../types/routes-page';
+import { publicUrl } from '../../lib/urls/public-url';
+
+interface Props {
+  route?: RouteEntry;
+  conceptRoute?: RoutePageConceptCard;
+}
+
+const { route, conceptRoute } = Astro.props;
+
+const isReal = !!route;
+
+// Extraer campos según tipo de tarjeta
+const title = isReal ? route.data.title : conceptRoute?.title;
+const description = isReal ? route.data.summary : conceptRoute?.description;
+const image = isReal ? route.data.media.cover : conceptRoute?.image;
+const tags = isReal ? route.data.taxonomy.tags : conceptRoute?.tags || [];
+const status = isReal ? 'prototype' : conceptRoute?.status;
+
+// Definición de badges y clases según estado
+let statusLabel = 'Prototipo disponible';
+let cardStateClass = 'card--prototype';
+
+if (!isReal) {
+  if (status === 'coming-soon') {
+    statusLabel = 'Próximamente';
+    cardStateClass = 'card--coming-soon';
+  } else if (status === 'planning') {
+    statusLabel = 'En planificación';
+    cardStateClass = 'card--planning';
+  }
+}
+
+const resolvedCover = publicUrl(image || '');
+
+// Métricas de ruta piloto real
+const metrics = isReal ? route.data.metrics : null;
+
+// Formateador de duración
+const formatDuration = (seconds?: number) => {
+  if (!seconds) return '';
+  const mins = Math.round(seconds / 60);
+  if (mins < 60) return `${mins} min`;
+  const hrs = Math.floor(mins / 60);
+  const remainingMins = mins % 60;
+  return remainingMins > 0 ? `${hrs} h ${remainingMins} min` : `${hrs} h`;
+};
+
+// Traductor de dificultad de conducción
+const getDifficultyLabel = (difficulty?: string) => {
+  if (!difficulty) return '';
+  switch (difficulty) {
+    case 'easy': return 'Fácil';
+    case 'moderate': return 'Moderada';
+    case 'advanced': return 'Avanzada';
+    default: return difficulty;
+  }
+};
+---
+
+<div class={`route-catalog-card glass-panel ${cardStateClass}`} aria-label={`Ruta: ${title}`}>
+  <!-- Imagen de portada -->
+  <div class="card-media">
+    <img
+      src={resolvedCover}
+      alt=""
+      class="cover-image"
+      loading="lazy"
+    />
+    <div class="media-overlay" aria-hidden="true"></div>
+
+    <div class="badges-wrapper">
+      <span class={`status-badge status-badge--${status}`}>{statusLabel}</span>
+    </div>
+  </div>
+
+  <!-- Cuerpo de la tarjeta -->
+  <div class="card-body">
+    {isReal && route.data.location.territory && (
+      <span class="card-eyebrow">{route.data.location.territory}</span>
+    )}
+    <h3 class="route-title">{title}</h3>
+    <p class="route-description">{description}</p>
+
+    <!-- Métricas: solo para rutas reales -->
+    {metrics && (
+      <div class="route-metrics" aria-label="Métricas del recorrido">
+        <!-- Distancia -->
+        <div class="metric-pill" title="Distancia total">
+          <svg class="metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <rect x="2" y="6" width="20" height="12" rx="2"></rect>
+            <line x1="6" y1="12" x2="18" y2="12"></line>
+          </svg>
+          <span>{metrics.distanceKm} km</span>
+        </div>
+
+        <!-- Duración -->
+        <div class="metric-pill" title="Duración estimada">
+          <svg class="metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          <span>{formatDuration(metrics.durationSeconds)}</span>
+        </div>
+
+        <!-- Altitud máxima -->
+        {metrics.maximumAltitudeMeters && (
+          <div class="metric-pill" title="Altitud máxima del trayecto">
+            <svg class="metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M12 2L2 22h20L12 2z"></path>
+              <line x1="12" y1="10" x2="12" y2="18"></line>
+            </svg>
+            <span>{metrics.maximumAltitudeMeters.toLocaleString('es-PE')} m</span>
+          </div>
+        )}
+
+        <!-- Dificultad -->
+        <div class="metric-pill" title="Dificultad de conducción">
+          <svg class="metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M8 12h8"></path>
+          </svg>
+          <span>{getDifficultyLabel(metrics.drivingDifficulty)}</span>
+        </div>
+      </div>
+    )}
+
+    <!-- Etiquetas/Tags -->
+    <div class="route-tags" aria-label="Etiquetas del trayecto">
+      {tags.map(tag => (
+        <span class="tag-pill">{tag}</span>
+      ))}
+    </div>
+  </div>
+
+  <!-- Footer con llamadas a la acción deshabilitadas u honestas -->
+  <div class="card-footer">
+    {status === 'prototype' ? (
+      <button
+        type="button"
+        class="btn-card-action btn-card-action--prototype"
+        disabled
+        aria-disabled="true"
+        title="Ficha individual de ruta en desarrollo"
+      >
+        <span>Ficha individual próximamente</span>
+        <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </button>
+    ) : (
+      <button
+        type="button"
+        class="btn-card-action btn-card-action--disabled"
+        disabled
+        aria-disabled="true"
+      >
+        <span>{status === 'coming-soon' ? 'Próximamente' : 'En planificación'}</span>
+        <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </button>
+    )}
+  </div>
+</div>
+
+<style>
+  .route-catalog-card {
+    background-color: rgba(16, 27, 36, 0.4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+    transition: var(--transition-smooth);
+  }
+
+  .route-catalog-card:not(.card--coming-soon):not(.card--planning):hover {
+    border-color: var(--color-border-hover);
+    transform: translateY(-4px);
+  }
+
+  /* Variantes visuales */
+  .card--coming-soon .cover-image,
+  .card--planning .cover-image {
+    filter: grayscale(80%) contrast(90%);
+    opacity: 0.7;
+  }
+
+  .card--coming-soon,
+  .card--planning {
+    opacity: 0.9;
+  }
+
+  /* Card Media */
+  .card-media {
+    position: relative;
+    height: 220px;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .cover-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .route-catalog-card:not(.card--coming-soon):not(.card--planning):hover .cover-image {
+    transform: scale(1.04);
+  }
+
+  .media-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(5, 12, 18, 0.05) 0%, rgba(5, 12, 18, 0.5) 100%);
+  }
+
+  /* Badges */
+  .badges-wrapper {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    right: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 2;
+  }
+
+  .status-badge {
+    padding: 0.35rem 0.85rem;
+    font-family: var(--font-interface);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    border-radius: var(--radius-sm);
+    text-transform: uppercase;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .status-badge--prototype {
+    background-color: var(--color-accent);
+    color: var(--color-bg-primary);
+    border-color: var(--color-accent);
+  }
+
+  .status-badge--coming-soon {
+    background-color: rgba(61, 156, 154, 0.15);
+    color: #5bc0be;
+    border-color: rgba(61, 156, 154, 0.3);
+  }
+
+  .status-badge--planning {
+    background-color: rgba(125, 131, 136, 0.15);
+    color: var(--color-text-muted);
+    border-color: rgba(125, 131, 136, 0.3);
+  }
+
+  .badge--immersive {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: rgba(16, 27, 36, 0.8);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .badge--immersive svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* Cuerpo */
+  .card-body {
+    padding: 1.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card-eyebrow {
+    font-family: var(--font-interface);
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--color-accent-strong);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+  }
+
+  .route-title {
+    font-family: var(--font-display);
+    font-size: 1.45rem;
+    line-height: 1.25;
+    font-weight: 400;
+    color: var(--color-text-primary);
+    margin: 0 0 0.75rem 0;
+  }
+
+  .route-description {
+    font-family: var(--font-interface);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+    margin: 0 0 1.5rem 0;
+    flex-grow: 1;
+  }
+
+  /* Métricas */
+  .route-metrics {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .metric-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.65rem;
+    background-color: rgba(245, 242, 235, 0.03);
+    border: 1px solid rgba(184, 190, 196, 0.06);
+    border-radius: 4px;
+    font-family: var(--font-interface);
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+  }
+
+  .metric-icon {
+    width: 14px;
+    height: 14px;
+    color: var(--color-accent);
+    flex-shrink: 0;
+  }
+
+  /* Tags */
+  .route-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: auto;
+  }
+
+  .tag-pill {
+    font-family: var(--font-interface);
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+    background-color: rgba(184, 190, 196, 0.05);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+  }
+
+  /* Footer */
+  .card-footer {
+    padding: 1.5rem;
+    border-top: 1px solid rgba(184, 190, 196, 0.08);
+  }
+
+  .btn-card-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0.8rem 1.25rem;
+    font-family: var(--font-interface);
+    font-size: 0.85rem;
+    border-radius: var(--radius-sm);
+    transition: var(--transition-smooth);
+    gap: 0.5rem;
+    cursor: not-allowed;
+    border: none;
+    font-weight: 600;
+  }
+
+  .btn-card-action--prototype {
+    background-color: rgba(16, 27, 36, 0.6);
+    color: var(--color-text-muted);
+    border: 1px solid var(--color-border);
+  }
+
+  .btn-card-action--disabled {
+    background-color: transparent;
+    color: var(--color-text-muted);
+    border: 1px solid rgba(184, 190, 196, 0.04);
+  }
+
+  .btn-arrow {
+    width: 16px;
+    height: 16px;
+    color: var(--color-text-muted);
+    opacity: 0.6;
+  }
+
+  @media (max-width: 480px) {
+    .card-media {
+      height: 180px;
+    }
+  }
+</style>
