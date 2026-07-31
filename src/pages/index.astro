@@ -1,16 +1,18 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import SiteHeader from '../components/navigation/SiteHeader.astro';
-import SiteFooter from '../components/navigation/SiteFooter.astro';
 import HomeHero from '../components/home/HomeHero.astro';
 import HomeStats from '../components/home/HomeStats.astro';
 import HomeMapSection from '../components/home/HomeMapSection.astro';
 import ExperienceTypeGrid from '../components/home/ExperienceTypeGrid.astro';
 import FeaturedRoute from '../components/home/FeaturedRoute.astro';
 import { getFeaturedRoute } from '../lib/content/get-featured-route';
+import { siteConfig } from '../data/site';
+import { publicUrl } from '../lib/urls/public-url';
 
-// Obtiene la ruta piloto destacada (incluyendo borradores en esta fase local)
-const featuredRoute = await getFeaturedRoute(true);
+// Obtiene la ruta piloto destacada basada en la configuración centralizada de exposición de borradores
+const featuredRoute = await getFeaturedRoute({
+  includeDrafts: siteConfig.content.showPrototypeDraftRoute,
+});
 
 if (!featuredRoute) {
   throw new Error("No se encontró la ruta piloto destacada en las Content Collections.");
@@ -22,40 +24,33 @@ const { metrics, location } = featuredRoute.data;
 <BaseLayout
   title="Aldo en Ruta | Viajes, carreteras y experiencias inmersivas"
   description="Explora recorridos reales por carretera en el Perú mediante mapas, vídeo, fotografías y experiencias 360°."
+  overlayHeader={true}
 >
-  <SiteHeader activePage="" />
+  <!-- 1. Hero Cinematográfico -->
+  <HomeHero
+    eyebrow="COLECCIÓN DESTACADA · PERÚ EN RUTA 360"
+    title="El Perú no solo se visita. Se atraviesa."
+    description="Descubre recorridos reales por carretera a través de mapas interactivos, panoramas 360°, vídeo y datos del trayecto."
+    backgroundImage="/images/temp/home/hero-road.webp"
+    primaryAction={{ href: publicUrl('/rutas/'), label: 'Explorar la ruta completa' }}
+    secondaryAction={{ label: 'Ver experiencia rápida', note: 'La experiencia rápida estará disponible próximamente.' }}
+  />
 
-  <main id="main-content">
+  <!-- 2. Franja de Métricas Dinámicas -->
+  <HomeStats
+    distanceKm={metrics.distanceKm}
+    durationSeconds={metrics.durationSeconds}
+    maximumAltitudeMeters={metrics.maximumAltitudeMeters ?? null}
+    territory={location.territory}
+    drivingDifficulty={metrics.drivingDifficulty}
+  />
 
-    <!-- 1. Hero Cinematográfico -->
-    <HomeHero
-      eyebrow="COLECCIÓN DESTACADA · PERÚ EN RUTA 360"
-      title="El Perú no solo se visita. Se atraviesa."
-      description="Descubre recorridos reales por carretera a través de mapas interactivos, panoramas 360°, vídeo y datos del trayecto."
-      backgroundImage="/images/temp/home/hero-road.webp"
-      primaryAction={{ href: '/rutas/', label: 'Explorar la ruta completa' }}
-      secondaryAction={{ label: 'Ver experiencia rápida', note: 'La experiencia rápida estará disponible próximamente.' }}
-    />
+  <!-- 3. Sección de Mapa y Leyendas -->
+  <HomeMapSection />
 
-    <!-- 2. Franja de Métricas Dinámicas -->
-    <HomeStats
-      distanceKm={metrics.distanceKm}
-      durationSeconds={metrics.durationSeconds}
-      maximumAltitudeMeters={metrics.maximumAltitudeMeters ?? null}
-      territory={location.territory}
-      drivingDifficulty={metrics.drivingDifficulty}
-    />
+  <!-- 4. Tipos de Experiencia (Desierto, Andes, Selva, Costa, Sinuosas) -->
+  <ExperienceTypeGrid />
 
-    <!-- 3. Sección de Mapa y Leyendas -->
-    <HomeMapSection />
-
-    <!-- 4. Tipos de Experiencia (Desierto, Andes, Selva, Costa, Sinuosas) -->
-    <ExperienceTypeGrid />
-
-    <!-- 5. Tarjeta Ampliada de la Ruta Destacada -->
-    <FeaturedRoute route={featuredRoute} />
-
-  </main>
-
-  <SiteFooter />
+  <!-- 5. Tarjeta Ampliada de la Ruta Destacada -->
+  <FeaturedRoute route={featuredRoute} />
 </BaseLayout>

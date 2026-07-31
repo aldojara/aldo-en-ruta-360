@@ -23,11 +23,11 @@
   },
   "map": {
     "sourceGpx": null,
-    "routeGeojson": "/data/placeholder.geojson",
+    "routeGeojson": null,
     "previewGeojson": null,
     "elevationData": null,
-    "center": [0, 0],
-    "zoom": 1,
+    "center": null,
+    "zoom": null,
     "bounds": null
   },
   "media": {
@@ -58,6 +58,9 @@
   },
   "verification": {
     "locationStatus": "pending",
-    "notes": "Los datos de la ruta piloto provienen de la especificación visual preliminar y se mantendrán en estado pending hasta su validación oficial."
+    "metricsStatus": "pending",
+    "geometryStatus": "pending",
+    "mediaStatus": "temporary",
+    "notes": "Los datos de localización, métricas, geometría y multimedia provienen del prototipo visual preliminar y permanecen pendientes de validación oficial."
   }
 }

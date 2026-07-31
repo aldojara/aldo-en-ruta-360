@@ -92,3 +92,12 @@ npm run build
 # Previsualizar el sitio compilado localmente
 npm run preview
 ```
+
+## Convenciones Arquitectónicas
+
+Para mantener la robustez y consistencia de la plataforma (especialmente ante el despliegue en subdirectorios como GitHub Pages), se aplican las siguientes reglas:
+
+1. **Responsabilidad Estructural:** `BaseLayout.astro` centraliza la inicialización del documento HTML y del bloque principal `<main id="main-content">`. Ninguna página debe duplicar esta estructura.
+2. **Direccionamiento Dinámico:** Todos los recursos de la carpeta `public/` y enlaces de navegación interna deben procesarse con el helper `publicUrl()` en `src/lib/urls/public-url.ts`.
+3. **Cálculo de Rutas Activas:** Las comparaciones de la ruta activa en los menús de navegación deben realizarse usando la utilidad `stripBasePath(Astro.url.pathname)`.
+4. **Estados de Datos:** La ausencia de datos geográficos reales se representa exclusivamente mediante `null` (evitando marcadores de posición o coordenadas vacías `[0,0]`). Todos los estados de madurez e integridad de datos se controlan en el esquema Zod bajo la clave `verification`.

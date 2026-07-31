@@ -1,18 +1,24 @@
 ---
 import { navigationItems } from '../../data/navigation';
 import { publicUrl } from '../../lib/urls/public-url';
+import { stripBasePath } from '../../lib/urls/strip-base-path';
 
-const { pathname } = Astro.url;
+const currentPath = stripBasePath(Astro.url.pathname);
 
-// Normalizar pathname para comparaciones
-const cleanPathname = pathname.endsWith('/') && pathname !== '/' ? pathname.slice(0, -1) : pathname;
+const normalizeHref = (href: string) =>
+  href === '/' ? '/' : href.replace(/\/+$/, '');
 
 const isActive = (href: string) => {
-  if (href === '/') {
-    return cleanPathname === '/';
+  const normalizedHref = normalizeHref(href);
+
+  if (normalizedHref === '/') {
+    return currentPath === '/';
   }
-  // Coincidencia exacta o subrutas
-  return cleanPathname === href || cleanPathname.startsWith(href + '/');
+
+  return (
+    currentPath === normalizedHref ||
+    currentPath.startsWith(`${normalizedHref}/`)
+  );
 };
 ---
 
