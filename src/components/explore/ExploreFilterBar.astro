@@ -1,0 +1,95 @@
+---
+import { exploreFilters } from '../../data/explore';
+---
+
+<div class="filter-bar-container" aria-label="Filtros de exploración visuales">
+  <div class="filter-scroll">
+    {exploreFilters.map((filter) => {
+      const isActive = filter.id === 'todo';
+      const isStatus = filter.type === 'status';
+
+      let dotColor = '';
+      if (filter.id === 'disponibles') dotColor = 'var(--color-accent)';
+      if (filter.id === 'coming') dotColor = 'var(--color-route-upcoming)';
+
+      return (
+        <span
+          class={`filter-chip ${isActive ? 'filter-chip--active' : ''} ${isStatus ? 'filter-chip--status' : ''}`}
+          data-id={filter.id}
+        >
+          {dotColor && (
+            <span class="status-dot" style={`background-color: ${dotColor}`} aria-hidden="true" />
+          )}
+          {filter.label}
+        </span>
+      );
+    })}
+  </div>
+</div>
+
+<style>
+  .filter-bar-container {
+    width: 100%;
+    margin: 1.5rem 0 2rem 0;
+  }
+
+  .filter-scroll {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .filter-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1.25rem;
+    font-family: var(--font-interface);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    background-color: rgba(16, 27, 36, 0.4);
+    border: 1px solid var(--color-border);
+    border-radius: 100px;
+    cursor: default;
+    user-select: none;
+    transition: var(--transition-fast);
+  }
+
+  .filter-chip--active {
+    color: var(--color-bg-primary);
+    background-color: var(--color-accent);
+    border-color: var(--color-accent);
+    font-weight: 600;
+  }
+
+  .filter-chip--status {
+    font-weight: 500;
+  }
+
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+    display: inline-block;
+  }
+
+  @media (max-width: 768px) {
+    .filter-scroll {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none; /* Firefox */
+    }
+
+    .filter-scroll::-webkit-scrollbar {
+      display: none; /* Safari and Chrome */
+    }
+
+    .filter-chip {
+      flex-shrink: 0;
+    }
+  }
+</style>

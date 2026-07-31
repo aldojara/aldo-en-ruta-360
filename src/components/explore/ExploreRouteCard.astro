@@ -1,0 +1,384 @@
+---
+import type { RouteEntry } from '../../types/route';
+import type { ExploreConceptRoute } from '../../types/explore';
+import { publicUrl } from '../../lib/urls/public-url';
+
+interface Props {
+  route?: RouteEntry;
+  conceptRoute?: ExploreConceptRoute;
+}
+
+const { route, conceptRoute } = Astro.props;
+
+// Inicializar variables según si es real o conceptual
+const isReal = !!route;
+
+const title = isReal ? route.data.title : conceptRoute?.title;
+const description = isReal ? route.data.summary : conceptRoute?.description;
+const image = isReal ? route.data.media.cover : conceptRoute?.image;
+const tags = isReal ? route.data.taxonomy.tags : conceptRoute?.tags || [];
+const eyebrow = isReal ? 'DESTACADA' : conceptRoute?.eyebrow;
+const status = isReal ? route.data.status : conceptRoute?.status;
+
+const resolvedCover = publicUrl(image || '');
+const targetHref = isReal ? publicUrl('/rutas/') : publicUrl('/rutas/');
+
+// Métricas de ruta real
+const metrics = isReal ? route.data.metrics : null;
+
+// Formateador de duración
+const formatDuration = (seconds?: number) => {
+  if (!seconds) return '';
+  const mins = Math.round(seconds / 60);
+  if (mins < 60) return `${mins} min`;
+  const hrs = Math.floor(mins / 60);
+  const remainingMins = mins % 60;
+  return remainingMins > 0 ? `${hrs} h ${remainingMins} min` : `${hrs} h`;
+};
+
+// Traductor de conducción
+const getDifficultyLabel = (difficulty?: string) => {
+  if (!difficulty) return '';
+  switch (difficulty) {
+    case 'easy': return 'Fácil';
+    case 'moderate': return 'Moderada';
+    case 'advanced': return 'Avanzada';
+    default: return difficulty;
+  }
+};
+---
+
+<div class={`route-card glass-panel ${!isReal ? 'route-card--concept' : ''}`} aria-label={`Ruta: ${title}`}>
+  <!-- Imagen de portada con badges -->
+  <div class="card-media">
+    <img
+      src={resolvedCover}
+      alt=""
+      class="cover-image"
+      loading="lazy"
+    />
+    <div class="media-overlay" aria-hidden="true"></div>
+
+    <!-- Badges -->
+    <div class="badges-wrapper">
+      {eyebrow && (
+        <span class={`badge ${isReal ? 'badge--featured' : 'badge--concept'}`}>{eyebrow}</span>
+      )}
+
+      <!-- Badge de 360 si tiene capacidad -->
+      {(isReal || status === 'coming-soon') && (
+        <span class="badge badge--immersive" title="Experiencia 360° disponible">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M12 2a10 10 0 1 0 10 10"></path>
+            <text x="12" y="15.5" font-size="7.5" font-family="sans-serif" font-weight="bold" text-anchor="middle" fill="currentColor">360</text>
+          </svg>
+        </span>
+      )}
+    </div>
+  </div>
+
+  <!-- Contenido informativo -->
+  <div class="card-body">
+    <h3 class="route-title">{title}</h3>
+    <p class="route-description">{description}</p>
+
+    <!-- Métricas opcionales: solo si es real y existen -->
+    {metrics && (
+      <div class="route-metrics" aria-label="Métricas de la ruta">
+        <!-- Distancia -->
+        <div class="metric-pill" title="Distancia total">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          <span>{metrics.distanceKm} km</span>
+        </div>
+
+        <!-- Duración -->
+        <div class="metric-pill" title="Duración estimada">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          <span>{formatDuration(metrics.durationSeconds)}</span>
+        </div>
+
+        <!-- Altitud Máxima -->
+        {metrics.maximumAltitudeMeters && (
+          <div class="metric-pill" title="Altitud máxima">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M22 10v6M2 10v6M12 4v16M4 18h16"></path>
+            </svg>
+            <span>{metrics.maximumAltitudeMeters.toLocaleString('es-PE')} m</span>
+          </div>
+        )}
+
+        <!-- Conducción -->
+        <div class="metric-pill" title="Dificultad de conducción">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <circle cx="12" cy="12" r="4"></circle>
+          </svg>
+          <span>{getDifficultyLabel(metrics.drivingDifficulty)}</span>
+        </div>
+      </div>
+    )}
+
+    <!-- Listado de etiquetas/tags -->
+    <div class="route-tags" aria-label="Etiquetas del trayecto">
+      {tags.map((tag) => (
+        <span class="tag-pill">{tag}</span>
+      ))}
+    </div>
+  </div>
+
+  <!-- Pie con botón de llamada a la acción -->
+  <div class="card-footer">
+    {isReal ? (
+      <a href={targetHref} class="btn-card-action btn-card-action--primary">
+        <span>Entrar a la ruta</span>
+        <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </a>
+    ) : (
+      <a href={targetHref} class="btn-card-action btn-card-action--secondary">
+        <span>Ver ruta</span>
+        <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </a>
+    )}
+  </div>
+</div>
+
+<style>
+  .route-card {
+    background-color: rgba(16, 27, 36, 0.4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+    transition: var(--transition-smooth);
+  }
+
+  .route-card:hover {
+    border-color: var(--color-border-hover);
+    transform: translateY(-4px);
+  }
+
+  /* Imagen multimedia */
+  .card-media {
+    position: relative;
+    height: 200px;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .cover-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .route-card:hover .cover-image {
+    transform: scale(1.04);
+  }
+
+  .media-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(5, 12, 18, 0.1) 0%, rgba(5, 12, 18, 0.4) 100%);
+  }
+
+  /* Badges */
+  .badges-wrapper {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    right: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 2;
+  }
+
+  .badge {
+    padding: 0.3rem 0.75rem;
+    font-family: var(--font-interface);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    border-radius: var(--radius-sm);
+    text-transform: uppercase;
+  }
+
+  .badge--featured {
+    background-color: var(--color-accent);
+    color: var(--color-bg-primary);
+  }
+
+  .badge--concept {
+    background-color: rgba(16, 27, 36, 0.85);
+    color: var(--color-text-secondary);
+    border: 1px solid var(--color-border);
+  }
+
+  .badge--immersive {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: rgba(16, 27, 36, 0.72);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(8px);
+  }
+
+  .badge--immersive svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Cuerpo */
+  .card-body {
+    padding: 1.25rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .route-title {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    line-height: 1.2;
+    font-weight: 400;
+    color: var(--color-text-primary);
+    margin: 0 0 0.5rem 0;
+  }
+
+  .route-description {
+    font-family: var(--font-interface);
+    font-size: 0.85rem;
+    line-height: 1.4;
+    color: var(--color-text-secondary);
+    margin: 0 0 1.25rem 0;
+    flex-grow: 1;
+  }
+
+  /* Métricas */
+  .route-metrics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .metric-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.25rem 0.6rem;
+    background-color: rgba(245, 242, 235, 0.03);
+    border: 1px solid rgba(184, 190, 196, 0.06);
+    border-radius: 4px;
+    font-family: var(--font-interface);
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+  }
+
+  .metric-pill svg {
+    width: 12px;
+    height: 12px;
+    color: var(--color-accent);
+  }
+
+  /* Tags */
+  .route-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: auto;
+  }
+
+  .tag-pill {
+    font-family: var(--font-interface);
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+    background-color: rgba(184, 190, 196, 0.05);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+  }
+
+  /* Footer y Acciones */
+  .card-footer {
+    padding: 1.25rem;
+    border-top: 1px solid rgba(184, 190, 196, 0.08);
+  }
+
+  .btn-card-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0.75rem 1.25rem;
+    font-family: var(--font-interface);
+    font-size: 0.9rem;
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    transition: var(--transition-smooth);
+    gap: 0.5rem;
+  }
+
+  .btn-card-action--primary {
+    background-color: var(--color-accent);
+    color: var(--color-bg-primary);
+    font-weight: 700;
+  }
+
+  .btn-card-action--primary:hover {
+    background-color: var(--color-accent-strong);
+    transform: translateY(-1px);
+  }
+
+  .btn-card-action--secondary {
+    background-color: transparent;
+    color: var(--color-text-secondary);
+    border: 1px solid var(--color-border);
+    font-weight: 600;
+  }
+
+  .btn-card-action--secondary:hover {
+    border-color: var(--color-border-hover);
+    color: var(--color-text-primary);
+    transform: translateY(-1px);
+  }
+
+  .btn-arrow {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.2s ease;
+  }
+
+  .btn-card-action:hover .btn-arrow {
+    transform: translateX(4px);
+  }
+
+  /* Variaciones concepto */
+  .route-card--concept {
+    opacity: 0.95;
+  }
+</style>
