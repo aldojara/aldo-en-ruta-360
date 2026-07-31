@@ -1,0 +1,56 @@
+---
+import type { RouteEntry } from '../../types/route';
+import { routesPageConceptCards } from '../../data/routes-page';
+import RouteCatalogCard from './RouteCatalogCard.astro';
+
+interface Props {
+  featuredRoute?: RouteEntry;
+}
+
+const { featuredRoute } = Astro.props;
+---
+
+<section id="catalogo-rutas" class="routes-catalog-section container" aria-label="Catálogo de rutas">
+  <div class="catalog-grid animate-fade-in">
+    <!-- Primera tarjeta: Ruta piloto real si está disponible -->
+    {featuredRoute && (
+      <div class="grid-item">
+        <RouteCatalogCard route={featuredRoute} />
+      </div>
+    )}
+
+    <!-- Tarjetas conceptuales adicionales de preparación/planificación -->
+    {routesPageConceptCards.map(conceptRoute => (
+      <div class="grid-item">
+        <RouteCatalogCard conceptRoute={conceptRoute} />
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .routes-catalog-section {
+    padding-bottom: 5rem;
+  }
+
+  .catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem 1.5rem;
+  }
+
+  /* Responsive adaptado a tablet y móvil */
+  @media (max-width: 1024px) {
+    .catalog-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .catalog-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+</style>

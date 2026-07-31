@@ -1,0 +1,23 @@
+---
+import ClosingCallout from '../patterns/ClosingCallout.astro';
+import { publicUrl } from '../../lib/urls/public-url';
+
+const action = {
+  href: publicUrl('/explorar/'),
+  label: 'Ir a Explorar'
+};
+---
+
+<div class="routes-closing-callout container">
+  <ClosingCallout
+    title="Explora el territorio antes de elegir tu ruta"
+    description="Descubre los recorridos por paisaje, geografía y tipo de experiencia."
+    action={action}
+  />
+</div>
+
+<style>
+  .routes-closing-callout {
+    margin-bottom: 5rem;
+  }
+</style>
