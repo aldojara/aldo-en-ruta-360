@@ -22,5 +22,10 @@ export const siteConfig = {
     moments: "/momentos",
     stories: "/historias",
     about: "/sobre-aldo",
+  },
+
+  // Configuración de contenido del prototipo
+  content: {
+    showPrototypeDraftRoute: true,
   }
 };

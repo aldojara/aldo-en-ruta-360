@@ -10,9 +10,10 @@ interface Props {
 
 const { title, description, image, exploreHref } = Astro.props;
 const resolvedImage = publicUrl(image);
+const resolvedHref = publicUrl(exploreHref);
 ---
 
-<a href={exploreHref} class="experience-card glass-panel" aria-label={`Explorar experiencia de ${title}: ${description}`}>
+<a href={resolvedHref} class="experience-card glass-panel" aria-label={`Explorar experiencia de ${title}: ${description}`}>
   <!-- Imagen de Fondo -->
   <div class="card-bg-wrapper">
     <img

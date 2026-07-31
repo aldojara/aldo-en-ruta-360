@@ -42,13 +42,15 @@ Este repositorio sigue reglas estrictas para el desarrollo del proyecto **Aldo e
 
 ---
 
+---
+
 ## 5. Control de Calidad y Servidor
 
 - **Comando de Desarrollo:** Para levantar el servidor local en modo background, ejecuta:
   ```bash
   ASTRO_TELEMETRY_DISABLED=1 npx astro dev --background
   ```
-  Gestiónalo con `astro dev stop`, `astro dev status` y `astro dev logs`.
+  Gestiónalo con `astro dev stop`, `astro dev status` and `astro dev logs`.
 - **Validaciones:** Antes de dar por finalizada cualquier tarea, debes ejecutar obligatoriamente:
   ```bash
   # Verificar sintaxis y tipado
@@ -61,3 +63,14 @@ Este repositorio sigue reglas estrictas para el desarrollo del proyecto **Aldo e
   npm run preview
   ```
   Entrega siempre el resultado literal de estas comprobaciones y una URL localhost activa para su revisión.
+
+---
+
+## 6. Consistencia y Directrices Arquitectónicas
+
+- **Propietario Único de Estructura:** `BaseLayout.astro` es el único responsable de renderizar `<!DOCTYPE html>`, `<html>`, `<head>`, `<body>`, `SiteHeader`, un único `<main id="main-content">` y `SiteFooter`. Las páginas individuales (como `index.astro`) deben limitarse a componer sus secciones internas dentro de `BaseLayout` sin duplicar estos elementos.
+- **Header Superpuesto (Overlay):** Si una página requiere que el header se dibuje sobre el hero (sin margen superior), debe declarar `overlayHeader={true}` como prop de `BaseLayout`. No realices validaciones basadas en el pathname en el layout.
+- **Resolución de URLs y Assets:** Todas las imágenes en `public/`, enlaces de navegación, meta tags de Open Graph y recursos deben resolverse mediante el helper `publicUrl()` en `src/lib/urls/public-url.ts` para soportar despliegues bajo subdirectorios de forma nativa.
+- **Normalización de Pathnames:** Para verificar qué enlace del menú está activo, utiliza `stripBasePath(Astro.url.pathname)` en `src/lib/urls/strip-base-path.ts` para retirar de forma segura el prefijo del subdirectorio y evitar fallos por base path o barras redundantes.
+- **Nulabilidad en Cartografía:** Cuando una ruta no posea datos geográficos o de mapa confirmados, los campos de `map` (`routeGeojson`, `center`, `zoom`, `bounds`) deben declararse como `null` en lugar de usar valores ficticios como `[0,0]`, zoom `1` o placeholders GeoJSON ficticios.
+- **Exposición de Borradores:** Para consultar la ruta destacada, utiliza la firma `getFeaturedRoute({ includeDrafts: boolean })`. La visualización de borradores provisionales de desarrollo debe activarse de forma centralizada usando la configuración `siteConfig.content.showPrototypeDraftRoute` en `src/data/site.ts`.

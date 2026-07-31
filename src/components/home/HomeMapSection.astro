@@ -1,5 +1,6 @@
 ---
 import HomeMapPreview from './HomeMapPreview.astro';
+import { publicUrl } from '../../lib/urls/public-url';
 
 interface Props {
   title?: string;
@@ -12,6 +13,8 @@ const {
   description = "Descubre rutas reales que atraviesan montañas, desiertos, valles y selvas. Elige tu próxima aventura.",
   routesLink = "/rutas/"
 } = Astro.props;
+
+const resolvedRoutesLink = publicUrl(routesLink);
 ---
 
 <section class="home-map-section container">
@@ -44,7 +47,7 @@ const {
 
       <!-- Enlace / CTA a todas las rutas -->
       <div class="cta-row">
-        <a href={routesLink} class="cta-link">
+        <a href={resolvedRoutesLink} class="cta-link">
           <span>Ver todas las rutas</span>
           <svg class="cta-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <line x1="5" y1="12" x2="19" y2="12"></line>

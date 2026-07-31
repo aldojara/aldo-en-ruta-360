@@ -2,6 +2,7 @@
 import SiteHeader from '../components/navigation/SiteHeader.astro';
 import SiteFooter from '../components/navigation/SiteFooter.astro';
 import '../styles/global.css';
+import { publicUrl } from '../lib/urls/public-url';
 
 interface Props {
   title?: string;
@@ -9,15 +10,32 @@ interface Props {
   ogImage?: string;
   canonicalURL?: string;
   noindex?: boolean;
+  overlayHeader?: boolean;
 }
 
 const {
   title = "Aldo en Ruta | Viajes por carretera, mapas y relatos 360°",
   description = "Explora el Perú por carretera de forma interactiva. Rutas con mapas dinámicos, perfiles de altitud, sincronización de vídeo y escenas inmersivas en 360°.",
   ogImage = "/assets/og-image-default.jpg",
-  canonicalURL = Astro.url.href,
-  noindex = false
+  canonicalURL,
+  noindex = false,
+  overlayHeader = false
 } = Astro.props;
+
+// Resolución del Canonical URL estable sin parámetros ni fragmentos
+const canonical = canonicalURL
+  ? new URL(canonicalURL, Astro.site ?? Astro.url.origin)
+  : new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin);
+
+canonical.search = '';
+canonical.hash = '';
+const canonicalString = canonical.href;
+
+// Resolución de favicons y OG image con base path
+const resolvedFaviconSvg = publicUrl('/favicon.svg');
+const resolvedFaviconIco = publicUrl('/favicon.ico');
+const resolvedOgImagePath = publicUrl(ogImage);
+const resolvedOgImageURL = new URL(resolvedOgImagePath, Astro.site ?? Astro.url.origin).href;
 ---
 
 <!DOCTYPE html>
@@ -27,28 +45,28 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
     
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href={resolvedFaviconSvg} />
+    <link rel="icon" href={resolvedFaviconIco} />
 
     <!-- SEO -->
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonicalURL} />
+    <link rel="canonical" href={canonicalString} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:url" content={canonicalString} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={new URL(ogImage, Astro.url.origin)} />
+    <meta property="og:image" content={resolvedOgImageURL} />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:url" content={canonicalString} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content={new URL(ogImage, Astro.url.origin)} />
+    <meta property="twitter:image" content={resolvedOgImageURL} />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -64,7 +82,7 @@ const {
   <body>
     <SiteHeader />
 
-    <main id="main-content" class="main-content">
+    <main id="main-content" class={`main-content ${overlayHeader ? 'main-content--overlay-header' : ''}`}>
       <slot />
     </main>
 
@@ -84,5 +102,9 @@ const {
     padding-top: calc(var(--header-height) + 40px);
     display: flex;
     flex-direction: column;
+  }
+
+  .main-content.main-content--overlay-header {
+    padding-top: 0;
   }
 </style>

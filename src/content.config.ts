@@ -11,7 +11,7 @@ const routesCollection = defineCollection({
     summary: z.string(),
     status: z.enum(['draft', 'coming-soon', 'published', 'archived']),
     featured: z.boolean().default(false),
-    
+
     // Bloque Location
     location: z.object({
       country: z.string(),
@@ -36,11 +36,11 @@ const routesCollection = defineCollection({
     // Bloque Geography / Map
     map: z.object({
       sourceGpx: z.string().nullable().optional(),
-      routeGeojson: z.string(),
+      routeGeojson: z.string().nullable().optional(),
       previewGeojson: z.string().nullable().optional(),
       elevationData: z.string().nullable().optional(),
-      center: z.tuple([z.number(), z.number()]), // [longitud, latitud]
-      zoom: z.number(),
+      center: z.tuple([z.number(), z.number()]).nullable().optional(), // [longitud, latitud]
+      zoom: z.number().nullable().optional(),
       bounds: z.array(z.number()).length(4).nullable().optional(), // [minLon, minLat, maxLon, maxLat]
     }),
 
@@ -80,7 +80,28 @@ const routesCollection = defineCollection({
 
     // Bloque Verification para datos pendientes
     verification: z.object({
-      locationStatus: z.enum(['pending', 'confirmed']).default('pending'),
+      locationStatus: z.enum([
+        'pending',
+        'confirmed'
+      ]).default('pending'),
+
+      metricsStatus: z.enum([
+        'pending',
+        'estimated',
+        'confirmed'
+      ]).default('pending'),
+
+      geometryStatus: z.enum([
+        'pending',
+        'generated',
+        'confirmed'
+      ]).default('pending'),
+
+      mediaStatus: z.enum([
+        'temporary',
+        'confirmed'
+      ]).default('temporary'),
+
       notes: z.string().nullable().optional(),
     }).nullable().optional(),
   }),
