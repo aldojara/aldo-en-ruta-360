@@ -1,0 +1,189 @@
+---
+import { publicUrl } from '../../lib/urls/public-url';
+import ExploreFilterBar from './ExploreFilterBar.astro';
+
+const resolvedHeroBg = publicUrl('/images/temp/explore/explore-hero.webp');
+---
+
+<section class="explore-hero" aria-label="Explorar Héroe">
+  <div class="hero-bg-wrapper">
+    <img
+      src={resolvedHeroBg}
+      alt="Carretera andina peruana al atardecer"
+      class="hero-bg-image"
+      loading="eager"
+      fetchpriority="high"
+    />
+    <div class="hero-overlay" aria-hidden="true"></div>
+  </div>
+
+  <div class="hero-content container">
+    <span class="hero-eyebrow">EXPLORAR</span>
+    <h1 class="hero-title">
+      Descubre el territorio<br />
+      a través de sus rutas
+    </h1>
+    <p class="hero-description">
+      Explora rutas por geografía, paisaje y experiencia de manejo en los caminos más fascinantes del Perú.
+    </p>
+
+    <!-- Barra de Filtros Visuales -->
+    <ExploreFilterBar />
+
+    <!-- Botones de Acción -->
+    <div class="hero-actions">
+      <a href="#mapa-territorial" class="btn btn-primary" aria-label="Desplazarse al mapa completo">
+        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+        </svg>
+        <span>Ver mapa completo</span>
+      </a>
+
+      <a href="#rutas-destacadas" class="btn btn-secondary" aria-label="Desplazarse a la sección de rutas destacadas">
+        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+        </svg>
+        <span>Explorar rutas destacadas</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .explore-hero {
+    position: relative;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    padding-top: calc(var(--header-height) + 3rem);
+    padding-bottom: 5rem;
+    overflow: hidden;
+    background-color: var(--color-bg-primary);
+  }
+
+  .hero-bg-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+
+  .hero-bg-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 35%;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      to bottom,
+      rgba(5, 12, 18, 0.6) 0%,
+      rgba(5, 12, 18, 0.8) 50%,
+      var(--color-bg-primary) 100%
+    );
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    margin-right: auto;
+  }
+
+  .hero-eyebrow {
+    display: inline-block;
+    font-family: var(--font-interface);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--color-accent);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+  }
+
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    line-height: 1.1;
+    font-weight: 400;
+    color: var(--color-text-primary);
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  .hero-description {
+    font-family: var(--font-interface);
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+    max-width: 600px;
+    margin-bottom: 2rem;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  /* Botones Generales del Héroe */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.85rem 1.75rem;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-interface);
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: var(--transition-smooth);
+    gap: 0.6rem;
+  }
+
+  .btn-icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+
+  .btn-primary {
+    background-color: var(--color-accent);
+    color: var(--color-bg-primary);
+    border: 1px solid var(--color-accent);
+  }
+
+  .btn-primary:hover {
+    background-color: var(--color-accent-strong);
+    border-color: var(--color-accent-strong);
+    transform: translateY(-2px);
+  }
+
+  .btn-secondary {
+    background-color: rgba(16, 27, 36, 0.6);
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border);
+    backdrop-filter: blur(12px);
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--color-border-hover);
+    background-color: rgba(16, 27, 36, 0.8);
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 576px) {
+    .btn {
+      width: 100%;
+    }
+  }
+</style>

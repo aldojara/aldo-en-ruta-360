@@ -1,0 +1,129 @@
+---
+import type { RouteEntry } from '../../types/route';
+import { exploreConceptRoutes } from '../../data/explore';
+import ExploreRouteCard from './ExploreRouteCard.astro';
+import { publicUrl } from '../../lib/urls/public-url';
+
+interface Props {
+  featuredRoute: RouteEntry;
+}
+
+const { featuredRoute } = Astro.props;
+const viewAllHref = publicUrl('/rutas/');
+---
+
+<section id="rutas-destacadas" class="featured-routes-section container" aria-labelledby="featured-routes-title">
+  <div class="section-header">
+    <h2 id="featured-routes-title" class="section-title">Rutas destacadas</h2>
+
+    <a href={viewAllHref} class="view-all-link" aria-label="Ver todas las rutas de Aldo en Ruta">
+      <span>Ver todas las rutas</span>
+      <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="5" y1="12" x2="19" y2="12"></line>
+        <polyline points="12 5 19 12 12 19"></polyline>
+      </svg>
+    </a>
+  </div>
+
+  <div class="routes-grid">
+    <!-- Primera tarjeta: Ruta piloto real destacada -->
+    <div class="grid-item">
+      <ExploreRouteCard route={featuredRoute} />
+    </div>
+
+    <!-- Siguientes tarjetas: Conceptos visuales con estado Próximamente / Planificación -->
+    {exploreConceptRoutes.map((conceptRoute) => (
+      <div class="grid-item">
+        <ExploreRouteCard conceptRoute={conceptRoute} />
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .featured-routes-section {
+    padding-top: 3rem;
+    padding-bottom: 5rem;
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 2rem;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    font-weight: 400;
+    color: var(--color-text-primary);
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  .view-all-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-interface);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    text-decoration: none;
+    transition: var(--transition-smooth);
+    border-bottom: 1px solid transparent;
+    padding-bottom: 0.2rem;
+  }
+
+  .view-all-link:hover {
+    color: var(--color-accent-strong);
+    border-color: var(--color-accent-strong);
+  }
+
+  .arrow-icon {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.2s ease;
+  }
+
+  .view-all-link:hover .arrow-icon {
+    transform: translateX(4px);
+  }
+
+  .routes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  /* Responsive breakpoints */
+  @media (max-width: 992px) {
+    .routes-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* El último elemento (Valle) se puede ocultar o apilar abajo según diseño */
+    .routes-grid .grid-item:last-child {
+      grid-column: span 2;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .section-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .routes-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .routes-grid .grid-item:last-child {
+      grid-column: span 1;
+    }
+  }
+</style>

@@ -1,0 +1,357 @@
+---
+// Vista previa cartográfica estática del mapa del Perú
+---
+
+<!-- NOTA TÉCNICA: Este mapa es una visualización editorial y conceptual estática para el prototipo. Será reemplazado por un mapa interactivo dinámico (MapLibre GL JS y geodatos GPX/GeoJSON validados) en la fase de implementación definitiva. -->
+
+<div class="map-preview-container" aria-label="Visualización cartográfica conceptual del Perú">
+  <svg class="peru-vector-map" viewBox="0 0 600 700" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Líneas de cuadrícula cartográfica (Graticule) -->
+    <path d="M 50 0 L 50 700" stroke="rgba(184, 190, 196, 0.03)" stroke-width="1" />
+    <path d="M 150 0 L 150 700" stroke="rgba(184, 190, 196, 0.03)" stroke-width="1" />
+    <path d="M 250 0 L 250 700" stroke="rgba(184, 190, 196, 0.03)" stroke-width="1" />
+    <path d="M 350 0 L 350 700" stroke="rgba(184, 190, 196, 0.03)" stroke-width="1" />
+    <path d="M 450 0 L 450 700" stroke="rgba(184, 190, 196, 0.03)" stroke-width="1" />
+    <path d="M 550 0 L 550 700" stroke="rgba(184, 190, 196, 0.03)" stroke-width="1" />
+    <path d="M 0 100 L 600 100" stroke="rgba(184, 190, 196, 0.03)" stroke-width="1" />
+    <path d="M 0 200 L 600 200" stroke="rgba(184, 190, 196, 0.03)" stroke-width="1" />
+    <path d="M 0 300 L 600 300" stroke="rgba(184, 190, 196, 0.03)" stroke-width="1" />
+    <path d="M 0 400 L 600 400" stroke="rgba(184, 190, 196, 0.03)" stroke-width="1" />
+    <path d="M 0 500 L 600 500" stroke="rgba(184, 190, 196, 0.03)" stroke-width="1" />
+    <path d="M 0 600 L 600 600" stroke="rgba(184, 190, 196, 0.03)" stroke-width="1" />
+
+    <!-- Texto Editorial Grande de Fondo -->
+    <text x="350" y="240" class="bg-editorial-text">PERÚ</text>
+
+    <!-- Contorno Estilizado del Perú -->
+    <path
+      class="peru-border"
+      d="M 120 120
+         C 150 90, 240 60, 280 70
+         C 320 80, 350 110, 390 120
+         C 430 130, 480 150, 490 200
+         C 500 250, 560 300, 520 370
+         C 490 420, 580 470, 550 520
+         C 520 570, 510 610, 480 640
+         C 460 660, 450 630, 440 600
+         C 430 570, 400 550, 380 520
+         C 360 490, 300 430, 260 390
+         C 220 350, 180 290, 150 250
+         C 120 210, 100 170, 120 120 Z"
+      stroke="rgba(184, 190, 196, 0.15)"
+      stroke-width="2"
+      fill="rgba(8, 20, 28, 0.4)"
+    />
+
+    <!-- Relieve Sombreado de la Cordillera de los Andes (Estilizado) -->
+    <path
+      class="andes-shade"
+      d="M 280 80
+         Q 330 150, 370 250
+         T 310 400
+         T 410 550
+         T 460 630"
+      stroke="rgba(184, 190, 196, 0.06)"
+      stroke-width="32"
+      stroke-linecap="round"
+      fill="none"
+    />
+    <path
+      class="andes-crest"
+      d="M 280 80
+         L 320 140
+         L 360 220
+         L 340 300
+         L 290 380
+         L 350 480
+         L 410 560
+         L 460 630"
+      stroke="rgba(184, 190, 196, 0.1)"
+      stroke-width="1.5"
+      stroke-dasharray="4 8"
+      fill="none"
+    />
+
+    <!-- RUTAS PLANIFICADAS Y FUTURAS (Teal discontinuo) -->
+
+    <!-- Conexión Norte a Selva -->
+    <path
+      class="route-planned"
+      d="M 180 110 L 250 150 L 390 150"
+      stroke="var(--color-route-upcoming)"
+      stroke-width="2"
+      stroke-dasharray="6 6"
+      fill="none"
+    />
+
+    <!-- Conexión Centro a Selva Central -->
+    <path
+      class="route-planned"
+      d="M 330 240 L 450 270 L 480 340"
+      stroke="var(--color-route-upcoming)"
+      stroke-width="2"
+      stroke-dasharray="6 6"
+      fill="none"
+    />
+
+    <!-- Conexión Sur Andina -->
+    <path
+      class="route-planned"
+      d="M 280 410 L 350 490 L 420 520 L 460 610"
+      stroke="var(--color-route-upcoming)"
+      stroke-width="2"
+      stroke-dasharray="6 6"
+      fill="none"
+    />
+
+    <!-- RUTA DISPONIBLE / PILOTO (Sólido Dorado) -->
+    <!-- Sierra Central / Ruta Andina -->
+    <path
+      class="route-active"
+      d="M 190 230
+         C 210 250, 220 240, 240 280
+         C 260 320, 280 310, 290 350
+         C 300 390, 310 380, 330 420"
+      stroke="var(--color-accent)"
+      stroke-width="3"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      fill="none"
+    />
+
+    <!-- PUNTOS / NODOS NUMERADOS (Maqueta) -->
+
+    <!-- Nodo 2 (Norte) -->
+    <g transform="translate(390, 150)">
+      <circle r="10" fill="var(--color-bg-primary)" stroke="var(--color-route-upcoming)" stroke-width="2" />
+      <text class="node-number" dy="3.5" text-anchor="middle">2</text>
+    </g>
+
+    <!-- Nodo 3 (Selva Central) -->
+    <g transform="translate(480, 340)">
+      <circle r="10" fill="var(--color-bg-primary)" stroke="var(--color-route-upcoming)" stroke-width="2" />
+      <text class="node-number" dy="3.5" text-anchor="middle">3</text>
+    </g>
+
+    <!-- Nodo 3 (Centro-Sur) -->
+    <g transform="translate(350, 490)">
+      <circle r="10" fill="var(--color-bg-primary)" stroke="var(--color-route-upcoming)" stroke-width="2" />
+      <text class="node-number" dy="3.5" text-anchor="middle">3</text>
+    </g>
+
+    <!-- Nodo 4 (Sur Andino) -->
+    <g transform="translate(420, 520)">
+      <circle r="10" fill="var(--color-bg-primary)" stroke="var(--color-route-upcoming)" stroke-width="2" />
+      <text class="node-number" dy="3.5" text-anchor="middle">4</text>
+    </g>
+
+    <!-- ETIQUETAS TERRITORIALES -->
+    <text x="240" y="160" class="map-label">Costa Norte</text>
+    <text x="290" y="295" class="map-label">Sierra Central</text>
+    <text x="240" y="490" class="map-label">Costa Sur</text>
+    <text x="440" y="305" class="map-label">Selva Central</text>
+    <text x="420" y="420" class="map-label">Sur Andino</text>
+
+    <!-- Marcador de Posición Pin en Ruta Activa Piloto -->
+    <g class="active-marker" transform="translate(238, 335)">
+      <!-- Sombra / Pulso de fondo -->
+      <circle r="12" fill="var(--color-accent-dim)" />
+      <!-- Pin principal -->
+      <path d="M 0 -10 C -5 -10, -8 -7, -8 -2 C -8 4, 0 10, 0 10 C 0 10, 8 4, 8 -2 C 8 -7, 5 -10, 0 -10 Z" fill="var(--color-accent)" />
+      <!-- Centro del pin -->
+      <circle cy="-2" r="3" fill="var(--color-bg-primary)" />
+    </g>
+  </svg>
+
+  <!-- Tooltip de la ruta activa flotando sobre el mapa -->
+  <div class="map-tooltip" style="top: 42%; left: 35%;">
+    <div class="tooltip-arrow"></div>
+    <div class="tooltip-body">
+      <span class="tooltip-text">Ruta andina —</span>
+      <span class="tooltip-sub">Tramo piloto</span>
+    </div>
+  </div>
+
+  <!-- Controles Cartográficos Estáticos de Superposición (Bottom-Right) -->
+  <div class="static-map-controls" aria-hidden="true">
+    <button class="control-btn compass-btn" title="Brújula (Norte)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polygon points="12 2 16 9 12 7 8 9 12 2"></polygon>
+        <polygon points="12 22 8 15 12 17 16 15 12 22"></polygon>
+      </svg>
+    </button>
+    <button class="control-btn" title="Acercar">+</button>
+    <button class="control-btn" title="Alejar">−</button>
+    <button class="control-btn geo-btn" title="Mostrar mi ubicación">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"></circle>
+        <circle cx="12" cy="12" r="3"></circle>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<style>
+  .map-preview-container {
+    position: relative;
+    width: 100%;
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 480px;
+  }
+
+  .peru-vector-map {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.5));
+  }
+
+  /* Clases de Elementos del SVG */
+  .peru-border {
+    transition: stroke var(--transition-smooth);
+  }
+
+  .bg-editorial-text {
+    font-family: var(--font-display);
+    font-size: 5rem;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    fill: rgba(245, 242, 235, 0.02);
+    user-select: none;
+    text-anchor: middle;
+  }
+
+  .map-label {
+    font-family: var(--font-interface);
+    font-size: 0.75rem;
+    font-weight: 500;
+    fill: var(--color-text-muted);
+    letter-spacing: 0.05em;
+    user-select: none;
+    text-shadow: 0 2px 4px rgba(5, 12, 18, 0.8);
+  }
+
+  .node-number {
+    font-family: var(--font-interface);
+    font-size: 0.7rem;
+    font-weight: 700;
+    fill: var(--color-text-primary);
+    user-select: none;
+  }
+
+  .active-marker {
+    filter: drop-shadow(0 2px 5px rgba(216, 154, 43, 0.4));
+  }
+
+  /* Tooltip Flotante */
+  .map-tooltip {
+    position: absolute;
+    transform: translate(-50%, -100%);
+    background-color: var(--color-accent);
+    color: var(--color-bg-primary);
+    padding: 0.4rem 0.8rem;
+    border-radius: var(--radius-sm);
+    box-shadow: 0 4px 15px rgba(216, 154, 43, 0.3);
+    pointer-events: none;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: -12px;
+  }
+
+  .tooltip-arrow {
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid var(--color-accent);
+  }
+
+  .tooltip-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1.2;
+    text-align: center;
+  }
+
+  .tooltip-text {
+    font-family: var(--font-interface);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .tooltip-sub {
+    font-family: var(--font-interface);
+    font-size: 0.7rem;
+    font-weight: 500;
+  }
+
+  /* Controles Cartográficos Estáticos */
+  .static-map-controls {
+    position: absolute;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    z-index: 5;
+  }
+
+  .control-btn {
+    width: 32px;
+    height: 32px;
+    background-color: var(--color-surface-glass);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-secondary);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-interface);
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: default;
+    user-select: none;
+    transition: var(--transition-fast);
+  }
+
+  .control-btn:hover {
+    border-color: var(--color-border-hover);
+    color: var(--color-text-primary);
+  }
+
+  .compass-btn svg, .geo-btn svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  @media (max-width: 576px) {
+    .map-preview-container {
+      min-height: 380px;
+      padding: 1rem;
+    }
+    .map-tooltip {
+      padding: 0.3rem 0.6rem;
+    }
+    .tooltip-text {
+      font-size: 0.7rem;
+    }
+    .tooltip-sub {
+      font-size: 0.65rem;
+    }
+  }
+</style>

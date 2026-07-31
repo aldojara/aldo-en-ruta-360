@@ -1,0 +1,89 @@
+---
+import type { RouteEntry } from '../../types/route';
+import ExploreMapPreview from './ExploreMapPreview.astro';
+import FeaturedRoutePanel from './FeaturedRoutePanel.astro';
+import MapLegend from './MapLegend.astro';
+
+interface Props {
+  featuredRoute: RouteEntry;
+}
+
+const { featuredRoute } = Astro.props;
+---
+
+<section id="mapa-territorial" class="explore-map-section container" aria-label="Mapa Territorial del Perú">
+  <div class="map-section-grid">
+    <!-- Columna Principal: Contenedor de Mapa y Leyenda -->
+    <div class="map-main-wrapper">
+      <ExploreMapPreview />
+
+      <!-- Leyenda superpuesta de forma absoluta (integrada visualmente) -->
+      <div class="map-legend-overlay">
+        <MapLegend />
+      </div>
+    </div>
+
+    <!-- Columna Lateral: Ficha de Ruta Destacada -->
+    <div class="map-sidebar-wrapper">
+      <FeaturedRoutePanel route={featuredRoute} />
+    </div>
+  </div>
+</section>
+
+<style>
+  .explore-map-section {
+    padding-top: 2rem;
+    padding-bottom: 5rem;
+  }
+
+  .map-section-grid {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 1.5rem;
+    align-items: stretch;
+  }
+
+  .map-main-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .map-legend-overlay {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 1.5rem;
+    width: 250px;
+    z-index: 5;
+    pointer-events: auto;
+  }
+
+  .map-sidebar-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Responsive styling */
+  @media (max-width: 1024px) {
+    .map-section-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .map-legend-overlay {
+      position: static;
+      width: 100%;
+      margin-top: 1rem;
+    }
+
+    .map-main-wrapper {
+      position: relative;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .explore-map-section {
+      padding-bottom: 3rem;
+    }
+  }
+</style>
