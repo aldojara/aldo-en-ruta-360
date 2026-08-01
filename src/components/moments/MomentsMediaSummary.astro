@@ -1,0 +1,200 @@
+---
+import { momentsPageData } from '../../data/moments-page';
+
+const items = momentsPageData.mediaSummary;
+---
+
+<section class="media-summary-stripe container" aria-label="Resumen de tipos de contenido">
+  <div class="stripe-grid glass-panel">
+    {items.map((item, index) => (
+      <div class="stripe-item">
+        <div class="item-icon-wrapper">
+          {item.type === 'panorama360' && (
+            <svg class="item-icon icon-projected" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M12 6v12"></path>
+              <path d="M6 12h12"></path>
+              <path d="M7.75 7.75l8.5 8.5"></path>
+              <path d="M7.75 16.25l8.5-8.5"></path>
+            </svg>
+          )}
+          {item.type === 'video' && (
+            <svg class="item-icon icon-projected" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+              <polygon points="10 8 16 11 10 14 10 8"></polygon>
+              <line x1="2" y1="21" x2="22" y2="21"></line>
+              <line x1="12" y1="17" x2="12" y2="21"></line>
+            </svg>
+          )}
+          {item.type === 'photo' && (
+            <svg class="item-icon icon-available" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+              <circle cx="12" cy="13" r="4"></circle>
+            </svg>
+          )}
+          {item.id === 'andes' && (
+            <svg class="item-icon icon-available" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 20h18L12 4z"></path>
+              <path d="M17 20l-4-6-2 3"></path>
+            </svg>
+          )}
+          {item.id === 'pilot-route' && (
+            <svg class="item-icon icon-available" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+          )}
+        </div>
+        <div class="item-text-wrapper">
+          <span class="item-title">{item.title}</span>
+          <span class="item-subtitle">{item.subtitle}</span>
+          <span class={`item-badge ${item.availability === 'projected' ? 'badge-projected' : 'badge-available'}`}>
+            {item.availability === 'projected' ? 'Proyectado' : 'Disponible'}
+          </span>
+        </div>
+        {index < items.length - 1 && <div class="item-divider" aria-hidden="true"></div>}
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .media-summary-stripe {
+    margin-top: -3rem;
+    position: relative;
+    z-index: 10;
+    margin-bottom: 4rem;
+  }
+
+  .stripe-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    padding: 1.75rem 1rem;
+    border-radius: var(--radius-md);
+    background-color: rgba(8, 20, 28, 0.75);
+  }
+
+  .stripe-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    position: relative;
+    padding: 0.5rem 1rem;
+  }
+
+  .item-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: rgba(245, 242, 241, 0.03);
+    border: 1px solid rgba(245, 242, 241, 0.05);
+    flex-shrink: 0;
+  }
+
+  .item-icon {
+    width: 22px;
+    height: 22px;
+  }
+
+  .icon-projected {
+    color: var(--color-route-upcoming);
+  }
+
+  .icon-available {
+    color: var(--color-accent-strong);
+  }
+
+  .item-text-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .item-title {
+    font-family: var(--font-interface);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    line-height: 1.2;
+  }
+
+  .item-subtitle {
+    font-family: var(--font-interface);
+    font-size: 0.72rem;
+    color: var(--color-text-secondary);
+    line-height: 1.2;
+  }
+
+  .item-badge {
+    display: inline-block;
+    width: fit-content;
+    font-size: 0.58rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 1px 6px;
+    border-radius: 4px;
+    line-height: 1.3;
+    margin-top: 2px;
+  }
+
+  .badge-available {
+    background-color: rgba(216, 154, 43, 0.1);
+    color: var(--color-accent-strong);
+    border: 1px solid rgba(216, 154, 43, 0.2);
+  }
+
+  .badge-projected {
+    background-color: rgba(61, 156, 154, 0.1);
+    color: var(--color-route-upcoming);
+    border: 1px solid rgba(61, 156, 154, 0.2);
+  }
+
+  .item-divider {
+    position: absolute;
+    right: 0;
+    top: 15%;
+    height: 70%;
+    width: 1px;
+    background-color: var(--color-border);
+  }
+
+  /* Media Queries */
+  @media (max-width: 1200px) {
+    .stripe-grid {
+      grid-template-columns: repeat(3, 1fr);
+      row-gap: 1.5rem;
+    }
+
+    .item-divider {
+      display: none;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .stripe-grid {
+      grid-template-columns: repeat(2, 1fr);
+      padding: 1.5rem;
+    }
+
+    .stripe-item {
+      justify-content: flex-start;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .media-summary-stripe {
+      margin-top: -1.5rem;
+    }
+
+    .stripe-grid {
+      grid-template-columns: 1fr;
+      row-gap: 1.25rem;
+      padding: 1.25rem;
+    }
+  }
+</style>

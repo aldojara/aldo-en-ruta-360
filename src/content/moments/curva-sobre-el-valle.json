@@ -1,0 +1,30 @@
+{
+  "title": "Curva sobre el valle",
+  "slug": "curva-sobre-el-valle",
+  "description": "Una curva amplia que revela todo el valle a tus pies.",
+  "status": "published",
+  "mediaType": "panorama360",
+  "routeSlug": "ruta-piloto",
+  "image": "/images/temp/moments/curva-sobre-el-valle.webp",
+  "imageAlt": "Vista panorámica desde una curva de carretera que domina un valle andino",
+  "order": 1,
+  "featured": true,
+  "tags": ["Curva", "Panorámica", "Valle"],
+  "territory": "Andes",
+  "locationLabel": "Ubicación referencial",
+  "kilometer": 28,
+  "altitude": 1450,
+  "availability": "projected",
+  "verification": {
+    "locationStatus": "pending",
+    "metricsStatus": "pending",
+    "geometryStatus": "pending",
+    "mediaStatus": "temporary",
+    "notes": "Representación visual del primer hito del tramo piloto. Coordenadas y kilómetro referenciales."
+  },
+  "seo": {
+    "title": "Curva sobre el valle | Momentos | Aldo en Ruta",
+    "description": "Vista panorámica 360° proyectada sobre el valle andino en el tramo piloto de Aldo en Ruta.",
+    "noindex": true
+  }
+}
