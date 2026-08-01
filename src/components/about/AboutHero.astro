@@ -1,0 +1,344 @@
+---
+import { publicUrl } from '../../lib/urls/public-url';
+import type { AboutPageData } from '../../data/about';
+
+interface Props {
+  hero: AboutPageData['hero'];
+}
+
+const { hero } = Astro.props;
+
+const resolvedBg = publicUrl(hero.backgroundImage);
+const resolvedPortrait = publicUrl(hero.portraitImage);
+---
+
+<section class="about-hero" style={`background-image: linear-gradient(to bottom, rgba(5, 12, 18, 0.4) 0%, rgba(5, 12, 18, 0.95) 100%), url('${resolvedBg}');`}>
+  <div class="hero-container container">
+    <div class="hero-content-grid">
+      <!-- Columna izquierda: Información y Redes -->
+      <div class="hero-text-col animate-fade-in">
+        <span class="hero-eyebrow">{hero.eyebrow}</span>
+        <h1 class="hero-title">{hero.title}</h1>
+        <p class="hero-description">{hero.description}</p>
+        
+        <!-- Enlaces a redes provisionales -->
+        <div class="social-links-wrapper">
+          {hero.socials.map((social) => (
+            <div class="social-item">
+              <span class="social-icon-btn" aria-label={social.label} title={`${social.label} - ${social.status}`}>
+                {social.icon === 'instagram' && (
+                  <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                  </svg>
+                )}
+                {social.icon === 'youtube' && (
+                  <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+                    <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+                  </svg>
+                )}
+                {social.icon === 'globe' && (
+                  <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="2" y1="12" x2="22" y2="12"></line>
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                  </svg>
+                )}
+              </span>
+              <span class="social-badge">{social.status}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Columna derecha: Retrato y Cita flotante -->
+      <div class="hero-visual-col animate-fade-in">
+        <div class="portrait-container">
+          <img src={resolvedPortrait} alt={hero.portraitAlt} class="hero-portrait" loading="eager" />
+          <div class="portrait-overlay"></div>
+        </div>
+
+        <!-- Caja de Cita Flotante -->
+        <div class="hero-quote-box glass-panel">
+          <svg class="quote-icon" viewBox="0 0 24 24" width="32" height="32" stroke="var(--color-accent)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 21c3 0 7-9 7-14a5 5 0 0 0-5-5 5 5 0 0 0-5 5c0 5 3 14 3 14zm11 0c3 0 7-9 7-14a5 5 0 0 0-5-5 5 5 0 0 0-5 5c0 5 3 14 3 14z"></path>
+          </svg>
+          <p class="quote-text">{hero.quote.text}</p>
+          <div class="quote-footer">
+            <span class="quote-author">{hero.quote.author}</span>
+            <span class="quote-badge">
+              {hero.quote.label} · {hero.quote.verificationStatus === 'conceptual' ? 'Provisional' : 'Verificado'}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-hero {
+    position: relative;
+    min-height: 85vh;
+    padding-top: calc(var(--header-height) + 60px);
+    padding-bottom: 80px;
+    background-size: cover;
+    background-position: center 30%;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .about-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 30% 50%, transparent 20%, rgba(5, 12, 18, 0.6) 80%);
+    pointer-events: none;
+  }
+
+  .hero-container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+  }
+
+  .hero-content-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 48px;
+    align-items: center;
+  }
+
+  /* Columna Texto */
+  .hero-text-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--font-interface);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-accent-strong);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 24px;
+    padding: 6px 12px;
+    background-color: rgba(216, 154, 43, 0.1);
+    border: 1px solid rgba(216, 154, 43, 0.2);
+    border-radius: var(--radius-sm);
+    backdrop-filter: blur(4px);
+  }
+
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 4vw, 3.4rem);
+    color: var(--color-text-primary);
+    line-height: 1.15;
+    margin: 0 0 24px 0;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  }
+
+  .hero-description {
+    font-size: clamp(1rem, 1.8vw, 1.15rem);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin-bottom: 40px;
+    max-width: 620px;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Enlaces de Redes */
+  .social-links-wrapper {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .social-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: rgba(16, 27, 36, 0.5);
+    border: 1px solid var(--color-border);
+    padding: 8px 16px;
+    border-radius: 30px;
+    backdrop-filter: blur(8px);
+    transition: var(--transition-smooth);
+  }
+
+  .social-item:hover {
+    border-color: var(--color-border-hover);
+    background-color: rgba(16, 27, 36, 0.8);
+    transform: translateY(-2px);
+  }
+
+  .social-icon-btn {
+    display: flex;
+    align-items: center;
+    color: var(--color-text-secondary);
+  }
+
+  .social-item:hover .social-icon-btn {
+    color: var(--color-accent-strong);
+  }
+
+  .social-badge {
+    font-family: var(--font-interface);
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Columna Visual */
+  .hero-visual-col {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .portrait-container {
+    position: relative;
+    width: 100%;
+    max-width: 440px;
+    aspect-ratio: 4/5;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  }
+
+  .hero-portrait {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 25%;
+    transition: transform 0.5s ease;
+  }
+
+  .portrait-container:hover .hero-portrait {
+    transform: scale(1.03);
+  }
+
+  .portrait-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, var(--color-bg-primary) 0%, transparent 40%);
+    pointer-events: none;
+  }
+
+  /* Caja de Cita Flotante */
+  .hero-quote-box {
+    position: absolute;
+    bottom: -30px;
+    right: -20px;
+    max-width: 320px;
+    padding: 24px;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+  }
+
+  .quote-icon {
+    opacity: 0.3;
+    margin-bottom: -4px;
+  }
+
+  .quote-text {
+    font-family: var(--font-display);
+    font-size: 0.98rem;
+    line-height: 1.5;
+    color: var(--color-text-primary);
+    font-style: italic;
+    margin: 0;
+  }
+
+  .quote-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    border-top: 1px solid var(--color-border);
+    padding-top: 12px;
+  }
+
+  .quote-author {
+    font-family: 'Georgia', serif;
+    font-size: 1.35rem;
+    color: var(--color-accent-strong);
+    font-weight: normal;
+  }
+
+  .quote-badge {
+    font-family: var(--font-interface);
+    font-size: 0.65rem;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Responsivo */
+  @media (max-width: 1024px) {
+    .hero-content-grid {
+      grid-template-columns: 1fr;
+      gap: 60px;
+    }
+
+    .hero-text-col {
+      align-items: center;
+      text-align: center;
+    }
+
+    .hero-description {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .social-links-wrapper {
+      justify-content: center;
+    }
+
+    .hero-visual-col {
+      width: 100%;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-bottom: 40px;
+    }
+
+    .hero-quote-box {
+      right: 0;
+      bottom: -10px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .about-hero {
+      padding-top: calc(var(--header-height) + 40px);
+      padding-bottom: 60px;
+    }
+
+    .portrait-container {
+      aspect-ratio: 1/1;
+    }
+
+    .hero-quote-box {
+      position: relative;
+      right: 0;
+      bottom: 0;
+      margin-top: 20px;
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+</style>

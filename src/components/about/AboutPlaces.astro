@@ -1,0 +1,283 @@
+---
+import { publicUrl } from '../../lib/urls/public-url';
+import type { AboutPlace } from '../../data/about';
+
+interface Props {
+  places: AboutPlace[];
+}
+
+const { places } = Astro.props;
+---
+
+<section class="about-places-section">
+  <div class="places-container container">
+    <div class="places-header">
+      <span class="places-eyebrow">ALGUNOS LUGARES QUE ME HAN INSPIRADO</span>
+    </div>
+
+    <!-- Carrusel de Lugares -->
+    <div class="places-carousel-wrapper">
+      <button 
+        class="carousel-nav-btn prev" 
+        id="places-prev-btn" 
+        aria-label="Desplazar a la izquierda"
+      >
+        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+
+      <div class="places-scroll-container" id="places-scroll">
+        {places.map((place) => {
+          const resolvedImg = publicUrl(place.image);
+          return (
+            <div class="place-card" style={`background-image: linear-gradient(to top, rgba(5, 12, 18, 0.9) 0%, rgba(5, 12, 18, 0.2) 50%, transparent 100%), url('${resolvedImg}');`}>
+              <div class="place-card-overlay"></div>
+              <div class="place-card-content">
+                <h3 class="place-card-title">{place.title}</h3>
+                <span class="place-card-status">
+                  {place.status === 'provisional' ? 'En validación' : 'Confirmado'}
+                </span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <button 
+        class="carousel-nav-btn next" 
+        id="places-next-btn" 
+        aria-label="Desplazar a la derecha"
+      >
+        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  const scrollContainer = document.getElementById('places-scroll');
+  const prevBtn = document.getElementById('places-prev-btn');
+  const nextBtn = document.getElementById('places-next-btn');
+
+  if (scrollContainer && prevBtn && nextBtn) {
+    const cardWidth = 280; // Ancho aproximado de tarjeta + gap
+    
+    const updateButtonVisibility = () => {
+      const scrollLeft = scrollContainer.scrollLeft;
+      const maxScrollLeft = scrollContainer.scrollWidth - scrollContainer.clientWidth;
+      
+      // Mostrar u ocultar botones según el scroll
+      if (scrollLeft <= 5) {
+        prevBtn.classList.add('disabled');
+        prevBtn.setAttribute('disabled', 'true');
+      } else {
+        prevBtn.classList.remove('disabled');
+        prevBtn.removeAttribute('disabled');
+      }
+      
+      if (scrollLeft >= maxScrollLeft - 5) {
+        nextBtn.classList.add('disabled');
+        nextBtn.setAttribute('disabled', 'true');
+      } else {
+        nextBtn.classList.remove('disabled');
+        nextBtn.removeAttribute('disabled');
+      }
+    };
+
+    prevBtn.addEventListener('click', () => {
+      scrollContainer.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+    });
+
+    nextBtn.addEventListener('click', () => {
+      scrollContainer.scrollBy({ left: cardWidth, behavior: 'smooth' });
+    });
+
+    // Detectar scroll para actualizar botones
+    scrollContainer.addEventListener('scroll', updateButtonVisibility);
+    
+    // Ejecutar inicialización una vez montado
+    window.addEventListener('resize', updateButtonVisibility);
+    
+    // Ejecutar inmediatamente
+    setTimeout(updateButtonVisibility, 200);
+  }
+</script>
+
+<style>
+  .about-places-section {
+    padding: 80px 0;
+    background-color: var(--color-bg-primary);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .places-header {
+    margin-bottom: 32px;
+    text-align: left;
+  }
+
+  .places-eyebrow {
+    font-family: var(--font-interface);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-accent-strong);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    display: block;
+  }
+
+  .places-carousel-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  /* Contenedor de Scroll */
+  .places-scroll-container {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    padding: 10px 0 20px 0;
+    width: 100%;
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .places-scroll-container::-webkit-scrollbar {
+    display: none; /* Safari y Chrome */
+  }
+
+  /* Tarjeta de Lugar */
+  .place-card {
+    flex: 0 0 240px; /* Ancho fijo para las tarjetas */
+    aspect-ratio: 9/12;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    position: relative;
+    overflow: hidden;
+    scroll-snap-align: start;
+    display: flex;
+    align-items: flex-end;
+    padding: 20px;
+    transition: var(--transition-smooth);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .place-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-border-hover);
+    box-shadow: 0 15px 30px rgba(216, 154, 43, 0.15);
+  }
+
+  .place-card-overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(5, 12, 18, 0.15);
+    transition: var(--transition-smooth);
+    z-index: 1;
+  }
+
+  .place-card:hover .place-card-overlay {
+    background-color: rgba(5, 12, 18, 0.05);
+  }
+
+  .place-card-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .place-card-title {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    color: var(--color-text-primary);
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+  }
+
+  .place-card-status {
+    font-family: var(--font-interface);
+    font-size: 0.65rem;
+    color: var(--color-accent-strong);
+    background-color: rgba(5, 12, 18, 0.7);
+    border: 1px solid rgba(216, 154, 43, 0.2);
+    padding: 2px 6px;
+    border-radius: 4px;
+    align-self: flex-start;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Botones de Navegación */
+  .carousel-nav-btn {
+    position: absolute;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: rgba(16, 27, 36, 0.85);
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: var(--transition-smooth);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  }
+
+  .carousel-nav-btn:hover:not(.disabled) {
+    background-color: var(--color-surface);
+    border-color: var(--color-accent);
+    color: var(--color-accent-strong);
+    transform: scale(1.05);
+  }
+
+  .carousel-nav-btn.prev {
+    left: -22px;
+  }
+
+  .carousel-nav-btn.next {
+    right: -22px;
+  }
+
+  .carousel-nav-btn.disabled {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Desktop layout (Si hay espacio, mostrar en fila sin scroll horizontal forzado) */
+  @media (min-width: 1400px) {
+    .places-scroll-container {
+      justify-content: space-between;
+    }
+    
+    .place-card {
+      flex: 1 1 0; /* Crece proporcionalmente */
+      max-width: calc(100% / 6 - 17px);
+    }
+
+    .carousel-nav-btn {
+      display: none; /* No se necesitan botones si caben todos */
+    }
+  }
+
+  @media (max-width: 768px) {
+    .carousel-nav-btn {
+      /* En móviles esconder los botones y permitir scroll swipe nativo */
+      display: none;
+    }
+  }
+</style>

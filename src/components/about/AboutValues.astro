@@ -1,0 +1,183 @@
+---
+import type { AboutValue } from '../../data/about';
+
+interface Props {
+  values: AboutValue[];
+}
+
+const { values } = Astro.props;
+---
+
+<section class="about-values-section">
+  <div class="values-container container">
+    <div class="values-header">
+      <span class="values-eyebrow">LO QUE ME MUEVE</span>
+      <h2 class="values-title">Valores que guían cada ruta</h2>
+    </div>
+
+    <div class="values-grid">
+      {values.map((val) => (
+        <div class="value-card glass-panel">
+          <div class="value-icon-box">
+            {val.iconName === 'shield' && (
+              /* Autenticidad: Escudo */
+              <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              </svg>
+            )}
+            {val.iconName === 'compass' && (
+              /* Exploración: Brújula */
+              <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+              </svg>
+            )}
+            {val.iconName === 'heart' && (
+              /* Conexión: Corazón */
+              <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+            )}
+            {val.iconName === 'map-pin' && (
+              /* Respeto: Marcador de mapa / manos/ojo */
+              <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+            )}
+            {val.iconName === 'share-2' && (
+              /* Compartir: Compartir/Nodos */
+              <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="18" cy="5" r="3"></circle>
+                <circle cx="6" cy="12" r="3"></circle>
+                <circle cx="18" cy="19" r="3"></circle>
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+              </svg>
+            )}
+          </div>
+
+          <h3 class="value-card-title">{val.title}</h3>
+          <p class="value-card-desc">{val.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-values-section {
+    padding: 100px 0;
+    background-color: var(--color-bg-secondary);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .values-header {
+    text-align: center;
+    margin-bottom: 56px;
+  }
+
+  .values-eyebrow {
+    font-family: var(--font-interface);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-accent-strong);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .values-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    color: var(--color-text-primary);
+    line-height: 1.25;
+    margin: 0;
+  }
+
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 24px;
+  }
+
+  .value-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 32px 24px;
+    background-color: var(--color-surface);
+    border-radius: var(--radius-md);
+    transition: var(--transition-smooth);
+    border: 1px solid var(--color-border);
+  }
+
+  .value-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-border-hover);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+  }
+
+  .value-icon-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    background-color: rgba(216, 154, 43, 0.06);
+    color: var(--color-accent);
+    border: 1px solid rgba(216, 154, 43, 0.1);
+    margin-bottom: 24px;
+    transition: var(--transition-smooth);
+  }
+
+  .value-card:hover .value-icon-box {
+    color: var(--color-accent-strong);
+    background-color: rgba(216, 154, 43, 0.15);
+    border-color: rgba(216, 154, 43, 0.4);
+    transform: scale(1.05);
+  }
+
+  .value-card-title {
+    font-family: var(--font-interface);
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin: 0 0 12px 0;
+  }
+
+  .value-card-desc {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* Responsivo */
+  @media (max-width: 1024px) {
+    .values-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .about-values-section {
+      padding: 60px 0;
+    }
+
+    .values-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .values-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
