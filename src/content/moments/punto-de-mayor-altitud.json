@@ -1,0 +1,30 @@
+{
+  "title": "Punto de mayor altitud",
+  "slug": "punto-de-mayor-altitud",
+  "description": "El aire se hace más delgado, el paisaje más inmenso.",
+  "status": "published",
+  "mediaType": "photo",
+  "routeSlug": "ruta-piloto",
+  "image": "/images/temp/moments/punto-de-mayor-altitud.webp",
+  "imageAlt": "Una carretera que bordea majestuosas cumbres andinas cubiertas de nieve en un paso elevado",
+  "order": 6,
+  "featured": true,
+  "tags": ["Paso elevado", "Nieve", "Altitud"],
+  "territory": "Andes",
+  "locationLabel": "Altitud por confirmar",
+  "kilometer": 96,
+  "altitude": 4350,
+  "availability": "available",
+  "verification": {
+    "locationStatus": "pending",
+    "metricsStatus": "pending",
+    "geometryStatus": "pending",
+    "mediaStatus": "temporary",
+    "notes": "Fotografía real tomada en el punto culminante del tramo piloto. Altitud en validación."
+  },
+  "seo": {
+    "title": "Punto de mayor altitud | Momentos | Aldo en Ruta",
+    "description": "Fotografía real del paso montañoso a 4,350 m en el tramo piloto de Aldo en Ruta.",
+    "noindex": true
+  }
+}

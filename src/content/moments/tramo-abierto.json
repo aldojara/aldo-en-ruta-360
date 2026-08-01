@@ -1,0 +1,30 @@
+{
+  "title": "Tramo abierto",
+  "slug": "tramo-abierto",
+  "description": "Kilómetros de libertad entre montañas y horizontes lejanos.",
+  "status": "published",
+  "mediaType": "photo",
+  "routeSlug": "ruta-piloto",
+  "image": "/images/temp/moments/tramo-abierto.webp",
+  "imageAlt": "Una carretera solitaria extendiéndose recta hacia colinas y montañas bajo cielos despejados",
+  "order": 4,
+  "featured": false,
+  "tags": ["Recta", "Horizonte", "Paisaje"],
+  "territory": "Andes",
+  "locationLabel": "Ubicación referencial",
+  "kilometer": 60,
+  "altitude": 2500,
+  "availability": "available",
+  "verification": {
+    "locationStatus": "pending",
+    "metricsStatus": "pending",
+    "geometryStatus": "pending",
+    "mediaStatus": "temporary",
+    "notes": "Fotografía estática disponible de un tramo recto en altitud."
+  },
+  "seo": {
+    "title": "Tramo abierto | Momentos | Aldo en Ruta",
+    "description": "Fotografía real del horizonte abierto y la llanura de la ruta piloto.",
+    "noindex": true
+  }
+}

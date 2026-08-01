@@ -1,0 +1,30 @@
+{
+  "title": "Mirador natural",
+  "slug": "mirador-natural",
+  "description": "Un alto en el camino para contemplar lo inmenso.",
+  "status": "published",
+  "mediaType": "panorama360",
+  "routeSlug": "ruta-piloto",
+  "image": "/images/temp/moments/mirador-natural.webp",
+  "imageAlt": "Vista panorámica espectacular desde un mirador natural al borde de un abismo en los Andes",
+  "order": 7,
+  "featured": false,
+  "tags": ["Mirador", "Panorámica", "Descanso"],
+  "territory": "Andes",
+  "locationLabel": "Ubicación referencial",
+  "kilometer": 64,
+  "altitude": 2900,
+  "availability": "projected",
+  "verification": {
+    "locationStatus": "pending",
+    "metricsStatus": "pending",
+    "geometryStatus": "pending",
+    "mediaStatus": "temporary",
+    "notes": "Representación visual del mirador del trayecto piloto. Panorámica 360 proyectada."
+  },
+  "seo": {
+    "title": "Mirador natural | Momentos | Aldo en Ruta",
+    "description": "Mirador de carretera proyectado con vistas panorámicas 360° en la ruta piloto.",
+    "noindex": true
+  }
+}

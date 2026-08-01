@@ -1,0 +1,171 @@
+---
+import { momentsPageData } from '../../data/moments-page';
+import { publicUrl } from '../../lib/urls/public-url';
+
+const { title, description, cta } = momentsPageData.closingCallout;
+const resolvedBg = publicUrl('/images/temp/moments/tramo-abierto.webp');
+---
+
+<section class="closing-callout container" aria-label="Llamada a la acción final">
+  <div class="callout-card">
+    <div class="callout-bg-wrapper" aria-hidden="true">
+      <img
+        src={resolvedBg}
+        alt="Carretera extendiéndose hacia montañas lejanas"
+        class="callout-bg-image"
+        loading="lazy"
+      />
+      <div class="callout-overlay"></div>
+    </div>
+
+    <div class="callout-content">
+      <h2 class="callout-title">{title}</h2>
+      <p class="callout-desc">{description}</p>
+
+      <a href={publicUrl(cta.href)} class="btn btn-primary btn-large" aria-label="Entrar al detalle de la ruta piloto">
+        <span>{cta.label}</span>
+        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .closing-callout {
+    padding-bottom: 8rem;
+  }
+
+  .callout-card {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-bg-secondary);
+    padding: 5rem 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 320px;
+    transition: var(--transition-smooth);
+  }
+
+  .callout-card:hover {
+    border-color: var(--color-border-hover);
+  }
+
+  .callout-bg-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+
+  .callout-bg-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 60%;
+    filter: brightness(0.4) contrast(1.1);
+    transition: transform 0.8s ease;
+  }
+
+  .callout-card:hover .callout-bg-image {
+    transform: scale(1.03);
+  }
+
+  .callout-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(5, 12, 18, 0.4) 0%, rgba(5, 12, 18, 0.85) 100%);
+  }
+
+  .callout-content {
+    position: relative;
+    z-index: 2;
+    max-width: 620px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .callout-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3.5vw, 2.6rem);
+    font-weight: 400;
+    color: var(--color-text-primary);
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .callout-desc {
+    font-family: var(--font-interface);
+    font-size: clamp(0.95rem, 1.5vw, 1.15rem);
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    margin: 0 0 0.5rem 0;
+  }
+
+  /* Botón */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.95rem 2.25rem;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-interface);
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: var(--transition-smooth);
+    gap: 0.75rem;
+    border: 1px solid var(--color-accent);
+    cursor: pointer;
+  }
+
+  .btn-icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+  }
+
+  .btn-primary {
+    background-color: var(--color-accent);
+    color: var(--color-bg-primary);
+  }
+
+  .btn-primary:hover {
+    background-color: var(--color-accent-strong);
+    border-color: var(--color-accent-strong);
+    transform: translateY(-2px);
+  }
+
+  .btn-primary:hover .btn-icon {
+    transform: translateX(4px);
+  }
+
+  /* Responsivo */
+  @media (max-width: 768px) {
+    .closing-callout {
+      padding-bottom: 6rem;
+    }
+
+    .callout-card {
+      padding: 4rem 2rem;
+    }
+
+    .btn {
+      width: 100%;
+    }
+  }
+</style>

@@ -1,0 +1,319 @@
+---
+import type { MomentEntry } from '../../types/moment';
+import { publicUrl } from '../../lib/urls/public-url';
+
+interface Props {
+  moments: MomentEntry[];
+}
+
+const { moments } = Astro.props;
+
+// Filtrar los 5 hitos en base a kilómetros específicos para garantizar consistencia con los datos
+const timelineMilestones = moments
+  .filter(m => [0, 28, 64, 96, 132].includes(m.data.kilometer ?? -1))
+  .sort((a, b) => (a.data.kilometer ?? 0) - (b.data.kilometer ?? 0));
+
+// Títulos y metadatos neutrales validados para cada hito
+const milestoneMetadata: Record<number, { title: string; descKm: string; descAlt: string; img: string }> = {
+  0: {
+    title: "Inicio del recorrido",
+    descKm: "Km 0",
+    descAlt: "800 m s. n. m. (Referencial)",
+    img: "/images/temp/moments/timeline-1.webp"
+  },
+  28: {
+    title: "Primer tramo de curvas",
+    descKm: "Km 28",
+    descAlt: "1,450 m s. n. m. (Referencial)",
+    img: "/images/temp/moments/timeline-2.webp"
+  },
+  64: {
+    title: "Mirador del trayecto",
+    descKm: "Km 64",
+    descAlt: "2,900 m s. n. m. (Referencial)",
+    img: "/images/temp/moments/timeline-3.webp"
+  },
+  96: {
+    title: "Punto de mayor altitud",
+    descKm: "Km 96",
+    descAlt: "4,350 m s. n. m. (Por confirmar)",
+    img: "/images/temp/moments/timeline-4.webp"
+  },
+  132: {
+    title: "Descenso final",
+    descKm: "Km 132",
+    descAlt: "1,880 m s. n. m. (Referencial)",
+    img: "/images/temp/moments/timeline-5.webp"
+  }
+};
+---
+
+<section class="timeline-section" aria-label="Cronología de momentos del tramo piloto">
+  <div class="container">
+    <div class="timeline-header">
+      <h2 class="timeline-section-title">Momentos del tramo piloto</h2>
+      <p class="timeline-section-subtitle">Un recorrido lleno de experiencias que hacen única cada carretera.</p>
+    </div>
+
+    <!-- Contenedor Timeline -->
+    <div class="timeline-scroll-container">
+      <div class="timeline-track">
+        <div class="timeline-connecting-line" aria-hidden="true"></div>
+
+        {timelineMilestones.map((milestone, index) => {
+          const km = milestone.data.kilometer ?? 0;
+          const meta = milestoneMetadata[km] || {
+            title: milestone.data.title,
+            descKm: `Km ${km}`,
+            descAlt: "Altitud pendiente",
+            img: milestone.data.image
+          };
+          const stepNumber = index + 1;
+
+          return (
+            <div class="timeline-milestone" data-step={stepNumber}>
+              <div class="milestone-media-wrapper">
+                <span class="milestone-number" aria-label={`Hito número ${stepNumber}`}>{stepNumber}</span>
+                <img
+                  src={publicUrl(meta.img)}
+                  alt={`Miniatura del hito: ${meta.title}`}
+                  class="milestone-thumbnail"
+                  loading="lazy"
+                />
+              </div>
+              <div class="milestone-info">
+                <h3 class="milestone-title">{meta.title}</h3>
+                <div class="milestone-meta">
+                  <span class="meta-km">{meta.descKm}</span>
+                  <span class="meta-separator" aria-hidden="true">•</span>
+                  <span class="meta-alt">{meta.descAlt}</span>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .timeline-section {
+    padding: 6rem 0;
+    background-color: var(--color-bg-secondary);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    overflow: hidden;
+  }
+
+  .timeline-header {
+    margin-bottom: 4rem;
+  }
+
+  .timeline-section-title {
+    font-family: var(--font-display);
+    font-size: 2.2rem;
+    color: var(--color-text-primary);
+    margin-bottom: 0.5rem;
+    font-weight: 400;
+  }
+
+  .timeline-section-subtitle {
+    font-family: var(--font-interface);
+    font-size: 1rem;
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  /* Scroll Horizontal en Desktop y Tablet */
+  .timeline-scroll-container {
+    width: 100%;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(216, 154, 43, 0.2) transparent;
+    padding-bottom: 1.5rem;
+  }
+
+  .timeline-scroll-container::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .timeline-scroll-container::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .timeline-scroll-container::-webkit-scrollbar-thumb {
+    background-color: rgba(216, 154, 43, 0.2);
+    border-radius: 4px;
+  }
+
+  .timeline-track {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    min-width: 1000px; /* Asegura el scroll horizontal */
+    padding: 2rem 0;
+  }
+
+  .timeline-connecting-line {
+    position: absolute;
+    top: calc(2rem + 40px); /* Alineado al centro de la miniatura de 80px */
+    left: 40px;
+    right: 40px;
+    height: 1px;
+    background: repeating-linear-gradient(
+      90deg,
+      var(--color-border) 0px,
+      var(--color-border) 6px,
+      transparent 6px,
+      transparent 12px
+    );
+    z-index: 1;
+  }
+
+  .timeline-milestone {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 180px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .milestone-media-wrapper {
+    position: relative;
+    width: 140px;
+    height: 80px;
+    border-radius: var(--radius-sm);
+    overflow: visible;
+    border: 2px solid var(--color-border);
+    background-color: var(--color-bg-primary);
+    margin-bottom: 1.25rem;
+    transition: var(--transition-smooth);
+  }
+
+  .timeline-milestone:hover .milestone-media-wrapper {
+    border-color: var(--color-accent);
+    transform: scale(1.03);
+  }
+
+  .milestone-thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: calc(var(--radius-sm) - 2px);
+  }
+
+  .milestone-number {
+    position: absolute;
+    top: -12px;
+    left: -12px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: var(--color-accent);
+    color: var(--color-bg-primary);
+    font-family: var(--font-interface);
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--color-bg-secondary);
+    z-index: 3;
+  }
+
+  .milestone-info {
+    text-align: left;
+  }
+
+  .milestone-title {
+    font-family: var(--font-interface);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: 0.35rem;
+    line-height: 1.3;
+  }
+
+  .milestone-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-family: var(--font-interface);
+    font-size: 0.72rem;
+    color: var(--color-text-muted);
+  }
+
+  .meta-separator {
+    display: none; /* Se oculta para el stack vertical de metadatos */
+  }
+
+  /* Responsivo para móviles (Conversión a lista vertical) */
+  @media (max-width: 768px) {
+    .timeline-section {
+      padding: 4rem 0;
+    }
+
+    .timeline-header {
+      margin-bottom: 2.5rem;
+    }
+
+    .timeline-scroll-container {
+      overflow-x: visible;
+      padding-bottom: 0;
+    }
+
+    .timeline-track {
+      flex-direction: column;
+      min-width: 100%;
+      gap: 2.5rem;
+      padding: 0;
+    }
+
+    .timeline-connecting-line {
+      top: 0;
+      bottom: 0;
+      left: 20px; /* Alineado al centro de la línea vertical */
+      width: 1px;
+      height: 100%;
+      right: auto;
+      background: repeating-linear-gradient(
+        0deg,
+        var(--color-border) 0px,
+        var(--color-border) 6px,
+        transparent 6px,
+        transparent 12px
+      );
+    }
+
+    .timeline-milestone {
+      flex-direction: row;
+      align-items: center;
+      width: 100%;
+      gap: 1.5rem;
+    }
+
+    .milestone-media-wrapper {
+      margin-bottom: 0;
+      width: 90px;
+      height: 60px;
+      flex-shrink: 0;
+    }
+
+    .milestone-number {
+      top: -8px;
+      left: -8px;
+    }
+
+    .milestone-meta {
+      flex-direction: row;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .meta-separator {
+      display: inline;
+    }
+  }
+</style>

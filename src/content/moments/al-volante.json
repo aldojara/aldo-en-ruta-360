@@ -1,0 +1,30 @@
+{
+  "title": "Al volante",
+  "slug": "al-volante",
+  "description": "La conexión entre el camino, el auto y la experiencia.",
+  "status": "published",
+  "mediaType": "video",
+  "routeSlug": "ruta-piloto",
+  "image": "/images/temp/moments/al-volante.webp",
+  "imageAlt": "Vista interior del habitáculo de un coche circulando por una sinuosa carretera de montaña",
+  "order": 8,
+  "featured": false,
+  "tags": ["Conducción", "Cabina", "Experiencia"],
+  "territory": "Andes",
+  "locationLabel": "Experiencia real",
+  "kilometer": 50,
+  "altitude": 2400,
+  "availability": "projected",
+  "verification": {
+    "locationStatus": "pending",
+    "metricsStatus": "pending",
+    "geometryStatus": "pending",
+    "mediaStatus": "temporary",
+    "notes": "Representación de la perspectiva de conducción. Proyección de videoclip sincronizado."
+  },
+  "seo": {
+    "title": "Al volante | Momentos | Aldo en Ruta",
+    "description": "Perspectiva de conducción en primera persona proyectada en la ruta piloto.",
+    "noindex": true
+  }
+}

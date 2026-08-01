@@ -1,31 +1,37 @@
 ---
-import ListingLayout from '../layouts/ListingLayout.astro';
-import PageHero from '../components/patterns/PageHero.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import MomentsHero from '../components/moments/MomentsHero.astro';
+import MomentsMediaSummary from '../components/moments/MomentsMediaSummary.astro';
+import MomentsFilters from '../components/moments/MomentsFilters.astro';
+import MomentsGallery from '../components/moments/MomentsGallery.astro';
+import PilotMomentsTimeline from '../components/moments/PilotMomentsTimeline.astro';
+import MomentsQuoteSection from '../components/moments/MomentsQuoteSection.astro';
+import MomentsClosingCallout from '../components/moments/MomentsClosingCallout.astro';
+
+import { getRelatedMoments } from '../lib/content/get-related-moments';
+import { siteConfig } from '../data/site';
+
+// Consultar los momentos del tramo piloto de forma dinámica de la Content Collection
+const showDrafts = siteConfig.content.showPrototypeDraftRoute;
+const moments = await getRelatedMoments('ruta-piloto', {
+  includeDrafts: showDrafts
+});
+
+// Metadatos SEO centralizados
+const seoTitle = "Momentos de carretera | Aldo en Ruta";
+const seoDescription = "Descubre fotografías, escenas y momentos vinculados a los recorridos de Aldo en Ruta por las carreteras del Perú.";
 ---
 
-<ListingLayout title="Aldo en Ruta | Momentos en Carretera">
-  <PageHero
-    eyebrow="Galería Visual"
-    title="Momentos"
-    description="Una colección visual de instantes en carretera. Instantáneas, clips cortos y miradas inmersivas que detienen el viaje en el tiempo."
-  />
-  <div class="container moments-placeholder animate-fade-in">
-    <div class="placeholder-box">
-      <p>Galería de Momentos - Las colecciones dinámicas de imágenes, vídeos e hitos se integrarán en la siguiente fase.</p>
-    </div>
-  </div>
-</ListingLayout>
-
-<style>
-  .moments-placeholder {
-    padding: 60px 20px;
-  }
-  .placeholder-box {
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: 40px;
-    background-color: var(--color-bg-secondary);
-    text-align: center;
-    color: var(--color-text-secondary);
-  }
-</style>
+<BaseLayout
+  title={seoTitle}
+  description={seoDescription}
+  overlayHeader={true}
+>
+  <MomentsHero />
+  <MomentsMediaSummary />
+  <MomentsFilters />
+  <MomentsGallery moments={moments} />
+  <PilotMomentsTimeline moments={moments} />
+  <MomentsQuoteSection />
+  <MomentsClosingCallout />
+</BaseLayout>

@@ -1,0 +1,30 @@
+{
+  "title": "Bosque de eucaliptos",
+  "slug": "bosque-de-eucaliptos",
+  "description": "Aromas, sombras y frescura en medio de la ruta.",
+  "status": "published",
+  "mediaType": "photo",
+  "routeSlug": "ruta-piloto",
+  "image": "/images/temp/moments/bosque-de-eucaliptos.webp",
+  "imageAlt": "Una carretera pavimentada rodeada de altos árboles de eucalipto con luz filtrada",
+  "order": 3,
+  "featured": false,
+  "tags": ["Bosque", "Naturaleza", "Sombra"],
+  "territory": "Andes",
+  "locationLabel": "Ubicación referencial",
+  "kilometer": 0,
+  "altitude": 800,
+  "availability": "available",
+  "verification": {
+    "locationStatus": "pending",
+    "metricsStatus": "pending",
+    "geometryStatus": "pending",
+    "mediaStatus": "temporary",
+    "notes": "Fotografía estática disponible del inicio del tramo piloto."
+  },
+  "seo": {
+    "title": "Bosque de eucaliptos | Momentos | Aldo en Ruta",
+    "description": "Fotografía real del tramo piloto que cruza un denso bosque de eucaliptos.",
+    "noindex": true
+  }
+}

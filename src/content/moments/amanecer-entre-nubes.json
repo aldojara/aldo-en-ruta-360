@@ -1,0 +1,30 @@
+{
+  "title": "Amanecer entre nubes",
+  "slug": "amanecer-entre-nubes",
+  "description": "La niebla matinal convierte la ruta en un escenario mágico.",
+  "status": "published",
+  "mediaType": "video",
+  "routeSlug": "ruta-piloto",
+  "image": "/images/temp/moments/amanecer-entre-nubes.webp",
+  "imageAlt": "Niebla matinal espesa flotando sobre colinas verdes cruzadas por una carretera en el amanecer",
+  "order": 5,
+  "featured": false,
+  "tags": ["Amanecer", "Niebla", "Escénico"],
+  "territory": "Andes",
+  "locationLabel": "Altitud referencial",
+  "kilometer": 40,
+  "altitude": 3200,
+  "availability": "projected",
+  "verification": {
+    "locationStatus": "pending",
+    "metricsStatus": "pending",
+    "geometryStatus": "pending",
+    "mediaStatus": "temporary",
+    "notes": "Representación visual de la niebla en el altiplano. Proyección de vídeo en fase 2."
+  },
+  "seo": {
+    "title": "Amanecer entre nubes | Momentos | Aldo en Ruta",
+    "description": "Clips de vídeo proyectados de la niebla matutina andina en la ruta de Aldo en Ruta.",
+    "noindex": true
+  }
+}

@@ -1,0 +1,83 @@
+---
+import type { MomentEntry } from '../../types/moment';
+import MomentCard from './MomentCard.astro';
+
+interface Props {
+  moments: MomentEntry[];
+}
+
+const { moments } = Astro.props;
+---
+
+<section class="moments-gallery-section" aria-label="Galería editorial de momentos">
+  <div class="container">
+    <div class="gallery-grid animate-fade-in">
+      {moments.map((moment, index) => (
+        <div class={`gallery-item gallery-item--${index + 1}`}>
+          <MomentCard moment={moment} index={index} />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .moments-gallery-section {
+    padding-bottom: 6rem;
+    background-color: var(--color-bg-primary);
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    align-items: start; /* Permite alturas desiguales para efecto editorial */
+  }
+
+  /* Asimetría editorial (Mosaico de la maqueta) */
+  .gallery-item {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Ajustes de relación de aspecto en las imágenes según la maqueta */
+  :global(.gallery-item--3 .card-media-wrapper) {
+    /* Bosque de eucaliptos es vertical y más alta */
+    height: 340px;
+  }
+
+  :global(.gallery-item--3 .card-image) {
+    object-position: center center;
+  }
+
+  :global(.gallery-item--1 .card-media-wrapper),
+  :global(.gallery-item--7 .card-media-wrapper) {
+    /* Curvas y miradores tienen aspecto cinemático */
+    height: 220px;
+  }
+
+  /* Media Queries */
+  @media (max-width: 1024px) {
+    .gallery-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    :global(.gallery-item--3 .card-media-wrapper) {
+      height: 240px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .moments-gallery-section {
+      padding-bottom: 4rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .gallery-grid {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+  }
+</style>

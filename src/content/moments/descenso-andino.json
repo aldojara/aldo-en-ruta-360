@@ -1,0 +1,30 @@
+{
+  "title": "Descenso andino",
+  "slug": "descenso-andino",
+  "description": "Curvas, quebradas y vistas que acompañan cada metro de descenso.",
+  "status": "published",
+  "mediaType": "video",
+  "routeSlug": "ruta-piloto",
+  "image": "/images/temp/moments/descenso-andino.webp",
+  "imageAlt": "Vista aérea de una carretera de montaña descendiendo sinuosamente entre colinas verdes",
+  "order": 2,
+  "featured": false,
+  "tags": ["Descenso", "Curvas", "Montaña"],
+  "territory": "Andes",
+  "locationLabel": "Ubicación referencial",
+  "kilometer": 132,
+  "altitude": 1880,
+  "availability": "projected",
+  "verification": {
+    "locationStatus": "pending",
+    "metricsStatus": "pending",
+    "geometryStatus": "pending",
+    "mediaStatus": "temporary",
+    "notes": "Representación visual del hito final del tramo piloto. Datos en validación."
+  },
+  "seo": {
+    "title": "Descenso andino | Momentos | Aldo en Ruta",
+    "description": "Clips de vídeo proyectados del descenso por carretera en los Andes peruanos.",
+    "noindex": true
+  }
+}
