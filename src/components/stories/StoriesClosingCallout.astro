@@ -1,0 +1,189 @@
+---
+import { storiesPageData } from '../../data/stories-page';
+import { publicUrl } from '../../lib/urls/public-url';
+
+const { title, description, cta } = storiesPageData.closingCallout;
+const resolvedBg = publicUrl('/images/temp/stories/stories-closing.webp');
+---
+
+<section class="stories-closing-callout container" aria-label="Llamada a la acción final">
+  <div class="callout-card">
+    <div class="callout-bg-wrapper" aria-hidden="true">
+      <img
+        src={resolvedBg}
+        alt="Paisaje montañoso con carretera al atardecer"
+        class="callout-bg-image"
+        loading="lazy"
+      />
+      <div class="callout-overlay"></div>
+    </div>
+
+    <div class="callout-content">
+      <div class="text-group">
+        <h2 class="callout-title">{title}</h2>
+        <p class="callout-desc">{description}</p>
+      </div>
+
+      <a href={publicUrl(cta.href)} class="btn btn-primary btn-large" aria-label="Entrar a explorar todas las rutas">
+        <span>{cta.label}</span>
+        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .stories-closing-callout {
+    padding-bottom: 8rem;
+  }
+
+  .callout-card {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-bg-secondary);
+    padding: 4.5rem 5rem;
+    min-height: 220px;
+    display: flex;
+    align-items: center;
+    transition: var(--transition-smooth);
+  }
+
+  .callout-card:hover {
+    border-color: var(--color-border-hover);
+  }
+
+  .callout-bg-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+
+  .callout-bg-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 45%;
+    filter: brightness(0.35) contrast(1.05);
+    transition: transform 0.8s ease;
+  }
+
+  .callout-card:hover .callout-bg-image {
+    transform: scale(1.02);
+  }
+
+  .callout-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(5, 12, 18, 0.3) 0%, rgba(5, 12, 18, 0.8) 100%);
+  }
+
+  .callout-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+  }
+
+  .text-group {
+    max-width: 580px;
+    text-align: left;
+  }
+
+  .callout-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 3vw, 2.3rem);
+    font-weight: 400;
+    color: var(--color-text-primary);
+    line-height: 1.25;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .callout-desc {
+    font-family: var(--font-interface);
+    font-size: clamp(0.95rem, 1.5vw, 1.08rem);
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  /* Botón */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.95rem 2.25rem;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-interface);
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: var(--transition-smooth);
+    gap: 0.75rem;
+    border: 1px solid var(--color-accent);
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .btn-icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+  }
+
+  .btn-primary {
+    background-color: var(--color-accent);
+    color: var(--color-bg-primary);
+  }
+
+  .btn-primary:hover {
+    background-color: var(--color-accent-strong);
+    border-color: var(--color-accent-strong);
+    transform: translateY(-2px);
+  }
+
+  .btn-primary:hover .btn-icon {
+    transform: translateX(4px);
+  }
+
+  /* Responsivo */
+  @media (max-width: 900px) {
+    .callout-content {
+      flex-direction: column;
+      text-align: center;
+      gap: 2rem;
+    }
+
+    .text-group {
+      text-align: center;
+    }
+
+    .btn {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .stories-closing-callout {
+      padding-bottom: 6rem;
+    }
+
+    .callout-card {
+      padding: 4rem 2rem;
+    }
+  }
+</style>

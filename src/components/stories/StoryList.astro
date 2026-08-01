@@ -1,0 +1,48 @@
+---
+import type { StoryEntry } from '../../types/story';
+import StoryListItem from './StoryListItem.astro';
+
+interface Props {
+  stories: StoryEntry[];
+}
+
+const { stories } = Astro.props;
+---
+
+<section class="stories-list-section" aria-label="Listado de crónicas secundarias">
+  <div class="container">
+    <div class="stories-grid">
+      {stories.map(story => (
+        <div class="grid-item">
+          <StoryListItem story={story} />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .stories-list-section {
+    padding-bottom: 6rem;
+    background-color: var(--color-bg-primary);
+  }
+
+  .stories-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  @media (max-width: 1024px) {
+    .stories-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .stories-list-section {
+      padding-bottom: 4rem;
+    }
+  }
+</style>
