@@ -1,31 +1,40 @@
 ---
-import ListingLayout from '../layouts/ListingLayout.astro';
-import PageHero from '../components/patterns/PageHero.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import StoriesHero from '../components/stories/StoriesHero.astro';
+import FeaturedStoriesGrid from '../components/stories/FeaturedStoriesGrid.astro';
+import StoryFilterBar from '../components/stories/StoryFilterBar.astro';
+import StoryList from '../components/stories/StoryList.astro';
+import PilotStoryTimeline from '../components/stories/PilotStoryTimeline.astro';
+import StoriesQuoteBlock from '../components/stories/StoriesQuoteBlock.astro';
+import StoriesClosingCallout from '../components/stories/StoriesClosingCallout.astro';
+
+import { getRelatedStories } from '../lib/content/get-related-stories';
+import { siteConfig } from '../data/site';
+
+// Consultar historias dinámicamente de la colección
+const showDrafts = siteConfig.content.showPrototypeDraftRoute;
+const allStories = await getRelatedStories({
+  includeDrafts: showDrafts
+});
+
+const featuredStories = allStories.filter(story => story.data.featured);
+const secondaryStories = allStories.filter(story => !story.data.featured);
+
+// Metadatos SEO centralizados
+const seoTitle = "Historias de carretera | Aldo en Ruta";
+const seoDescription = "Crónicas, aprendizajes y relatos vinculados con las rutas por carretera de Aldo en Ruta, desde la preparación del viaje hasta las experiencias que deja cada recorrido.";
 ---
 
-<ListingLayout title="Aldo en Ruta | Historias y Crónicas">
-  <PageHero
-    eyebrow="Bitácora Editorial"
-    title="Historias"
-    description="Bitácoras de viaje y crónicas editoriales. Relatos detallados sobre los territorios recorridos, su gente y la experiencia detrás del volante."
-  />
-  <div class="container stories-placeholder animate-fade-in">
-    <div class="placeholder-box">
-      <p>Crónicas Editoriales - La integración de relatos narrativos dinámicos se realizará en la siguiente fase.</p>
-    </div>
-  </div>
-</ListingLayout>
-
-<style>
-  .stories-placeholder {
-    padding: 60px 20px;
-  }
-  .placeholder-box {
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: 40px;
-    background-color: var(--color-bg-secondary);
-    text-align: center;
-    color: var(--color-text-secondary);
-  }
-</style>
+<BaseLayout
+  title={seoTitle}
+  description={seoDescription}
+  overlayHeader={true}
+>
+  <StoriesHero />
+  <FeaturedStoriesGrid stories={featuredStories} />
+  <StoryFilterBar />
+  <StoryList stories={secondaryStories} />
+  <PilotStoryTimeline />
+  <StoriesQuoteBlock />
+  <StoriesClosingCallout />
+</BaseLayout>

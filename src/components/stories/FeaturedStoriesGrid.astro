@@ -1,0 +1,88 @@
+---
+import type { StoryEntry } from '../../types/story';
+import FeaturedStoryCard from './FeaturedStoryCard.astro';
+
+interface Props {
+  stories: StoryEntry[];
+}
+
+const { stories } = Astro.props;
+---
+
+<section class="featured-stories-section" id="historias-destacadas" aria-label="Historias destacadas de camino">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">SELECCIÓN EDITORIAL</span>
+      <h2 class="section-title">Crónicas Destacadas</h2>
+    </div>
+
+    <div class="featured-grid">
+      {stories.map(story => (
+        <div class="grid-item">
+          <FeaturedStoryCard story={story} />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .featured-stories-section {
+    padding: 6rem 0 4rem;
+    background-color: var(--color-bg-primary);
+    scroll-margin-top: calc(var(--header-height) + 20px);
+  }
+
+  .section-header {
+    margin-bottom: 3.5rem;
+  }
+
+  .section-eyebrow {
+    font-family: var(--font-interface);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--color-accent);
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: 2.2rem;
+    color: var(--color-text-primary);
+    font-weight: 400;
+    margin: 0;
+  }
+
+  .featured-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  @media (max-width: 1024px) {
+    .featured-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .featured-stories-section {
+      padding: 4rem 0 3rem;
+    }
+
+    .section-header {
+      margin-bottom: 2.5rem;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .featured-grid {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+  }
+</style>

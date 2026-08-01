@@ -1,0 +1,182 @@
+---
+import { storiesPageData } from '../../data/stories-page';
+import { publicUrl } from '../../lib/urls/public-url';
+
+const { quote, attribution, image, imageAlt, principles } = storiesPageData.quoteSection;
+---
+
+<section class="stories-quote-section container" aria-label="Manifiesto editorial del proyecto">
+  <div class="quote-card glass-panel">
+    <!-- Columna Izquierda: Imagen Conceptual -->
+    <div class="quote-media">
+      <img
+        src={publicUrl(image)}
+        alt={imageAlt}
+        class="quote-image"
+        loading="lazy"
+      />
+      <div class="media-overlay"></div>
+    </div>
+
+    <!-- Columna Derecha: Cita y Pilares Narrativos -->
+    <div class="quote-content">
+      <blockquote class="manifiesto-blockquote">
+        <svg class="quote-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.988zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+        </svg>
+        <p class="quote-text">{quote}</p>
+        <cite class="quote-attribution">— {attribution}</cite>
+      </blockquote>
+
+      <!-- Pilares Editoriales -->
+      <div class="principles-grid">
+        {principles.map(principle => (
+          <div class="principle-item">
+            <h4 class="principle-title">{principle.title}</h4>
+            <p class="principle-desc">{principle.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .stories-quote-section {
+    padding: 6rem 0;
+  }
+
+  .quote-card {
+    display: grid;
+    grid-template-columns: 45% 55%;
+    overflow: hidden;
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+  }
+
+  .quote-media {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 420px;
+    background-color: var(--color-bg-primary);
+  }
+
+  .quote-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .media-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, transparent 50%, var(--color-bg-secondary) 100%);
+  }
+
+  .quote-content {
+    padding: 3.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .manifiesto-blockquote {
+    position: relative;
+    margin: 0 0 2rem 0;
+    padding-left: 0;
+  }
+
+  .quote-icon {
+    width: 32px;
+    height: 32px;
+    color: var(--color-accent-dim);
+    margin-bottom: 1rem;
+  }
+
+  .quote-text {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+    line-height: 1.45;
+    color: var(--color-text-primary);
+    margin: 0 0 0.75rem 0;
+    font-style: italic;
+  }
+
+  .quote-attribution {
+    font-family: var(--font-interface);
+    font-size: 0.85rem;
+    color: var(--color-accent);
+    font-style: normal;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Grid de Principios */
+  .principles-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem 2rem;
+    border-top: 1px solid var(--color-border);
+    padding-top: 2rem;
+  }
+
+  .principle-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .principle-title {
+    font-family: var(--font-interface);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin: 0;
+  }
+
+  .principle-desc {
+    font-family: var(--font-interface);
+    font-size: 0.78rem;
+    line-height: 1.4;
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  /* Responsivo */
+  @media (max-width: 1024px) {
+    .quote-card {
+      grid-template-columns: 1fr;
+    }
+
+    .quote-media {
+      height: 300px;
+      min-height: auto;
+    }
+
+    .media-overlay {
+      background: linear-gradient(to bottom, transparent 50%, var(--color-bg-secondary) 100%);
+    }
+
+    .quote-content {
+      padding: 2.5rem;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .quote-section {
+      padding: 4rem 0;
+    }
+
+    .principles-grid {
+      grid-template-columns: 1fr;
+      row-gap: 1.25rem;
+      padding-top: 1.5rem;
+    }
+  }
+</style>

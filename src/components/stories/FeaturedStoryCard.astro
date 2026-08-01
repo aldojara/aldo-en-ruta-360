@@ -1,0 +1,218 @@
+---
+import type { StoryEntry } from '../../types/story';
+import { publicUrl } from '../../lib/urls/public-url';
+
+interface Props {
+  story: StoryEntry;
+}
+
+const { story } = Astro.props;
+const {
+  title,
+  excerpt,
+  category,
+  contextLabel,
+  readingTimeMinutes,
+  image,
+  imageAlt,
+  status
+} = story.data;
+
+const resolvedImage = publicUrl(image);
+
+// Mapeo de categorías editoriales
+const getCategoryLabel = (cat: string) => {
+  switch (cat) {
+    case 'chronicle': return 'Crónica';
+    case 'logbook': return 'Bitácora';
+    case 'behind-the-route': return 'Detrás de la ruta';
+    case 'preparation': return 'Preparación';
+    case 'learning': return 'Aprendizaje';
+    case 'encounter': return 'Encuentro';
+    default: return cat;
+  }
+};
+
+const categoryLabel = getCategoryLabel(category);
+---
+
+<article class="featured-story-card">
+  <div class="card-media-wrapper">
+    <img
+      src={resolvedImage}
+      alt={imageAlt}
+      class="card-image"
+      loading="lazy"
+    />
+    <div class="card-overlay" aria-hidden="true"></div>
+
+    <span class="card-category-badge">{categoryLabel}</span>
+
+    {status === 'provisional' && (
+      <span class="status-badge" aria-label="Contenido editorial en preparación">
+        En preparación
+      </span>
+    )}
+  </div>
+
+  <div class="card-content">
+    <div class="card-meta-top">
+      <span class="meta-context">{contextLabel}</span>
+      <span class="meta-separator" aria-hidden="true">•</span>
+      <span class="meta-time">{readingTimeMinutes} min de lectura</span>
+    </div>
+
+    <h3 class="card-title">{title}</h3>
+    <p class="card-excerpt">{excerpt}</p>
+
+    <div class="card-footer">
+      <span class="status-legend">Disponible próximamente</span>
+    </div>
+  </div>
+</article>
+
+<style>
+  .featured-story-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: var(--transition-smooth);
+  }
+
+  .featured-story-card:hover {
+    border-color: var(--color-border-hover);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+  }
+
+  .card-media-wrapper {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+    background-color: var(--color-bg-primary);
+  }
+
+  .card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .featured-story-card:hover .card-image {
+    transform: scale(1.04);
+  }
+
+  .card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(5, 12, 18, 0.4) 0%, transparent 100%);
+  }
+
+  .card-category-badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    font-family: var(--font-interface);
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 4px 10px;
+    border-radius: 4px;
+    background-color: var(--color-accent);
+    color: var(--color-bg-primary);
+    z-index: 2;
+  }
+
+  .status-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-family: var(--font-interface);
+    font-size: 0.62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background-color: rgba(61, 156, 154, 0.15);
+    color: var(--color-route-upcoming);
+    border: 1px solid rgba(61, 156, 154, 0.3);
+    z-index: 2;
+  }
+
+  .card-content {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .card-meta-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-interface);
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-text-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .meta-context {
+    color: var(--color-accent-strong);
+  }
+
+  .meta-separator {
+    color: rgba(255, 255, 255, 0.1);
+  }
+
+  .card-title {
+    font-family: var(--font-display);
+    font-size: 1.45rem;
+    line-height: 1.3;
+    color: var(--color-text-primary);
+    margin-bottom: 0.75rem;
+    font-weight: 400;
+  }
+
+  .card-excerpt {
+    font-family: var(--font-interface);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+    margin-bottom: 1.75rem;
+    flex-grow: 1;
+  }
+
+  .card-footer {
+    border-top: 1px solid var(--color-border);
+    padding-top: 1rem;
+    margin-top: auto;
+  }
+
+  .status-legend {
+    font-family: var(--font-interface);
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    display: inline-block;
+  }
+
+  @media (max-width: 480px) {
+    .card-content {
+      padding: 1.5rem;
+    }
+  }
+</style>
