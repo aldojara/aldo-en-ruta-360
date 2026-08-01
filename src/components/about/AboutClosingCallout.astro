@@ -1,0 +1,137 @@
+---
+import { publicUrl } from '../../lib/urls/public-url';
+import type { AboutPageData } from '../../data/about';
+
+interface Props {
+  closing: AboutPageData['closing'];
+}
+
+const { closing } = Astro.props;
+
+const resolvedBg = publicUrl(closing.backgroundImage);
+const resolvedHref = publicUrl(closing.href);
+---
+
+<section class="about-closing-section">
+  <div class="closing-container container">
+    <div 
+      class="closing-card animate-fade-in" 
+      style={`background-image: linear-gradient(to right, rgba(5, 12, 18, 0.9) 20%, rgba(5, 12, 18, 0.5) 60%, rgba(5, 12, 18, 0.3) 100%), url('${resolvedBg}');`}
+    >
+      <div class="closing-content">
+        <h2 class="closing-title">{closing.title}</h2>
+        <p class="closing-desc">{closing.description}</p>
+        <a href={resolvedHref} class="btn-primary-golden">
+          <span>{closing.label}</span>
+          <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-closing-section {
+    padding: 60px 0 100px 0;
+    background-color: var(--color-bg-primary);
+  }
+
+  .closing-card {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    padding: 80px 60px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+  }
+
+  .closing-content {
+    position: relative;
+    z-index: 2;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .closing-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    color: var(--color-text-primary);
+    line-height: 1.2;
+    margin: 0 0 16px 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  }
+
+  .closing-desc {
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+    margin: 0 0 32px 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Botón Dorado */
+  .btn-primary-golden {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background-color: var(--color-accent);
+    color: #1c150c; /* Alto contraste */
+    padding: 14px 32px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-interface);
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(216, 154, 43, 0.3);
+    transition: var(--transition-smooth);
+    border: 1px solid var(--color-accent);
+  }
+
+  .btn-primary-golden:hover {
+    background-color: var(--color-accent-strong);
+    border-color: var(--color-accent-strong);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(216, 154, 43, 0.4);
+  }
+
+  .btn-primary-golden svg {
+    transition: transform var(--transition-smooth);
+  }
+
+  .btn-primary-golden:hover svg {
+    transform: translateX(4px);
+  }
+
+  /* Responsivo */
+  @media (max-width: 768px) {
+    .about-closing-section {
+      padding: 40px 0 60px 0;
+    }
+
+    .closing-card {
+      padding: 48px 32px;
+      text-align: center;
+      background-image: linear-gradient(to top, rgba(5, 12, 18, 0.95) 0%, rgba(5, 12, 18, 0.75) 100%) !important;
+    }
+
+    .closing-content {
+      max-width: 100%;
+      align-items: center;
+    }
+
+    .btn-primary-golden {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>
