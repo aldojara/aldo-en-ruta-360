@@ -15,7 +15,7 @@ verification:
   factualStatus: conceptual
   locationStatus: pending
 seo:
-  title: Cuando el camino se pone difícil | Historias | Aldo en Ruta
+  title: Cuando el camino se pone difícil | Historias | Aldo al Volante
   description: Crónica sobre la toma de decisiones prudentes y adaptabilidad en climas adversos.
   noindex: true
 tags: [Conducción, Desafío, Clima, Aprendizaje]
@@ -23,6 +23,6 @@ tags: [Conducción, Desafío, Clima, Aprendizaje]
 
 # Cuando el camino se pone difícil
 
-*Nota: Esta crónica se encuentra en preparación como parte del material narrativo proyectado para el proyecto Aldo en Ruta.*
+*Nota: Esta crónica se encuentra en preparación como parte del material narrativo proyectado para el proyecto Aldo al Volante.*
 
 La geografía del Perú es tan espectacular como exigente. El barro, la lluvia y los cambios repentinos de terreno ponen a prueba la templanza del conductor y exigen una conducción defensiva y sumamente prudente en todo momento.

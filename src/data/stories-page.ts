@@ -59,7 +59,7 @@ export const storiesPageData = {
 
   quoteSection: {
     quote: "Viajar por carretera no es únicamente llegar. También es aprender a observar, escuchar y comprender el territorio.",
-    attribution: "Principio editorial de Aldo en Ruta",
+    attribution: "Principio editorial de Aldo al Volante",
     image: "/images/temp/stories/stories-quote.webp",
     imageAlt: "Libreta de viaje, cámara fotográfica y gafas sobre una mesa de madera",
     principles: [

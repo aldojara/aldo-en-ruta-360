@@ -15,7 +15,7 @@ verification:
   factualStatus: conceptual
   locationStatus: pending
 seo:
-  title: El silencio del altiplano | Historias | Aldo en Ruta
+  title: El silencio del altiplano | Historias | Aldo al Volante
   description: Reflexión editorial sobre el silencio y la inmensidad del altiplano andino.
   noindex: true
 tags: [Silencio, Altiplano, Reflexión, Aprendizaje]
@@ -23,6 +23,6 @@ tags: [Silencio, Altiplano, Reflexión, Aprendizaje]
 
 # El silencio del altiplano
 
-*Nota: Esta reflexión se encuentra en preparación como parte del material narrativo proyectado para el proyecto Aldo en Ruta.*
+*Nota: Esta reflexión se encuentra en preparación como parte del material narrativo proyectado para el proyecto Aldo al Volante.*
 
 En las grandes llanuras de altura, la carretera parece no tener fin. El motor zumba de fondo mientras el entorno enmudece. Es una inmensidad que invita a la introspección y a conectar con la geografía de una forma que la ciudad nunca permite.

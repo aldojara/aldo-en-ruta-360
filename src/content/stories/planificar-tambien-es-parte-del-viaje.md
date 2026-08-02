@@ -15,7 +15,7 @@ verification:
   factualStatus: conceptual
   locationStatus: pending
 seo:
-  title: Planificar también es parte del viaje | Historias | Aldo en Ruta
+  title: Planificar también es parte del viaje | Historias | Aldo al Volante
   description: Bitácora de planificación técnica y de seguridad previa a la partida.
   noindex: true
 tags: [Preparación, Planificación, Mapas, Seguridad]
@@ -23,6 +23,6 @@ tags: [Preparación, Planificación, Mapas, Seguridad]
 
 # Planificar también es parte del viaje
 
-*Nota: Esta bitácora se encuentra en preparación como parte del material narrativo proyectado para el proyecto Aldo en Ruta.*
+*Nota: Esta bitácora se encuentra en preparación como parte del material narrativo proyectado para el proyecto Aldo al Volante.*
 
 Trazar el recorrido ideal implica cruzar capas de información: estado de las vías, gasolineras disponibles y puntos de descanso. Planificar con rigor reduce la incertidumbre en campo y permite disfrutar verdaderamente de la carretera.

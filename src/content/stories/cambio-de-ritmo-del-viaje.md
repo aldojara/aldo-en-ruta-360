@@ -15,7 +15,7 @@ verification:
   factualStatus: conceptual
   locationStatus: pending
 seo:
-  title: Cuando la carretera cambia el ritmo del viaje | Historias | Aldo en Ruta
+  title: Cuando la carretera cambia el ritmo del viaje | Historias | Aldo al Volante
   description: Bitácora de viaje sobre las pausas y adaptaciones necesarias en los caminos de la sierra central.
   noindex: true
 tags: [Curvas, Bitácora, Paisaje, Clima]
@@ -23,6 +23,6 @@ tags: [Curvas, Bitácora, Paisaje, Clima]
 
 # Cuando la carretera cambia el ritmo del viaje
 
-*Nota: Esta bitácora se encuentra en preparación como parte del material narrativo proyectado para el proyecto Aldo en Ruta.*
+*Nota: Esta bitácora se encuentra en preparación como parte del material narrativo proyectado para el proyecto Aldo al Volante.*
 
 En los Andes, la distancia no se mide en kilómetros, sino en horas y sorpresas climáticas. Una llovizna repentina o un tramo de curvas cerradas te obligan a reducir la velocidad y a entender que el destino final es secundario frente al aprendizaje que regala el camino en cada pausa.

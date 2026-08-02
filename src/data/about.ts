@@ -79,8 +79,8 @@ export const aboutPageData: AboutPageData = {
   showPrototypeAboutContent: true,
   
   seo: {
-    title: "Sobre Aldo | Aldo en Ruta",
-    description: "Conoce la historia, los valores y la visión detrás de Aldo en Ruta, un proyecto que une tecnología, viajes por carretera y experiencias inmersivas en el Perú.",
+    title: "Sobre Aldo | Aldo al Volante",
+    description: "Conoce la historia, los valores y la visión detrás de Aldo al Volante, un proyecto que une tecnología, viajes por carretera y experiencias inmersivas en el Perú.",
     canonical: "/sobre-aldo/",
     noindex: true,
     ogImage: "/images/temp/about/about-hero.webp"
@@ -150,7 +150,7 @@ export const aboutPageData: AboutPageData = {
     paragraphs: [
       "Soy Ingeniero de Sistemas y profesional vinculado a la analítica y los datos, con amplia experiencia ayudando a organizaciones a tomar mejores decisiones.",
       "Pero más allá de los datos, está mi otra pasión: viajar, conducir, descubrir caminos y capturar momentos únicos.",
-      "Aldo en Ruta nace de la unión de estas dos pasiones: la tecnología y la exploración, para crear experiencias que inspiran a otros a salir, descubrir y vivir el Perú."
+      "Aldo al Volante nace de la unión de estas dos pasiones: la tecnología y la exploración, para crear experiencias que inspiran a otros a salir, descubrir y vivir el Perú."
     ],
     image: "/images/aldo-louvre.png",
     imageAlt: "Aldo frente a la Pirámide del Louvre en París",

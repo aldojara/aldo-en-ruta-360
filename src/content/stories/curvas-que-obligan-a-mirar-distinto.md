@@ -15,7 +15,7 @@ verification:
   factualStatus: conceptual
   locationStatus: pending
 seo:
-  title: Curvas que enseñan | Historias | Aldo en Ruta
+  title: Curvas que enseñan | Historias | Aldo al Volante
   description: Crónica sobre la conducción y el aprendizaje de trazar curvas complejas en el Perú.
   noindex: true
 tags: [Curvas, Conducción, Lección, Crónica]
@@ -23,6 +23,6 @@ tags: [Curvas, Conducción, Lección, Crónica]
 
 # Curvas que enseñan
 
-*Nota: Esta crónica se encuentra en preparación como parte del material narrativo proyectado para el proyecto Aldo en Ruta.*
+*Nota: Esta crónica se encuentra en preparación como parte del material narrativo proyectado para el proyecto Aldo al Volante.*
 
 Trazar una curva no es solo girar el volante. Es dosificar la tracción, prever la visibilidad del carril contrario y mantener un ritmo que respete el flujo del camino. Cada curva superada enseña paciencia y agudeza mental en la conducción.
