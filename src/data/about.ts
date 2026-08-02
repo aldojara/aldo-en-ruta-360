@@ -91,8 +91,8 @@ export const aboutPageData: AboutPageData = {
     title: "Apasionado por los viajes, las carreteras y las historias que nos conectan.",
     description: "Creo experiencias digitales para que más personas descubran el Perú desde una perspectiva inmersiva, auténtica y profundamente humana.",
     backgroundImage: "/images/temp/about/about-hero-bg.webp",
-    portraitImage: "/images/temp/about/about-hero-portrait.webp",
-    portraitAlt: "Retrato provisional de Aldo Jara con una cámara fotográfica",
+    portraitImage: "/images/aldo-conduciendo.jpg",
+    portraitAlt: "Aldo conduciendo durante un recorrido por carretera",
     quote: {
       text: "La carretera siempre me ha enseñado algo nuevo. Este proyecto es mi forma de compartirlo.",
       author: "Aldo Jara",
@@ -152,8 +152,8 @@ export const aboutPageData: AboutPageData = {
       "Pero más allá de los datos, está mi otra pasión: viajar, conducir, descubrir caminos y capturar momentos únicos.",
       "Aldo en Ruta nace de la unión de estas dos pasiones: la tecnología y la exploración, para crear experiencias que inspiran a otros a salir, descubrir y vivir el Perú."
     ],
-    image: "/images/temp/about/about-story.webp",
-    imageAlt: "Aldo trabajando en una laptop frente a las montañas en una cabaña rústica",
+    image: "/images/aldo-louvre.png",
+    imageAlt: "Aldo frente a la Pirámide del Louvre en París",
     profileButton: {
       label: "Conoce mi perfil profesional",
       note: "Próximamente",
