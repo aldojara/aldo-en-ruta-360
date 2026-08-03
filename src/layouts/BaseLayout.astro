@@ -52,7 +52,7 @@ const resolvedOgImageURL = new URL(resolvedOgImagePath, Astro.site ?? Astro.url.
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalString} />
-    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />

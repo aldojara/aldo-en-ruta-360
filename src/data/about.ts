@@ -82,7 +82,7 @@ export const aboutPageData: AboutPageData = {
     title: "Sobre Aldo | Aldo al Volante",
     description: "Conoce la historia, los valores y la visión detrás de Aldo al Volante, un proyecto que une tecnología, viajes por carretera y experiencias inmersivas en el Perú.",
     canonical: "/sobre-aldo/",
-    noindex: true,
+    noindex: false,
     ogImage: "/images/temp/about/about-hero.webp"
   },
 
