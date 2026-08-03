@@ -19,11 +19,27 @@ if (!featuredRoute) {
 }
 
 const { metrics, location } = featuredRoute.data;
+
+const homeSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Aldo al Volante",
+  "url": "https://aldoalvolante.com/",
+  "inLanguage": "es-PE",
+  "description": "Explora el Perú por carretera con mapas, rutas, fotografías, vídeos y experiencias inmersivas. Descubre cada recorrido con Aldo al Volante."
+};
 ---
 
 <BaseLayout
-  title="Aldo al Volante | Viajes, carreteras y experiencias inmersivas"
-  description="Explora recorridos reales por carretera en el Perú mediante mapas, vídeo, fotografías y experiencias 360°."
+  title="Aldo al Volante | Rutas y viajes por carretera en el Perú"
+  description="Explora el Perú por carretera con mapas, rutas, fotografías, vídeos y experiencias inmersivas. Descubre cada recorrido con Aldo al Volante."
+  canonicalURL="https://aldoalvolante.com/"
+  ogImage="/images/temp/home/hero-road.webp"
+  ogImageAlt="Carretera entre montañas en una ruta por el Perú"
+  ogImageWidth={1376}
+  ogImageHeight={768}
+  ogType="website"
+  structuredData={homeSchema}
   overlayHeader={true}
 >
   <!-- 1. Hero Cinematográfico -->

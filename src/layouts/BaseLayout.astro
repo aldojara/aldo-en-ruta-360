@@ -8,34 +8,47 @@ interface Props {
   title?: string;
   description?: string;
   ogImage?: string;
+  ogImageAlt?: string;
+  ogImageWidth?: number;
+  ogImageHeight?: number;
   canonicalURL?: string;
   noindex?: boolean;
   overlayHeader?: boolean;
+  ogType?: string;
+  structuredData?: object | string;
 }
 
 const {
   title = "Aldo al Volante | Viajes por carretera, mapas y relatos 360°",
   description = "Explora el Perú por carretera de forma interactiva. Rutas con mapas dinámicos, perfiles de altitud, sincronización de vídeo y escenas inmersivas en 360°.",
   ogImage = "/assets/og-image-default.jpg",
+  ogImageAlt,
+  ogImageWidth,
+  ogImageHeight,
   canonicalURL,
   noindex = false,
-  overlayHeader = false
+  overlayHeader = false,
+  ogType = "website",
+  structuredData
 } = Astro.props;
+
+// Origen absoluto de producción garantizado para SEO
+const siteOrigin = 'https://aldoalvolante.com';
 
 // Resolución del Canonical URL estable sin parámetros ni fragmentos
 const canonical = canonicalURL
-  ? new URL(canonicalURL, Astro.site ?? Astro.url.origin)
-  : new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin);
+  ? (canonicalURL.startsWith('http') ? new URL(canonicalURL) : new URL(canonicalURL, siteOrigin))
+  : new URL(Astro.url.pathname, siteOrigin);
 
 canonical.search = '';
 canonical.hash = '';
 const canonicalString = canonical.href;
 
-// Resolución de favicons y OG image con base path
+// Resolución de favicons y OG image con base path y siteOrigin estricto
 const resolvedFaviconSvg = publicUrl('/favicon.svg');
 const resolvedFaviconIco = publicUrl('/favicon.ico');
 const resolvedOgImagePath = publicUrl(ogImage);
-const resolvedOgImageURL = new URL(resolvedOgImagePath, Astro.site ?? Astro.url.origin).href;
+const resolvedOgImageURL = new URL(resolvedOgImagePath, siteOrigin).href;
 ---
 
 <!DOCTYPE html>
@@ -55,11 +68,17 @@ const resolvedOgImageURL = new URL(resolvedOgImagePath, Astro.site ?? Astro.url.
     <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
 
     <!-- Open Graph -->
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:url" content={canonicalString} />
+    <meta property="og:site_name" content="Aldo al Volante" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={resolvedOgImageURL} />
+    <meta property="og:image:secure_url" content={resolvedOgImageURL} />
+    {ogImageAlt && <meta property="og:image:alt" content={ogImageAlt} />}
+    {ogImageWidth && <meta property="og:image:width" content={ogImageWidth.toString()} />}
+    {ogImageHeight && <meta property="og:image:height" content={ogImageHeight.toString()} />}
+    <meta property="og:locale" content="es_PE" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
@@ -67,6 +86,16 @@ const resolvedOgImageURL = new URL(resolvedOgImagePath, Astro.site ?? Astro.url.
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={resolvedOgImageURL} />
+    {ogImageAlt && <meta property="twitter:image:alt" content={ogImageAlt} />}
+
+    <!-- Structured Data (JSON-LD) -->
+    {structuredData && (
+      <script
+        type="application/ld+json"
+        is:inline
+        set:html={typeof structuredData === 'string' ? structuredData : JSON.stringify(structuredData)}
+      />
+    )}
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

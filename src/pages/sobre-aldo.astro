@@ -7,6 +7,28 @@ import AboutValues from '../components/about/AboutValues.astro';
 import AboutPlaces from '../components/about/AboutPlaces.astro';
 import AboutClosingCallout from '../components/about/AboutClosingCallout.astro';
 import { aboutPageData } from '../data/about';
+
+const aboutSchema = {
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  "url": "https://aldoalvolante.com/sobre-aldo/",
+  "name": "Aldo Jara Pisconti | Creador de Aldo al Volante",
+  "inLanguage": "es-PE",
+  "mainEntity": {
+    "@type": "Person",
+    "name": "Aldo Jara Pisconti",
+    "url": "https://aldoalvolante.com/sobre-aldo/",
+    "image": "https://aldoalvolante.com/images/aldo-conduciendo.jpg",
+    "description": "Creador de Aldo al Volante, un proyecto de viajes por carretera, rutas, paisajes y experiencias inmersivas por el Perú.",
+    "knowsAbout": [
+      "viajes por carretera",
+      "rutas por el Perú",
+      "experiencias inmersivas",
+      "fotografía de viajes",
+      "cartografía de recorridos"
+    ]
+  }
+};
 ---
 
 <BaseLayout
@@ -15,6 +37,11 @@ import { aboutPageData } from '../data/about';
   canonicalURL={aboutPageData.seo.canonical}
   noindex={aboutPageData.seo.noindex}
   ogImage={aboutPageData.seo.ogImage}
+  ogImageAlt="Aldo Jara Pisconti conduciendo durante un recorrido por carretera"
+  ogImageWidth={3105}
+  ogImageHeight={2687}
+  ogType="profile"
+  structuredData={aboutSchema}
   overlayHeader={true}
 >
   <!-- 1. Hero Cinematográfico y Retrato -->
