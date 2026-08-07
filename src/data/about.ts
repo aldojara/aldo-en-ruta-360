@@ -80,7 +80,7 @@ export const aboutPageData: AboutPageData = {
   
   seo: {
     title: "Aldo Jara Pisconti | Creador de Aldo al Volante",
-    description: "Conoce a Aldo Jara Pisconti, creador de Aldo al Volante, un proyecto de viajes por carretera, rutas, paisajes y experiencias inmersivas por el Perú.",
+    description: "Conoce a Aldo Jara Pisconti, creador y autor de Aldo al Volante, un proyecto de viajes por carretera, rutas, paisajes y experiencias inmersivas por el Perú.",
     canonical: "https://aldoalvolante.com/sobre-aldo/",
     noindex: false,
     ogImage: "/images/aldo-conduciendo.jpg"
@@ -156,8 +156,8 @@ export const aboutPageData: AboutPageData = {
     imageAlt: "Aldo frente a la Pirámide del Louvre en París",
     profileButton: {
       label: "Conoce mi perfil profesional",
-      note: "Próximamente",
-      disabled: true
+      note: "Visitar",
+      disabled: false
     }
   },
 

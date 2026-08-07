@@ -33,21 +33,20 @@ const resolvedImage = publicUrl(story.image);
           ))}
         </div>
 
-        <!-- Botón profesional deshabilitado (Prototipo/Próximamente) -->
+        <!-- Enlace al perfil profesional -->
         <div class="story-action-wrapper">
-          <button 
-            class="btn-professional-placeholder" 
-            disabled 
-            aria-disabled="true"
-            aria-describedby="prof-btn-note"
+          <a 
+            href="https://aldojarapisconti.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-professional" 
           >
             <span>{story.profileButton.label}</span>
             <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
               <line x1="5" y1="12" x2="19" y2="12"></line>
               <polyline points="12 5 19 12 12 19"></polyline>
             </svg>
-          </button>
-          <span id="prof-btn-note" class="badge-provisional">{story.profileButton.note}</span>
+          </a>
         </div>
       </div>
     </div>
@@ -148,24 +147,35 @@ const resolvedImage = publicUrl(story.image);
     flex-wrap: wrap;
   }
 
-  .btn-professional-placeholder {
+  .btn-professional {
     display: inline-flex;
     align-items: center;
     gap: 12px;
     background: transparent;
-    border: 1px solid rgba(245, 245, 240, 0.15);
-    color: var(--color-text-muted);
+    border: 1px solid rgba(245, 245, 240, 0.25);
+    color: var(--color-text-primary);
     padding: 12px 24px;
     border-radius: var(--radius-sm);
     font-family: var(--font-interface);
     font-size: 0.92rem;
     font-weight: 600;
-    cursor: not-allowed;
+    text-decoration: none;
+    cursor: pointer;
     transition: var(--transition-smooth);
   }
 
-  .btn-professional-placeholder svg {
+  .btn-professional:hover {
+    background-color: var(--color-accent-dim);
+    border-color: var(--color-accent-strong);
+    color: var(--color-accent-strong);
+  }
+
+  .btn-professional svg {
     transition: transform var(--transition-smooth);
+  }
+
+  .btn-professional:hover svg {
+    transform: translateX(4px);
   }
 
   .badge-provisional {

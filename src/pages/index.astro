@@ -22,11 +22,35 @@ const { metrics, location } = featuredRoute.data;
 
 const homeSchema = {
   "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "Aldo al Volante",
-  "url": "https://aldoalvolante.com/",
-  "inLanguage": "es-PE",
-  "description": "Explora el Perú por carretera con mapas, rutas, fotografías, vídeos y experiencias inmersivas. Descubre cada recorrido con Aldo al Volante."
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://aldoalvolante.com/#website",
+      "url": "https://aldoalvolante.com/",
+      "name": "Aldo al Volante",
+      "description": "Explora el Perú por carretera con mapas, rutas, fotografías, vídeos y experiencias inmersivas. Descubre cada recorrido con Aldo al Volante.",
+      "inLanguage": "es",
+      "creator": {
+        "@id": "https://aldojarapisconti.com/#person"
+      },
+      "author": {
+        "@id": "https://aldojarapisconti.com/#person"
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://aldojarapisconti.com/#person",
+      "name": "Aldo Jara Pisconti",
+      "url": "https://aldojarapisconti.com/",
+      "sameAs": [
+        "https://www.linkedin.com/in/aldojarapisconti/",
+        "https://www.youtube.com/@aldopisconti",
+        "https://bigtalentanalytica.com/sobre-mi",
+        "https://aprendefrancesviajando.com/sobre-nosotros/aldo-jara-pisconti/",
+        "https://aldoalvolante.com/sobre-aldo/"
+      ]
+    }
+  ]
 };
 ---
 

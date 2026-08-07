@@ -10,24 +10,42 @@ import { aboutPageData } from '../data/about';
 
 const aboutSchema = {
   "@context": "https://schema.org",
-  "@type": "ProfilePage",
-  "url": "https://aldoalvolante.com/sobre-aldo/",
-  "name": "Aldo Jara Pisconti | Creador de Aldo al Volante",
-  "inLanguage": "es-PE",
-  "mainEntity": {
-    "@type": "Person",
-    "name": "Aldo Jara Pisconti",
-    "url": "https://aldoalvolante.com/sobre-aldo/",
-    "image": "https://aldoalvolante.com/images/aldo-conduciendo.jpg",
-    "description": "Creador de Aldo al Volante, un proyecto de viajes por carretera, rutas, paisajes y experiencias inmersivas por el Perú.",
-    "knowsAbout": [
-      "viajes por carretera",
-      "rutas por el Perú",
-      "experiencias inmersivas",
-      "fotografía de viajes",
-      "cartografía de recorridos"
-    ]
-  }
+  "@graph": [
+    {
+      "@type": "ProfilePage",
+      "@id": "https://aldoalvolante.com/sobre-aldo/#profilepage",
+      "url": "https://aldoalvolante.com/sobre-aldo/",
+      "name": "Aldo Jara Pisconti | Creador de Aldo al Volante",
+      "inLanguage": "es",
+      "mainEntity": {
+        "@id": "https://aldojarapisconti.com/#person"
+      },
+      "isPartOf": {
+        "@id": "https://aldoalvolante.com/#website"
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://aldojarapisconti.com/#person",
+      "name": "Aldo Jara Pisconti",
+      "url": "https://aldojarapisconti.com/",
+      "description": "Creador y autor de Aldo al Volante, un proyecto de viajes por carretera, rutas, paisajes y experiencias inmersivas por el Perú.",
+      "sameAs": [
+        "https://www.linkedin.com/in/aldojarapisconti/",
+        "https://www.youtube.com/@aldopisconti",
+        "https://bigtalentanalytica.com/sobre-mi",
+        "https://aprendefrancesviajando.com/sobre-nosotros/aldo-jara-pisconti/",
+        "https://aldoalvolante.com/sobre-aldo/"
+      ],
+      "knowsAbout": [
+        "viajes por carretera",
+        "rutas por el Perú",
+        "experiencias inmersivas",
+        "fotografía de viajes",
+        "cartografía de recorridos"
+      ]
+    }
+  ]
 };
 ---
 
